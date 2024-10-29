@@ -1,0 +1,19 @@
+const createApiError = (statusCode, message = "Something went wrong", errors = [], stack = "") => {
+    const error = new Error(); 
+    error.message = message;    
+    error.statusCode = statusCode; 
+    error.data = null;        
+    error.success = false;      
+    error.errors = errors;      
+
+    
+    if (!stack) {
+        Error.captureStackTrace(error, createApiError);
+    } else {
+        error.stack = stack; 
+    }
+
+    return error; 
+};
+
+export { createApiError };
