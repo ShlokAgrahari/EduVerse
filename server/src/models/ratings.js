@@ -19,6 +19,8 @@ const RatingReviewSchema = new mongoose.Schema({
         type:Date,
         dafault: Date.now,
     },
+},{
+    timestamps:true,
 });
 
 module.exports = mongoose.model("ratings",RatingReviewSchema);

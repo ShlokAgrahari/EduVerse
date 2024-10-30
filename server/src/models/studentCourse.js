@@ -12,6 +12,9 @@ const StudentCoursesSchema = new mongoose.Schema({
       Image: String,
     },
   ],
+},
+{
+  timestamps:true,
 });
 
 module.exports = mongoose.model("StudentCourses", StudentCoursesSchema);
