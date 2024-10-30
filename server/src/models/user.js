@@ -1,4 +1,5 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+
 
 const UserSchema = new mongoose.Schema({
     userName:{
@@ -22,9 +23,16 @@ const UserSchema = new mongoose.Schema({
         type: String,
         enums:["student","instructor"],
     },
+    token:{
+        type: String,
+        default: null,
+    }
 },{
     timestamps:true,
 }
 );
 
-module.exports = mongoose.model("user",UserSchema);
+// module.exports = mongoose.model("user",UserSchema);
+const User = mongoose.model("User", UserSchema); // Define the User model
+
+export default User;
