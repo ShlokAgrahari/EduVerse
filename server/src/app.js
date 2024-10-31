@@ -3,6 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import router from "./routes/user.routes.js";
 
+
 const app=express();
 
 app.use(cors({
@@ -25,5 +26,4 @@ app.use("/healthcheck",healthcheckRouter)
 app.use("/signup",router);
 app.use("/login",router);
 app.use("/",router);
-
 export default app;
