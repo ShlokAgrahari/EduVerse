@@ -1,0 +1,107 @@
+/* src/components/HomePage.css */
+
+.homepage {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure it takes the full height of the viewport */
+}
+
+/* Header styling */
+.homepage-header {
+    text-align: center;
+    padding: 5px;
+    background-color: #003366; /* Dark blue */
+    color: white;
+}
+
+/* Navbar styling */
+.homepage-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f8f9fa; /* Light background color */
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+}
+
+.search-form input {
+    padding: 5px;
+    margin-right: 10px;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* Main content styling */
+.content {
+    display: flex;
+    flex: 1; /* Occupy the remaining space */
+}
+
+.carousel-wrapper {
+    width: 50%; /* Right half */
+    overflow: hidden; /* Ensure no overflow from carousel */
+}
+
+.trusted-companies {
+    width: 50%; /* Left half */
+    padding: 20px;
+    background-color: #f8f9fa; /* Light background color */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.trusted-companies h2 {
+    margin-bottom: 15px;
+}
+
+.company-ovals {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Center the ovals */
+}
+
+.company-oval {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px 20px;
+    border-radius: 30px; /* Rounded edges */
+    background-color: #003366; /* Dark blue background */
+    color: white; /* White text */
+    font-weight: bold;
+}
+
+/* Footer styling */
+/* src/components/HomePage.css */
+
+.homepage-footer {
+    background-color: #007bff; /* Footer background color */
+    color: white; /* Footer text color */
+    text-align: center; /* Center align text */
+    padding: 15px 0; /* Padding inside footer */
+    position: relative; /* Position for styling */
+    bottom: 0; /* Position footer at the bottom */
+    width: 100%; /* Full width */
+}
+
+.footer-links {
+    margin-top: 10px; /* Space above links */
+}
+
+.footer-links a {
+    color: white; /* Link color */
+    margin: 0 10px; /* Space between links */
+    text-decoration: none; /* No underline */
+}
+
+.footer-links a:hover {
+    text-decoration: underline; /* Underline on hover */
+}
