@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+import mongoose,{Schema} from "mongoose";
 
-const UserSchema = new mongoose.Schema({
+const UserSchema = new Schema({
     userName:{
         type: String,
         required : true,
@@ -17,14 +17,15 @@ const UserSchema = new mongoose.Schema({
     loginType:{
         type: String,
         enums: ["standard","google","facebook","github"],
+        default:"standard"
     },
     role:{
         type: String,
-        enums:["student","instructor"],
+        enum:["student","instructor"],
     },
 },{
     timestamps:true,
 }
 );
 
-module.exports = mongoose.model("user",UserSchema);
+export const User = mongoose.model("User", UserSchema);

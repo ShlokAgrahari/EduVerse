@@ -10,21 +10,40 @@ const SignupPage = () => {
   const [phone, setPhone] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [userType, setUserType] = useState('Student');
 
-  const handleSignup = (e) => {
+  const handleSignup =async (e) => {
     e.preventDefault();
     console.log("Email:", email);
     console.log("Phone:", phone);
     console.log("Username:", username);
     console.log("Password:", password);
-    setEmail('');
+    try {
+      const res=await fetch("/signup",{
+        method:"POST",
+        header:{
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify({
+          email,phone,username,password,userType
+        })
+      })
+      const data=await res.json();
+
+      if(res.status===422 || !data){
+        throw new Error("Something went wrong");
+      }
+
+      setEmail('');
     setPhone('');
     setUsername('');
     setPassword('');
+    } catch (error) {
+      console.log(error.message);
+    }
+    
   };
 
-
-  const [userType, setUserType] = useState('Student');
   return (
     
     <div className="signup-page">

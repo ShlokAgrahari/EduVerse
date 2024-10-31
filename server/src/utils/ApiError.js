@@ -1,4 +1,4 @@
-const createApiError = (statusCode, message = "Something went wrong", errors = [], stack = "") => {
+const ApiError = (statusCode, message = "Something went wrong", errors = [], stack = "") => {
     const error = new Error(); 
     error.message = message;    
     error.statusCode = statusCode; 
@@ -16,4 +16,4 @@ const createApiError = (statusCode, message = "Something went wrong", errors = [
     return error; 
 };
 
-export { createApiError };
+export { ApiError };
