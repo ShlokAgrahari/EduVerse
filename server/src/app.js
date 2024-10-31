@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-
+import router from "./routes/user.routes.js";
 const app=express();
 
 app.use(cors({
@@ -17,5 +17,5 @@ app.use(express.static("public"))
 import  healthcheckRouter  from "./routes/healthcheck.routes.js";
 
 app.use("/healthcheck",healthcheckRouter)
-
+app.use("/signup",router)
 export default app;
