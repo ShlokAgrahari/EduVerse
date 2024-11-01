@@ -7,7 +7,8 @@ import router from "./routes/user.routes.js";
 const app=express();
 
 app.use(cors({
-    origin:process.env.CORS_ORIGIN,
+    origin:'http://localhost:3000',
+    methods: ['GET', 'POST'], 
     credentials:true,
 }))
 
@@ -23,6 +24,8 @@ app.use(express.static("public"))
 import  healthcheckRouter  from "./routes/healthcheck.routes.js";
 
 app.use("/healthcheck",healthcheckRouter)
+
+  
 app.use("/signup",router);
 app.use("/login",router);
 app.use("/",router);

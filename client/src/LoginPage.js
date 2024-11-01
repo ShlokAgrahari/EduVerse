@@ -1,66 +1,87 @@
 // src/components/LoginPage.js
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
 import { FaUser, FaLock, FaGoogle, FaFacebook, FaGithub } from 'react-icons/fa';
 import './LoginPage.css';
 
 const LoginPage = () => {
+    const [userType, setUserType] = useState('Student');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Logic for login goes here
+        console.log('Logging in', { username, password, userType });
+    };
 
     return (
-        <div className="login-page flex flex-col items-center justify-center min-h-screen bg-gray-100">
+        <div className="login-page">
             {/* Header */}
-            <header className="header-box bg-blue-600 text-white w-full p-4 text-center">
-                <h1 className="text-3xl">ASHTRA</h1>
-                <p className="text-xl">Best Teacher | Affordable Pricing | Exclusive Notes</p>
+            <header className="header-box">
+                <h1>ASHTRA</h1>
+                <p>Best Teacher | Affordable Pricing | Exclusive Notes</p>
             </header>
 
-            {/* Login Container */}
-            <div className="login-container bg-white rounded-lg shadow-lg p-6 w-full max-w-md mt-6">
-                <h2 className="text-2xl font-bold mb-4">Login</h2>
-                <form onSubmit={handleLogin}>
-                    <div className="form-group mb-4 flex items-center border border-gray-300 rounded-md">
-                        <FaUser className="icon text-black m-2" />
-                        <input
-                            type="text"
-                            placeholder="Username"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            className="flex-grow p-2 focus:outline-none"
-                            required
-                        />
+            <div className="login-container">
+                {/* User Type Selection */}
+                <div className="user-type">
+                    <button
+                        onClick={() => setUserType('Student')}
+                        className={`user-button ${userType === 'Student' ? 'active' : ''}`}
+                    >
+                        Student
+                    </button>
+                    <button
+                        onClick={() => setUserType('Instructor')}
+                        className={`user-button ${userType === 'Instructor' ? 'active' : ''}`}
+                    >
+                        Instructor
+                    </button>
+                </div>
+
+                {/* Login Form */}
+                <form className="login-form" onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label htmlFor="username" className="input-icon-container">
+                            <FaUser className="input-icon" />
+                            <input
+                                type="text"
+                                id="username"
+                                placeholder="Enter your username"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                            />
+                        </label>
                     </div>
-                    <div className="form-group mb-4 flex items-center border border-gray-300 rounded-md">
-                        <FaLock className="icon text-black m-2" />
-                        <input
-                            type="password"
-                            placeholder="Password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className="flex-grow p-2 focus:outline-none"
-                            required
-                        />
+                    <div className="form-group">
+                        <label htmlFor="password" className="input-icon-container">
+                            <FaLock className="input-icon" />
+                            <input
+                                type="password"
+                                id="password"
+                                placeholder="Enter your password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </label>
                     </div>
 
-                    <button type="submit" className="login-button bg-blue-600 text-white rounded-md p-2 w-full hover:bg-blue-700 transition">
-                        Login
-                    </button>
+                    <button type="submit" className="login-button">Login</button>
                 </form>
 
-                <div className="other-login-options mt-4 text-center">
+                {/* Other Login Options */}
+                <div className="other-login-options">
                     <p>Other login options</p>
-                    <div className="icon-container flex justify-center mt-2">
-                        <FaGoogle className="login-icon text-black m-2" size={24} />
-                        <FaFacebook className="login-icon text-black m-2" size={24} />
-                        <FaGithub className="login-icon text-black m-2" size={24} />
+                    <div className="icon-container">
+                        <FaGoogle className="login-icon google" />
+                        <FaFacebook className="login-icon facebook" />
+                        <FaGithub className="login-icon github" />
                     </div>
                 </div>
 
                 {/* Forgot Password Link */}
-                <Link to="/forgot-password" className="forgot-password text-blue-600 hover:underline mt-2 block text-center">
+                <Link to="/forgot-password" className="forgot-password">
                     Forgot Password?
                 </Link>
             </div>

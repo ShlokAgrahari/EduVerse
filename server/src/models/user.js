@@ -5,6 +5,10 @@ const UserSchema = new Schema({
         type: String,
         required: true,
     },
+    phone:{
+        type:String,
+        required:true
+    },
     userEmail: {
         type: String,
         required: true,
@@ -14,14 +18,14 @@ const UserSchema = new Schema({
         type: String,
         required: true,
     },
+    role: {
+        type: String,
+        enum: ["student", "instructor"],
+    },
     loginType: {
         type: String,
         enum: ["standard", "google", "facebook", "github"],
         default: "standard",
-    },
-    role: {
-        type: String,
-        enum: ["student", "instructor"],
     },
     token: {
         type: String,

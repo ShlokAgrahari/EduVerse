@@ -7,25 +7,27 @@ import jsonwebtoken from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 
 const registerUser = asyncHandler(async (req, res) => {
-    console.log("registeruser worked");
-    const { userName, userEmail, password, role, loginType } = req.body;
+    console.log("Register user function triggered");
+    const { userName,phone,userEmail, password, role, loginType } = req.body;
+    console.log(req.body)
 
-    if (!(userName && userEmail && password && role)) {
-        throw new ApiError(400, "all fields are required");
+    if (!(userName && userEmail && password)) {
+        throw ApiError(400, "All fields are required");
     }
 
     const existuser = await User.findOne({ userEmail });
     if (existuser) {
-        throw new ApiError(409, "user already exists");
+        throw ApiError(409, "User already exists");
     }
 
     const encrpassword = await bcrypt.hash(password, 10);
     const user = await User.create({
-        userName: userName,
-        userEmail: userEmail,
+        userName,
+        phone,
+        userEmail,
         password: encrpassword,
-        role: role,
-        loginType: loginType,
+        role,
+        loginType,
     });
 
     const token = jsonwebtoken.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRY });
@@ -33,38 +35,38 @@ const registerUser = asyncHandler(async (req, res) => {
     user.token = token;
     user.password = undefined;
 
-    return res.status(200).json(ApiResponse(200, user, "successfully registered"));
+    return res.status(200).json(ApiResponse(200, user, "Successfully registered"));
 });
 
 const loginUser = asyncHandler(async (req, res) => {
-    console.log("login worked");
-    const { userEmail, password, role } = req.body;
+    console.log("Login function triggered");
+    const { userEmail, password } = req.body; // Removed role as it's not used
     if (!(userEmail && password)) {
-        throw new ApiError(400, "all fields are required");
+        throw ApiError(400, "All fields are required");
     }
 
     const user = await User.findOne({ userEmail });
     if (!user) {
-        throw new ApiError(409, "user does not exist");
+        throw ApiError(409, "User does not exist");
     }
 
-    if (await bcrypt.compare(password, user.password)) {
-        const token = jsonwebtoken.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRY });
-        user.token = token;
-        user.password = undefined;
-
-        const options = {
-            expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-            httpOnly: true,
-        };
-        return res.status(200).cookie("token", token, options).json({
-            success: true,
-        });
+    if (!(await bcrypt.compare(password, user.password))) {
+        throw ApiError(401, "Invalid credentials");
     }
+
+    const token = jsonwebtoken.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRY });
+    user.token = token;
+    user.password = undefined;
+
+    const options = {
+        expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+        httpOnly: true,
+    };
+    return res.status(200).cookie("token", token, options).json(ApiResponse(200, { user }, "Successfully logged in"));
 });
 
 const test = asyncHandler(async (req, res) => {
-    res.status(200).json({ msg: "working" });
+    res.status(200).json({ msg: "Working" });
 });
 
 export { registerUser, loginUser, test };
