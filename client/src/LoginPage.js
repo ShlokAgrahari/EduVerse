@@ -1,5 +1,6 @@
 // src/components/LoginPage.js
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { FaUser, FaLock, FaGoogle, FaFacebook, FaGithub } from 'react-icons/fa';
 import './LoginPage.css';
