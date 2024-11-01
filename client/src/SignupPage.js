@@ -1,79 +1,79 @@
 // src/components/SignupPage.js
 import React, { useState } from 'react';
 import './SignupPage.css';
-import { FaGoogle, FaFacebook, FaGithub } from 'react-icons/fa';
-
-import { FaUser, FaLock, FaEnvelope, FaPhone } from 'react-icons/fa';
+import { FaGoogle, FaFacebook, FaGithub, FaUser, FaLock, FaEnvelope, FaPhone } from 'react-icons/fa';
 
 const SignupPage = () => {
-  const [email, setEmail] = useState('');
+  const [userEmail, setUserEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [username, setUsername] = useState('');
+  const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
-  const [userType, setUserType] = useState('Student');
+  const [role, setRole] = useState('student'); // updated to 'role' for consistency
 
-  const handleSignup =async (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
-    console.log("Email:", email);
+    console.log("Email:", userEmail);
     console.log("Phone:", phone);
-    console.log("Username:", username);
+    console.log("Username:", userName);
     console.log("Password:", password);
     try {
-      const res=await fetch("/signup",{
-        method:"POST",
-        header:{
-          'Content-Type':'application/json'
+      const res = await fetch("http://localhost:8000/signup", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
         },
-        body:JSON.stringify({
-          email,phone,username,password,userType
+        body: JSON.stringify({
+          userName,phone, userEmail, password, role
         })
-      })
-      const data=await res.json();
-
-      if(res.status===422 || !data){
+      });
+      if (res.status === 404) {
+        throw new Error("Endpoint not found");
+      } else if (res.status === 422) {
         throw new Error("Something went wrong");
       }
+  
+      // Only parse as JSON if no errors have occurred
+      const data = await res.json();
+      if (!data) {
+        throw new Error("Unexpected response format");
+      }
 
-      setEmail('');
-    setPhone('');
-    setUsername('');
-    setPassword('');
+      // Reset form fields upon successful submission
+      setUserEmail('');
+      setPhone('');
+      setUserName('');
+      setPassword('');
     } catch (error) {
       console.log(error.message);
     }
-    
   };
 
   return (
-    
     <div className="signup-page">
       <div className="signup-box">
-      <div className="user-type">
-      
-      <div className="user-type">
-                    <button
-                        onClick={() => setUserType('Student')}
-                        className={`user-button ${userType === 'Student' ? 'active' : ''}`}
-                    >
-                        Student
-                    </button>
-                    <button
-                        onClick={() => setUserType('Instructor')}
-                        className={`user-button ${userType === 'Instructor' ? 'active' : ''}`}
-                    >
-                        Instructor
-                    </button>
-                </div>
-                </div>
+        <div className="user-type">
+          <button
+            onClick={() => setRole('student')}
+            className={`user-button ${role === 'student' ? 'active' : ''}`}
+          >
+            Student
+          </button>
+          <button
+            onClick={() => setRole('instructor')}
+            className={`user-button ${role === 'instructor' ? 'active' : ''}`}
+          >
+            Instructor
+          </button>
+        </div>
         <h2>Sign Up</h2>
-        <form onSubmit={handleSignup}>
+        <form>
           <div className="input-container">
             <FaEnvelope className="icon" />
             <input
               type="email"
               placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={userEmail}
+              onChange={(e) => setUserEmail(e.target.value)}
               required
             />
           </div>
@@ -92,12 +92,11 @@ const SignupPage = () => {
             <input
               type="text"
               placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
               required
             />
           </div>
-
           <div className="input-container">
             <FaLock className="icon" />
             <input
@@ -108,20 +107,18 @@ const SignupPage = () => {
               required
             />
           </div>
-          <button type="submit">Sign Up</button>
+          <button type="submit" onClick={handleSignup}>Sign Up</button>
           <div className="other-login-options">
-                    <p>Other login options</p>
-                    <div className="icon-container">
-                        <FaGoogle className="login-icon" />
-                        <FaFacebook className="login-icon" />
-                        <FaGithub className="login-icon" />
-                    </div>
-                </div>
+            <p>Other login options</p>
+            <div className="icon-container">
+              <FaGoogle className="login-icon" />
+              <FaFacebook className="login-icon" />
+              <FaGithub className="login-icon" />
+            </div>
+          </div>
         </form>
       </div>
-      
     </div>
-    
   );
 };
 

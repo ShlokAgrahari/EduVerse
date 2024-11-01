@@ -1,11 +1,19 @@
 // src/components/LoginPage.js
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaGoogle, FaFacebook, FaGithub, FaUser, FaLock } from 'react-icons/fa';
+import { FaUser, FaLock, FaGoogle, FaFacebook, FaGithub } from 'react-icons/fa';
 import './LoginPage.css';
 
 const LoginPage = () => {
     const [userType, setUserType] = useState('Student');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Logic for login goes here
+        console.log('Logging in', { username, password, userType });
+    };
 
     return (
         <div className="login-page">
@@ -33,18 +41,30 @@ const LoginPage = () => {
                 </div>
 
                 {/* Login Form */}
-                <form className="login-form">
+                <form className="login-form" onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <div className="input-icon-container">
+                        <label htmlFor="username" className="input-icon-container">
                             <FaUser className="input-icon" />
-                            <input type="text" id="username" placeholder="Enter your username" />
-                        </div>
+                            <input
+                                type="text"
+                                id="username"
+                                placeholder="Enter your username"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                            />
+                        </label>
                     </div>
                     <div className="form-group">
-                        <div className="input-icon-container">
+                        <label htmlFor="password" className="input-icon-container">
                             <FaLock className="input-icon" />
-                            <input type="password" id="password" placeholder="Enter your password" />
-                        </div>
+                            <input
+                                type="password"
+                                id="password"
+                                placeholder="Enter your password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </label>
                     </div>
 
                     <button type="submit" className="login-button">Login</button>
