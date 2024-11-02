@@ -5,10 +5,8 @@ const ApiError = (statusCode, message = "Something went wrong", errors = [], sta
     error.data = null;        
     error.success = false;      
     error.errors = errors;      
-
-    
     if (!stack) {
-        Error.captureStackTrace(error, createApiError);
+        Error.captureStackTrace(error, ApiError);
     } else {
         error.stack = stack; 
     }
