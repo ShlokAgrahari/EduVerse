@@ -29,4 +29,5 @@ app.use("/healthcheck",healthcheckRouter)
 app.use("/signup",router);
 app.use("/login",router);
 app.use("/",router);
+app.use("/stdhome",router);
 export default app;

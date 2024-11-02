@@ -9,6 +9,9 @@ import { Routes, Route } from 'react-router-dom';
 import LoginPage from './LoginPage';
 import SignupPage from './SignupPage.js';
 import HomePage from './HomePage.js';
+import StudentDashboard from './StudentDashboard.js';
+
+
 import './App.css';
 
 const App = () => {
@@ -21,7 +24,7 @@ const App = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/" element={<HomePage />} />
-          {/* <Route path="/student-dashboard" component={StudentDashboard} /> */}
+          <Route path= "/stdhome" element={<StudentDashboard/>} />
         </Routes>
       </div>
    

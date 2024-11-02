@@ -5,14 +5,42 @@ import { FaUser, FaLock, FaGoogle, FaFacebook, FaGithub } from 'react-icons/fa';
 import './LoginPage.css';
 
 const LoginPage = () => {
-    const [userType, setUserType] = useState('Student');
-    const [username, setUsername] = useState('');
+    const [role, setRole] = useState('student');
+    const [userEmail, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
         // Logic for login goes here
-        console.log('Logging in', { username, password, userType });
+        try{
+            const res = await fetch("http://localhost:8000/login", {
+                method: "POST",
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  userEmail,password, role
+                })
+            });
+            if (res.status === 404) {
+                throw new Error("Endpoint not found");
+            }else if (res.status === 422) {
+                throw new Error("Something went wrong");
+            }
+
+            console.log("working");
+
+            const data = await res.json();
+            if (!data) {
+                throw new Error("Unexpected response format");
+            }
+
+
+            setEmail("");
+            setPassword("");
+        }catch(error){
+            console.log(error);
+        }
     };
 
     return (
@@ -27,14 +55,14 @@ const LoginPage = () => {
                 {/* User Type Selection */}
                 <div className="user-type">
                     <button
-                        onClick={() => setUserType('Student')}
-                        className={`user-button ${userType === 'Student' ? 'active' : ''}`}
+                        onClick={() => setRole('student')}
+                        className={`user-button ${role === 'student' ? 'active' : ''}`}
                     >
                         Student
                     </button>
                     <button
-                        onClick={() => setUserType('Instructor')}
-                        className={`user-button ${userType === 'Instructor' ? 'active' : ''}`}
+                        onClick={() => setRole('instructor')}
+                        className={`user-button ${role === 'instructor' ? 'active' : ''}`}
                     >
                         Instructor
                     </button>
@@ -43,14 +71,14 @@ const LoginPage = () => {
                 {/* Login Form */}
                 <form className="login-form" onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label htmlFor="username" className="input-icon-container">
+                        <label htmlFor="userEmail" className="input-icon-container">
                             <FaUser className="input-icon" />
                             <input
                                 type="text"
-                                id="username"
-                                placeholder="Enter your username"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
+                                id="useremail"
+                                placeholder="Enter your email"
+                                value={userEmail}
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                         </label>
                     </div>
