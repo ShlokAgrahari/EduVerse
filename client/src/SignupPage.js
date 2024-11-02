@@ -2,8 +2,13 @@
 import React, { useState } from 'react';
 import './SignupPage.css';
 import { FaGoogle, FaFacebook, FaGithub, FaUser, FaLock, FaEnvelope, FaPhone } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+ 
+
 
 const SignupPage = () => {
+  const navigate = useNavigate();
+
   const [userEmail, setUserEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [userName, setUserName] = useState('');
@@ -37,6 +42,8 @@ const SignupPage = () => {
       if (!data) {
         throw new Error("Unexpected response format");
       }
+      navigate("/student-dashboard");
+
 
       // Reset form fields upon successful submission
       setUserEmail('');
