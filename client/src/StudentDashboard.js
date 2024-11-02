@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import './StudentDashboard.css';
 import { Carousel } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 const StudentDashboard = () => {
     const courses = [
@@ -11,7 +12,10 @@ const StudentDashboard = () => {
         { title: "Python for Data Science", description: "Master Python for data analysis and visualization.", price: "$24.99", image: "https://via.placeholder.com/300x200" },
         { title: "Web Development Bootcamp", description: "Become a full-stack web developer.", price: "$34.99", image: "https://via.placeholder.com/300x200" },
     ];
-
+    const navigate=useNavigate();
+    const handleNavigation=()=>{
+        navigate("/coursedetails")
+    }
     return (
         <div className="dashboard">
             {/* Header */}
@@ -81,7 +85,7 @@ const StudentDashboard = () => {
                     </Carousel>
 
                     {/* Courses Section */}
-                    <div className="courses-section">
+                    <div className="courses-section" onClick={handleNavigation}>
                         <h2>Popular Courses</h2>
                         <div className="courses-grid">
                             {courses.map((course, index) => (
