@@ -5,10 +5,6 @@ const CourseSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    videoURL:{
-        type: String,
-        required: true,
-    },
     instructorId:{
         type: String,
         required: true,
@@ -36,8 +32,8 @@ const CourseSchema = new mongoose.Schema({
         studentId:String,
         studentName : String,
         studentEmail :String,
-        paidAmount : String,
+        paidAmount : Number,
     },]
 });
 
-module.exports = mongoose.model("course",CourseSchema);
+module.exports = mongoose.model("Course",CourseSchema);
