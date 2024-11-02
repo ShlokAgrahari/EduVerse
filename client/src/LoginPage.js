@@ -27,14 +27,14 @@ const LoginPage = () => {
                 {/* User Type Selection */}
                 <div className="user-type">
                     <button
-                        onClick={() => setUserType('Student')}
-                        className={`user-button ${userType === 'Student' ? 'active' : ''}`}
+                        onClick={() => setUserType('student')}
+                        className={`user-button ${userType === 'student' ? 'active' : ''}`}
                     >
                         Student
                     </button>
                     <button
-                        onClick={() => setUserType('Instructor')}
-                        className={`user-button ${userType === 'Instructor' ? 'active' : ''}`}
+                        onClick={() => setUserType('instructor')}
+                        className={`user-button ${userType === 'instructor' ? 'active' : ''}`}
                     >
                         Instructor
                     </button>
