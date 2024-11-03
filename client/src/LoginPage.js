@@ -8,6 +8,7 @@ const LoginPage = () => {
     const [role, setRole] = useState('student');
     const [userEmail, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [errmsg,setError] = useState('');
 
     const handleSubmit = async(e) => {
         e.preventDefault();
@@ -22,6 +23,14 @@ const LoginPage = () => {
                   userEmail,password, role
                 })
             });
+
+            if (!res.ok) {
+                const errorData = await res.json(); // Retrieve error message from response
+                console.log(errorData.message);
+                setError(errorData.message);
+                throw new Error(errorData.message || "Something went wrong"); // Pass the error message to catch block
+            }
+
             if (res.status === 404) {
                 throw new Error("Endpoint not found");
             }else if (res.status === 422) {
@@ -39,7 +48,8 @@ const LoginPage = () => {
             setEmail("");
             setPassword("");
         }catch(error){
-            console.log(error);
+            console.log("error is ",error);
+            setError(error.message);
         }
     };
 
@@ -94,6 +104,7 @@ const LoginPage = () => {
                             />
                         </label>
                     </div>
+                    <p style={{color:'red'}}>{errmsg}</p>
 
                     <button type="submit" className="login-button">Login</button>
                 </form>

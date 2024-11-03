@@ -42,16 +42,16 @@ const loginUser = asyncHandler(async (req, res) => {
     console.log("Login function triggered");
     const { userEmail, password } = req.body; // Removed role as it's not used
     if (!(userEmail && password)) {
-        throw ApiError(400, "All fields are required");
+        return res.status(400).json(ApiResponse(400,null, "All fields are required"));
     }
 
     const user = await User.findOne({ userEmail });
     if (!user) {
-        throw ApiError(409, "User does not exist");
+        return res.status(409).json(ApiResponse(404, null, "User does not exist"));
     }
 
     if (!(await bcrypt.compare(password, user.password))) {
-        throw ApiError(401, "Invalid credentials");
+        return res.status(401).json(ApiResponse(401,null,"incorrect password"));
     }
 
     const token = jsonwebtoken.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRY });
