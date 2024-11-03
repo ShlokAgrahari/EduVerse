@@ -1,150 +1,144 @@
 /* src/components/InstructorDashboard.css */
 
+:root {
+  --primary-color: #4A5568; /* Dark Slate Blue */
+  --secondary-color: #319795; /* Teal */
+  --background-color: #F7FAFC; /* Light Gray */
+  --card-background: #FFFFFF; /* White */
+  --course-background: #E6FFFA; /* Light Teal for course cards */
+  --hover-color: #63B3ED; /* Light Blue */
+  --text-color: #2D3748; /* Dark Charcoal */
+  --muted-text: #A0AEC0; /* Gray */
+}
+
 .dashboard {
-  font-family: Arial, sans-serif;
-  color: #333;
-  background-color: #f4f7fc;
-  padding: 20px;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: var(--background-color);
+  min-height: 100vh;
 }
 
 .dashboard-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #333;
-  color: #f4f7fc;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
+  padding: 1.5rem 2rem;
+  background-color: var(--primary-color);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .header-title {
-  font-size: 1.8rem;
-  margin: 0;
+  font-size: 1.75rem;
 }
 
+.header-buttons {
+  display: flex;
+  gap: 1rem; /* Space between profile and logout buttons */
+}
+
+.profile-button,
 .logout-button {
-  background-color: #ff4d4f;
-  color: white;
-  padding: 8px 15px;
+  background-color: var(--secondary-color);
+  color: #ffffff;
   border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
   border-radius: 5px;
   font-size: 0.9rem;
-  cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.3s, transform 0.2s;
 }
 
+.profile-button:hover,
 .logout-button:hover {
-  background-color: #ff3333;
+  background-color: #2B6CB0; /* Darker blue on hover */
+  transform: scale(1.05); /* Slightly enlarge the button */
 }
 
-.dashboard-main {
-  text-align: center;
-  flex: 1; 
-  overflow-y: auto;
-  padding-right: 15px; 
+.create-course-section {
+  background-color: var(--card-background);
+  padding: 1.5rem;
+  margin: 1rem 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Set a max height to enable scrolling */
-.dashboard-main {
-  max-height: calc(100vh - 120px); /* Adjust based on header height */
+.create-course-button {
+  background-color: var(--primary-color);
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.create-course-button:hover {
+  background-color: #2C5282; /* Darker teal on hover */
+  transform: scale(1.05); /* Slightly enlarge the button */
+}
+
+.main-content {
+  padding: 2rem;
+  margin: 0 2rem;
+  flex: 1; /* Allow main content to grow */
 }
 
 .welcome-message {
   font-size: 1.5rem;
-  margin-bottom: 20px;
-  color: #4b6587;
+  color: var(--text-color);
+  margin-bottom: 1rem;
 }
 
-/* Overview Section */
-.overview-section {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 30px;
+.course-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+  max-height: 400px;
+  overflow-y: auto; /* Enable vertical scrolling */
+  padding-right: 10px;
 }
 
-.overview-card {
-  display: flex;
-  align-items: center;
-  background-color: #fff;
-  padding: 15px;
+.course-card {
+  background-color: var(--course-background);
+  padding: 1.5rem;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 200px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative; /* For the hover effect */
 }
 
-.overview-icon {
-  font-size: 2rem;
-  color: #4b6587;
-  margin-right: 10px;
+.course-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  border: 2px solid var(--secondary-color); /* Highlight border on hover */
 }
 
-.overview-card h3 {
-  font-size: 1rem;
-  margin: 0;
+.course-title {
+  font-size: 1.25rem;
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+  text-align: center; /* Center title */
 }
 
-.overview-card p {
-  font-size: 1.2rem;
-  color: #333;
-  margin: 0;
+.course-info {
+  font-size: 0.9rem;
+  color: var(--muted-text);
+  margin: 0.25rem 0;
+  text-align: center; /* Center info text */
 }
 
-/* Card Layout */
-.card-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-}
-
-.card {
-  background: #fff;
-  padding: 20px;
-  width: 280px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+/* Fixed Footer Styles */
+.dashboard-footer {
+  background-color: var(--primary-color);
+  color: #ffffff;
   text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-}
-
-.card-icon {
-  font-size: 2.5rem;
-  color: #4b6587;
-  margin-bottom: 15px;
-}
-
-.card-title {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-  color: #333;
-}
-
-.card-description {
-  font-size: 0.9rem;
-  color: #666;
-  margin-bottom: 20px;
-}
-
-.card-button {
-  background: linear-gradient(45deg, #4b6587, #3867d6);
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background 0.3s ease;
-}
-
-.card-button:hover {
-  background: linear-gradient(45deg, #3867d6, #4b6587);
+  padding: 1rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+  margin: 0 2rem; /* Match the margin of the main content */
+  border-radius: 0 0 8px 8px; /* Round the bottom corners */
 }
