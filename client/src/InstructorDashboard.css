@@ -1,0 +1,150 @@
+/* src/components/InstructorDashboard.css */
+
+.dashboard {
+  font-family: Arial, sans-serif;
+  color: #333;
+  background-color: #f4f7fc;
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  color: #f4f7fc;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.header-title {
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+.logout-button {
+  background-color: #ff4d4f;
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #ff3333;
+}
+
+.dashboard-main {
+  text-align: center;
+  flex: 1; 
+  overflow-y: auto;
+  padding-right: 15px; 
+}
+
+/* Set a max height to enable scrolling */
+.dashboard-main {
+  max-height: calc(100vh - 120px); /* Adjust based on header height */
+}
+
+.welcome-message {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #4b6587;
+}
+
+/* Overview Section */
+.overview-section {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 30px;
+}
+
+.overview-card {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 200px;
+}
+
+.overview-icon {
+  font-size: 2rem;
+  color: #4b6587;
+  margin-right: 10px;
+}
+
+.overview-card h3 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.overview-card p {
+  font-size: 1.2rem;
+  color: #333;
+  margin: 0;
+}
+
+/* Card Layout */
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.card {
+  background: #fff;
+  padding: 20px;
+  width: 280px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.card-icon {
+  font-size: 2.5rem;
+  color: #4b6587;
+  margin-bottom: 15px;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.card-description {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.card-button {
+  background: linear-gradient(45deg, #4b6587, #3867d6);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.3s ease;
+}
+
+.card-button:hover {
+  background: linear-gradient(45deg, #3867d6, #4b6587);
+}
