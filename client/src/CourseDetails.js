@@ -1,90 +1,70 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './CourseDetails.css';
-import { useParams } from 'react-router-dom';
 
 const CourseDetails = () => {
-    const { courseId } = useParams();
-    const [course, setCourse] = useState(null);
-
-    useEffect(() => {
-        const fetchDetails = async () => {
-            try {
-                const response = await fetch(`http://localhost:8000/courses/${courseId}`);
-                if (!response.ok) throw new Error('Failed to fetch details');
-                const data = await response.json();
-                setCourse(data);
-            } catch (error) {
-                console.log("Some error occurred", error);
-            }
-        };
-        fetchDetails();
-    }, [courseId]);
+    const courseName = "Full Stack Development Masterclass";
+    const instructorName = "John Doe";
+    const coursePrice = "$199"; // Course price
 
     return (
         <div className="course-details-container">
+            {/* Header Section */}
             <header className="header">
                 <h1>My Learning Platform</h1>
-                <button className="cart-button">🛒 Cart</button>
             </header>
+            
+            {/* Navbar with Previous Content */}
             <nav className="navbar">
                 <button className="nav-link">Home</button>
                 <button className="nav-link">Courses</button>
+                <button className="nav-link">Affiliates</button>
+
                 <button className="nav-link">About</button>
                 <button className="nav-link">Contact</button>
+                <button className="nav-link cart-button">🛒 Cart</button>
             </nav>
+            
+            {/* Course Title Section */}
             <div className="course-title-section">
-                <h2>{course?.title}</h2>
+                <h2>{courseName}</h2>
             </div>
+            
+            {/* Content Container */}
             <div className="content-container">
+                {/* Main Content */}
                 <div className="main-content">
                     <h3>Preview</h3>
                     <video width="100%" controls>
-                        <source src={course?.previewVideo || "path-to-preview-video.mp4"} type="video/mp4" />
+                        <source src="path-to-preview-video.mp4" type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
-                    <button className="preview-button">Play Sample Video</button>
-
+                    
                     <div className="what-you-will-learn">
                         <h2>What You'll Learn</h2>
-                        <ul>
-                            <li>Become a full stack developer</li>
-                            <li>Master the JavaScript ecosystem</li>
-                            <li>Build any project for your company or for freelance projects</li>
-                            <li>Full stack with MERN, GIT, and many advanced topics</li>
-                        </ul>
+                        <p>Become a full stack developer with essential skills...</p>
                     </div>
 
-                    <div className="companies-section">
-                        <h3>Top companies offer this course to their employees</h3>
-                        <p>This course was selected for our collection of top-rated courses trusted by businesses worldwide. Learn more</p>
-                        <div className="company-logos">
-                            <img src="path-to-nasdaq-logo.png" alt="Nasdaq" />
-                            <img src="path-to-volkswagen-logo.png" alt="Volkswagen" />
-                            <img src="path-to-box-logo.png" alt="Box" />
-                            <img src="path-to-netapp-logo.png" alt="NetApp" />
-                            <img src="path-to-eventbrite-logo.png" alt="Eventbrite" />
+                    {/* Price and Enroll Section */}
+                    <div className="enroll-price-container">
+                        <div className="price-block">
+                            <p>Price: <span className="course-price">{coursePrice}</span></p>
                         </div>
-                    </div>
-
-                    <div className="enroll-container">
                         <button className="enroll-button">Enroll Now</button>
                     </div>
                 </div>
+
+                {/* Sidebar */}
                 <div className="sidebar">
+                    <h3>CREATED BY: <span className="instructor-name">{instructorName}</span></h3>
                     <h3>Course Includes:</h3>
-                    <ul>
-                        <li>10 Modules</li>
-                        <li>50+ Lessons</li>
-                        <li>Quizzes at the end of each module</li>
-                        <li>Downloadable resources</li>
-                        <li>Assignments to enhance learning</li>
-                        <li>Access to a community forum</li>
-                        <li>Certificates upon completion</li>
-                        <li>Lifetime access to the course materials</li>
-                        <li>Regular updates with new content</li>
-                    </ul>
+                    <p>10 Modules, 50+ Lessons, Quizzes, Community access...</p>
+                    
+                    {/* New Add to Cart Button */}
+                    <button className="add-to-cart-button">Add to Cart</button>
                 </div>
             </div>
+
+            {/* Footer */}
             <footer className="footer">
                 <p>&copy; 2024 My Learning Platform. All rights reserved.</p>
             </footer>
