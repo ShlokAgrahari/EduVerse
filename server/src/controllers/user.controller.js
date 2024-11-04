@@ -6,6 +6,9 @@ import bcrypt from "bcryptjs";
 import jsonwebtoken from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
+
+
+
 const registerUser = asyncHandler(async (req, res) => {
     console.log("Register user function triggered");
     const { userName,phone,userEmail, password, role, loginType } = req.body;
@@ -66,8 +69,24 @@ const loginUser = asyncHandler(async (req, res) => {
     return res.status(200).cookie("token", token, options).json(ApiResponse(200, { user }, "Successfully logged in"));
 });
 
+
+const logoutUser = asyncHandler(async(req,res)=>{
+    console.log("logout function triggered");
+    res.clearCookie("token",{
+        httpOnly: true,
+        expires: new Date(0),
+    });
+
+    return res.status(200).json(ApiResponse(200,{},"logged out"));
+});
+
+
 const test = asyncHandler(async (req, res) => {
     res.status(200).json({ msg: "Working" });
 });
 
-export { registerUser, loginUser, test };
+const getinfo = asyncHandler(async(req,res)=>{
+    return res.status(202).json(ApiResponse(200,req.user,"user fetched"))
+});
+
+export { registerUser, loginUser, test ,logoutUser ,getinfo};
