@@ -1,17 +1,25 @@
-/* Overall Page Layout */
-.course-details-container {
+/* General Styling */
+body {
   font-family: Arial, sans-serif;
-  color: #333;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f7fa;
+}
+
+.course-details-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 /* Header Styling */
 .header {
+  background-color: #003366;
+  color: #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #003366;
-  color: #fff;
-  padding: 10px 20px;
+  padding: 15px 30px;
 }
 
 .header h1 {
@@ -24,7 +32,7 @@
   color: #fff;
   border: none;
   padding: 8px 12px;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
 }
 
@@ -36,57 +44,64 @@
 .navbar {
   display: flex;
   justify-content: space-around;
-  background-color: #004080;
+  background-color: #e6f2ff;
   padding: 10px 0;
 }
 
-.nav-link {
-  background: transparent;
-  color: #ffffff;
-  padding: 8px 16px;
-  text-decoration: none;
-  border: none;
+.navbar .nav-link {
   font-size: 16px;
+  color: #003366;
+  padding: 10px;
   cursor: pointer;
+  text-decoration: none;
+  background: none;
+  border: none;
 }
 
-.nav-link:hover {
-  background-color: #0059b3;
+.navbar .nav-link:hover {
+  color: #ff6600;
 }
 
 /* Course Title Section */
 .course-title-section {
+  padding: 20px;
+  background-color: #ffffff;
   text-align: center;
-  margin: 20px 0;
-}
-
-.course-title-section h2 {
-  font-size: 28px;
+  font-size: 22px;
+  font-weight: bold;
   color: #003366;
 }
 
-/* Content Container */
+/* Main Content Area */
 .content-container {
   display: flex;
-  gap: 20px;
   padding: 20px;
+  gap: 20px;
+  flex: 1;
 }
 
-/* Main Content Styling with Scrollbar */
+/* Main Content Styling */
 .main-content {
-  flex: 3;
-  background-color: #f9f9f9;
+  flex: 2;
+  background-color: #ffffff;
   padding: 20px;
   border-radius: 8px;
-  max-height: 750px;
-  overflow-y: auto;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Scrollbar Styling for Firefox */
-.main-content {
-  scrollbar-width: thin;
-  scrollbar-color: #888 #e0e0e0;
+.main-content h3 {
+  font-size: 20px;
+  color: #003366;
+  margin-top: 0;
+}
+
+.what-you-will-learn {
+  margin-top: 20px;
+}
+
+.what-you-will-learn p {
+  font-size: 14px;
+  color: #333;
 }
 
 /* Sidebar Styling */
@@ -96,6 +111,9 @@
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .sidebar h3 {
@@ -109,7 +127,23 @@
   margin-bottom: 15px;
 }
 
-.add-to-cart-button {
+/* Created By Section */
+.created-by {
+  font-size: 14px;
+  color: #003366;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Flexbox Container for Enroll Button and Price */
+.enroll-price-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.enroll-button {
   background-color: #ff6600;
   color: #fff;
   border: none;
@@ -117,42 +151,29 @@
   font-size: 16px;
   cursor: pointer;
   border-radius: 5px;
-  margin-top: 20px;
-  display: block;
-  width: 100%;
 }
 
-.add-to-cart-button:hover {
+.enroll-button:hover {
   background-color: #ff9933;
 }
 
-/* Footer Styling */
-.footer {
-  text-align: center;
-  background-color: #003366;
-  color: #fff;
-  padding: 10px 0;
-  margin-top: 20px;
-}
-
-.footer p {
-  margin: 0;
-  font-size: 14px;
-}
-
-/* Created By Section in Sidebar */
-.sidebar .created-by {
-  font-size: 16px;
-  color: #003366;
-  margin-bottom: 10px;
-  font-weight: bold;
-}
-
-/* Course Price Block */
 .course-price {
   font-size: 18px;
   color: #003366;
   font-weight: bold;
-  margin: 20px 0;
-  text-align: center;
 }
+
+/* Footer Styling */
+.footer {
+  background-color: #003366;
+  color: #ffffff;
+  text-align: center;
+  padding: 15px 0;
+  font-size: 14px;
+}
+
+/* Scrollbar Styling */
+.main-content, .sidebar {
+  overflow-y: auto;
+}
+
