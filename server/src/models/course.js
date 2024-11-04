@@ -1,11 +1,11 @@
-const mongoose = require("mongoose");
+import mongoose, { Schema } from "mongoose";
 
 const CourseSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true,
     },
-    instructorId:{
+    createdBy:{
         type: String,
         required: true,
     },
@@ -26,7 +26,7 @@ const CourseSchema = new mongoose.Schema({
     },
     pricing :{
         type: Number,
-        default : 0,
+        default : 0, 
     },
     students:[{
         studentId:String,
@@ -36,4 +36,5 @@ const CourseSchema = new mongoose.Schema({
     },]
 });
 
-module.exports = mongoose.model("Course",CourseSchema);
+const newCourse = mongoose.model("Course",CourseSchema);
+export default newCourse

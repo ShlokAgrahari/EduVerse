@@ -42,7 +42,8 @@ const SignupPage = () => {
       if (!data) {
         throw new Error("Unexpected response format");
       }
-      navigate("/student-dashboard");
+      const navRole = (role === 'student') ? '/student-dashboard' : '/instructor-dashboard';
+      navigate(`${navRole}`)
 
 
       // Reset form fields upon successful submission
