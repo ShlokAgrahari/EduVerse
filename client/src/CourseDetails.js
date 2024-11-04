@@ -1,7 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './CourseDetails.css';
+import { useParams } from 'react-router-dom';
 
 const CourseDetails = () => {
+    const { courseId } = useParams();
+    const [course, setCourse] = useState(null);
+
+    useEffect(() => {
+        const fetchDetails = async () => {
+            try {
+                const response = await fetch(`http://localhost:8000/courses/${courseId}`);
+                if (!response.ok) throw new Error('Failed to fetch details');
+                const data = await response.json();
+                setCourse(data);
+            } catch (error) {
+                console.log("Some error occurred", error);
+            }
+        };
+        fetchDetails();
+    }, [courseId]);
+
     return (
         <div className="course-details-container">
             <header className="header">
@@ -15,13 +33,13 @@ const CourseDetails = () => {
                 <button className="nav-link">Contact</button>
             </nav>
             <div className="course-title-section">
-                <h2>Complete Course Title</h2>
+                <h2>{course?.title}</h2>
             </div>
             <div className="content-container">
                 <div className="main-content">
                     <h3>Preview</h3>
                     <video width="100%" controls>
-                        <source src="path-to-preview-video.mp4" type="video/mp4" />
+                        <source src={course?.previewVideo || "path-to-preview-video.mp4"} type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
                     <button className="preview-button">Play Sample Video</button>
