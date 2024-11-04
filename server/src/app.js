@@ -30,4 +30,5 @@ app.use("/signup",router);
 app.use("/login",router);
 app.use("/",router);
 app.use("/stdhome",router);
+app.use("/instructor/newcourse",router);
 export default app;

@@ -27,6 +27,12 @@ const UserSchema = new Schema({
         enum: ["standard", "google", "facebook", "github"],
         default: "standard",
     },
+    subscription: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Courses",
+        },
+      ],
     token: {
         type: String,
         default: null,
