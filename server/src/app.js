@@ -29,7 +29,8 @@ app.use("/healthcheck",healthcheckRouter)
 app.use("/signup",router);
 app.use("/login",router);
 app.use("/",router);
-app.use("/stdhome",router);
+app.use("/student-dashboard",router);
 app.use("/instructor/newcourse",router);
 app.use("student/cart",router);
+app.use("/coursedetails/:courseId",router)
 export default app;
