@@ -5,7 +5,7 @@ import User from "../models/user.js";
 import bcrypt from "bcryptjs";
 import jsonwebtoken from "jsonwebtoken";
 import cookieParser from "cookie-parser";
-
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
 const registerUser = asyncHandler(async (req, res) => {
     console.log("Register user function triggered");
     const { userName,phone,userEmail, password, role, loginType } = req.body;
@@ -19,6 +19,7 @@ const registerUser = asyncHandler(async (req, res) => {
     if (existuser) {
         throw ApiError(409, "User already exists");
     }
+
 
     const encrpassword = await bcrypt.hash(password, 10);
     const user = await User.create({

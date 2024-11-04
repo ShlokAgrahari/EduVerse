@@ -13,8 +13,7 @@ const SignupPage = () => {
   const [phone, setPhone] = useState('');
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('student'); // updated to 'role' for consistency
-
+  const [role, setRole] = useState('student'); 
   const handleSignup = async (e) => {
     e.preventDefault();
     console.log("Email:", userEmail);
@@ -36,8 +35,6 @@ const SignupPage = () => {
       } else if (res.status === 422) {
         throw new Error("Something went wrong");
       }
-  
-      // Only parse as JSON if no errors have occurred
       const data = await res.json();
       if (!data) {
         throw new Error("Unexpected response format");
@@ -46,7 +43,6 @@ const SignupPage = () => {
       navigate(`${navRole}`)
 
 
-      // Reset form fields upon successful submission
       setUserEmail('');
       setPhone('');
       setUserName('');
