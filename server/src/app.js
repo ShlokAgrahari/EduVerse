@@ -31,4 +31,5 @@ app.use("/login",router);
 app.use("/",router);
 app.use("/stdhome",router);
 app.use("/instructor/newcourse",router);
+app.use("student/cart",router);
 export default app;
