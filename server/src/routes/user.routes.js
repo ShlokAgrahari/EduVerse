@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { registerUser, loginUser, test } from "../controllers/user.controller.js";
 import { addCourse } from "../controllers/course.controller.js";
+import { addCart } from "../controllers/cart.controller.js";
 import newCourse from "../models/course.js";
 import { upload } from "../middlewares/multer.middleware.js";
 //import courses from "../controllers/course.controller.js";
@@ -10,6 +11,8 @@ const router = Router();
 router.post("/signup", registerUser);
 router.post("/login", loginUser);
 router.get("/", test);
+router.post("/instructor/newcourse",addCourse)
+router.post("/student/cart",addCart);
 router.post("/instructor/newcourse",upload.fields([
     {
         name:"image",
