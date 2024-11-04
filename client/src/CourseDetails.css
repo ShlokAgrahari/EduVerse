@@ -1,164 +1,158 @@
-/* Course Details Container */
+/* Overall Page Layout */
 .course-details-container {
-  font-family: 'Arial', sans-serif;
-  margin: 0;
-  padding: 0;
-  overflow: hidden; /* Prevent additional scrollbars */
-  min-height: 100vh; /* Ensure the container takes at least full height */
-  background-color: #f4f4f4;
+  font-family: Arial, sans-serif;
+  color: #333;
 }
 
-/* Header Styles */
+/* Header Styling */
 .header {
-  background-color: #333;
-  color: white;
-  padding: 8px;
-  text-align: center;
-  position: fixed;
-  top: 0;
-  left: 0; 
-  width: 100%;
-  z-index: 1000; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #003366;
+  color: #fff;
+  padding: 10px 20px;
 }
 
-/* Navbar Styles */
+.header h1 {
+  font-size: 24px;
+  margin: 0;
+}
+
+.cart-button {
+  background-color: #ff6600;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cart-button:hover {
+  background-color: #ff9933;
+}
+
+/* Navbar Styling */
 .navbar {
   display: flex;
-  justify-content: center;
-  background-color: #444; 
-  padding: 5px 0; 
-  position: fixed; 
-  top: 60px; /* Adjust to avoid overlap with header */
-  left: 0; 
-  width: 100%;
-  z-index: 999;
+  justify-content: space-around;
+  background-color: #004080;
+  padding: 10px 0;
 }
 
-/* Navbar Link Styles */
 .nav-link {
-  color: white;
-  background-color: transparent;
+  background: transparent;
+  color: #ffffff;
+  padding: 8px 16px;
+  text-decoration: none;
   border: none;
-  margin: 0 15px;
+  font-size: 16px;
   cursor: pointer;
-  font-size: 1rem;
-  padding: 10px 15px;
-  transition: background-color 0.3s;
 }
 
 .nav-link:hover {
-  background-color: #555;
-  border-radius: 5px;
+  background-color: #0059b3;
 }
 
 /* Course Title Section */
 .course-title-section {
-  background-color: #333;
-  color: white;
-  padding: 1rem;
   text-align: center;
-  margin-top: 100px; /* Create space below the fixed navbar */
+  margin: 20px 0;
 }
 
-/* Main Content Styles */
+.course-title-section h2 {
+  font-size: 28px;
+  color: #003366;
+}
+
+/* Content Container */
 .content-container {
   display: flex;
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 1rem auto 0; /* Center the container and allow for spacing */
+  gap: 20px;
+  padding: 20px;
 }
 
+/* Main Content Styling with Scrollbar */
 .main-content {
   flex: 3;
-  padding: 1rem;
-  background-color: white;
+  background-color: #f9f9f9;
+  padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  margin-right: 20px;
+  max-height: 750px;
+  overflow-y: auto;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Scrollbar Styling for Firefox */
+.main-content {
+  scrollbar-width: thin;
+  scrollbar-color: #888 #e0e0e0;
+}
+
+/* Sidebar Styling */
 .sidebar {
   flex: 1;
-  background-color: #f9f9f9;
-  padding: 1rem;
+  background-color: #e6f2ff;
+  padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Button Styles */
-.preview-button, .enroll-button {
-  background-color: #28a745;
-  color: white;
+.sidebar h3 {
+  font-size: 18px;
+  color: #003366;
+  margin-bottom: 10px;
+}
+
+.sidebar p {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.add-to-cart-button {
+  background-color: #ff6600;
+  color: #fff;
   border: none;
-  padding: 0.75rem 1.5rem;
+  padding: 10px 20px;
+  font-size: 16px;
   cursor: pointer;
-  font-size: 1rem;
   border-radius: 5px;
-  margin-top: 1rem;
-}
-
-.preview-button:hover, .enroll-button:hover {
-  background-color: #218838;
-}
-
-/* What You'll Learn Section */
-.what-you-will-learn {
-  margin-top: 2rem;
-}
-
-.what-you-will-learn h2 {
-  margin-bottom: 1rem;
-}
-
-/* Companies Section Styles */
-.companies-section {
-  margin-top: 2rem;
-  text-align: center;
-}
-
-.companies-section h3 {
-  margin-bottom: 1rem;
-}
-
-.company-logos {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 1rem;
-}
-
-.company-logos img {
-  width: 100px;
-  margin: 0 10px;
-  height: auto;
-}
-
-/* Footer Styles */
-.footer {
-  text-align: center;
-  padding: 1rem;
-  background-color: #333;
-  color: white;
-  position: relative;
-  bottom: 0;
+  margin-top: 20px;
+  display: block;
   width: 100%;
 }
 
-/* Cart Button Styles */
-.cart-button {
-  background-color: #28a745;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  font-size: 1rem;
-  border-radius: 5px;
-  position: absolute;
-  right: 20px;
-  top: 15px;
-  transition: background-color 0.3s;
+.add-to-cart-button:hover {
+  background-color: #ff9933;
 }
 
-.cart-button:hover {
-  background-color: #218838;
+/* Footer Styling */
+.footer {
+  text-align: center;
+  background-color: #003366;
+  color: #fff;
+  padding: 10px 0;
+  margin-top: 20px;
+}
+
+.footer p {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Created By Section in Sidebar */
+.sidebar .created-by {
+  font-size: 16px;
+  color: #003366;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+/* Course Price Block */
+.course-price {
+  font-size: 18px;
+  color: #003366;
+  font-weight: bold;
+  margin: 20px 0;
+  text-align: center;
 }
