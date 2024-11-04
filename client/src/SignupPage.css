@@ -9,12 +9,13 @@
 
 /* Box for the signup form */
 .signup-box {
-  width: 350px;
+  width: 500px;
   padding: 40px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   text-align: center;
+  border: 2px solid black;
 }
 
 /* Heading for the signup form */
