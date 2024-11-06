@@ -34,7 +34,7 @@ const InstructorDashboard = () => {
         <h2>Create Courses</h2>
         <button 
           className="create-course-button" 
-          onClick={() => navigate('/instructor/create-course')}>
+          onClick={() => navigate('/instructor/newcourse')}>
           <FaChalkboardTeacher /> Start Creating
         </button>
       </div>

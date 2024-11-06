@@ -11,22 +11,23 @@ const router = Router();
 router.post("/signup", registerUser);
 router.post("/login", loginUser);
 router.get("/", test);
-router.post("/instructor/newcourse",addCourse)
 router.post("/student/cart",addCart);
-router.post("/instructor/newcourse",upload.fields([
-    {
-        name:"image",
-        maxCount:1
-    }
-]),addCourse)
+router.post("/instructor/newcourse", upload, addCourse);
 router.get("/student-dashboard",async(req,res)=>{
     const courses=await newCourse.find()
     res.json(courses)
 })
-router.get("/coursedetails/:courseId",async(req,res)=>{
-    const currcourse=await newCourse.findById(req.params.courseId)
-    res.json(currcourse)
-})
+router.get("/coursedetails/:courseId", async (req, res) => {
+    try {
+        const currcourse = await newCourse.findById(req.params.courseId);
+        if (!currcourse) {
+            return res.status(404).json({ message: "Course not found" });
+        }
+        res.json(currcourse);
+    } catch (error) {
+        res.status(500).json({ message: "Server error" });
+    }
+});
 //router.get("/stdhome",async(req,res)=>{
 //    res.json(courses);
 //});
