@@ -1,0 +1,141 @@
+/* src/components/CreateCourse.css */
+
+.create-course-page {
+    /* Reduced width for more side space */
+    margin: 0;
+    padding: 2rem;
+    background: linear-gradient(to bottom right, #62bcf8, #003366); /* Light blue gradient */
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    overflow-y: auto; /* Enables vertical scrolling */
+    max-height: 100vh; /* Ensures it doesn't overflow the viewport */
+  }
+  
+  .create-course-page h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #1e3a8a; /* Deep blue color */
+    text-align: center;
+  }
+  
+  .create-course-form {
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(to right, #ffffff, #f0f4f8); /* White to light gray gradient */
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: relative; /* For pseudo-elements */
+  }
+  
+  .create-course-form:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -20px;
+    right: -20px;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.2); /* Light overlay */
+    border-radius: 10px; /* Match the form's border radius */
+    z-index: -1; /* Place behind the form */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+  }
+  
+  .create-course-form label {
+    font-weight: bold;
+    margin-top: 1rem;
+    color: #374151; /* Dark gray text color */
+  }
+
+  #abc
+  {
+    color: solid black;
+  }
+  
+  .create-course-form input,
+  .create-course-form select,
+  .create-course-form textarea {
+    padding: 1rem;
+    margin-top: 0.5rem;
+    background-color: white;
+    border: 2px solid black; /* Light gray border */
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+    
+  }
+  .create-course-form input:focus,
+  .create-course-form select:focus,
+  .create-course-form textarea:focus {
+    border-color: #3b82f6; /* Blue border on focus */
+    outline: none; /* Remove default outline */
+
+  }
+  
+  .create-course-form textarea {
+    height: 150px; /* Fixed height for the description area */
+    resize: vertical; /* Allow vertical resizing only */
+
+  }
+  
+  .submit-button {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: #3b82f6; /* Blue background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .submit-button:hover {
+    background-color: #2563eb; /* Darker blue on hover */
+  }
+  
+  .submit-button:disabled {
+    background-color: #9ca3af; /* Gray background when disabled */
+  }
+  /* src/components/CreateCourse.css */
+
+.video-input {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .video-input input[type="text"] {
+    margin-right: 0.5rem;
+    flex: 1;
+  }
+  
+  .add-video-button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #007bff; /* Blue background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .add-video-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  .delete-video-button {
+    background-color: transparent;
+    border: none;
+    color: #ff4d4d; /* Red color for delete */
+    cursor: pointer;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .delete-video-button:hover {
+    color: #ff1a1a; /* Darker red on hover */
+  }
+  

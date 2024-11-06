@@ -4,19 +4,18 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  background-color: #f5f5f5;
+  background-color: #ffffff;
 }
 
 .header-box {
-  background-color: #007bff;
+  background-color: #003366;
   color: white;
   text-align: center;
   padding: 20px;
+  margin-top:0;
   border-radius: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   width: 100%;
-  max-width: 600px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -34,14 +33,16 @@
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
+  border: 2px solid black;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 300px;
+  width: 400px;
+  height: 400px;
 }
 
 .user-type {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .user-button {
@@ -111,33 +112,62 @@ input {
 .icon-container {
   display: flex;
   justify-content: center;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .login-icon {
   margin: 0 10px;
-  font-size: 1.5rem;
+  font-size: 2.5rem;
 }
-
-.google {
-  color: #DB4437; /* Google Red */
+#git {
+  color: #000000; /* Google Red */
 }
 
 .facebook {
   color: #3b5998; /* Facebook Blue */
 }
 
-.github {
-  color: #333; /* GitHub Black */
+#google {
+  color: linear-gradient(to bottom right, solid red, #039106); /* GitHub Black */
 }
 
 .forgot-password {
-  margin-top: 10px;
+  margin-top: 20px;
   text-align: center;
-  color: #007bff;
-  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  color: #000000;
 }
 
 .forgot-password:hover {
+  text-decoration: underline;
+}
+.login-footer {
+  background-color: #003366;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  margin-top: 75px;
+  width: 100%;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+.login-footer p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.footer-links {
+  margin-top: 10px;
+}
+
+.footer-links a {
+  color: #d1e8ff;
+  margin: 0 10px;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover {
+  color: #00bfff;
   text-decoration: underline;
 }

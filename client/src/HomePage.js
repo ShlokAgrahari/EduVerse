@@ -6,23 +6,25 @@ import './HomePage.css';
 
 const HomePage = () => {
     const companies = [
-        'Company A',
-        'Company B',
-        'Company C',
-        'Company D',
-        'Company E',
-        'Company F',
-        'Company G',
-        'Company H',
-        'Company I',
-        'Company J',
+        'COURSERA',
+        'edX',
+        'UDACITY',
+        'EVENTBRITE',
+        'QUIZLEDT',
+        'NEARPOD',
+        'ACHIEVE3000',
+        'CHEGG',
+        'WYZANT',
+        'COLLEGE BOARD',
     ];
 
     return (
         <div className="homepage">
             {/* Header */}
             <header className="homepage-header">
-                <h1>ASHTRA</h1>
+            <img src="logo.png" alt="Logo" className="logo" />
+                <h1>EDUVERSE</h1>
+                
                 <p>Best Teacher | Affordable Pricing | Exclusive Notes</p>
             </header>
 
@@ -51,28 +53,28 @@ const HomePage = () => {
                 <div className="carousel-wrapper">
                     <Carousel className="homepage-carousel" interval={3000} controls={true} indicators={true}>
                         <Carousel.Item>
-                            <img className="d-block w-100" src="https://via.placeholder.com/600x500" alt="First slide" />
+                            <img className="d-block w-100" src="https://images.unsplash.com/photo-1610484826967-09c5720778c7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8b25saW5lJTIwZWR1Y2F0aW9ufGVufDB8fDB8fHww" alt="First slide" />
                             <Carousel.Caption>
-                                <h3>Welcome to ASHTRA</h3>
-                                <p>Best Teacher | Affordable Pricing | Exclusive Notes</p>
+                                <h3><b>Welcome to EDUVERSE</b></h3>
+                                <p><b>Best Teacher | Affordable Pricing | Exclusive Notes</b></p>
                             </Carousel.Caption>
                         </Carousel.Item>
                         <Carousel.Item>
-                            <img className="d-block w-100" src="https://via.placeholder.com/600x500" alt="Second slide" />
+                            <img className="d-block w-100" src="https://plus.unsplash.com/premium_photo-1663090752502-1f38cea3be4e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8b25saW5lJTIwZWR1Y2F0aW9ufGVufDB8fDB8fHww" alt="Second slide" />
                             <Carousel.Caption>
-                                <h3>Explore Courses</h3>
-                                <p>Find the perfect course tailored for you!</p>
+                                <h3><b>Explore Courses</b></h3>
+                                <p><b>Find the perfect course tailored for you!</b></p>
                             </Carousel.Caption>
                         </Carousel.Item>
                         <Carousel.Item>
-                            <img className="d-block w-100" src="https://via.placeholder.com/600x500" alt="Third slide" />
+                            <img className="d-block w-100" src="https://media.istockphoto.com/id/1287828808/photo/black-man-using-computer-with-educational-website.webp?a=1&b=1&s=612x612&w=0&k=20&c=krXB9Ygw5514iLe3so4feT2JkpfbzGMQKiJYINtJZUM=" alt="Third slide" />
                             <Carousel.Caption>
                                 <h3>Learn from Experts</h3>
                                 <p>Get insights from top industry instructors.</p>
                             </Carousel.Caption>
                         </Carousel.Item>
                         <Carousel.Item>
-                            <img className="d-block w-100" src="https://via.placeholder.com/600x500" alt="Fourth slide" />
+                            <img className="d-block w-100" src="https://media.istockphoto.com/id/1349104991/photo/e-learning-online-education-concept.webp?a=1&b=1&s=612x612&w=0&k=20&c=mG2l86JNDQmEP9t2NkJ4Nvc8rL-OGdXoU55ZrS1LDhA=" alt="Fourth slide" />
                             <Carousel.Caption>
                                 <h3>Join Our Community</h3>
                                 <p>Connect with fellow learners and instructors.</p>
@@ -96,11 +98,13 @@ const HomePage = () => {
 
             {/* Footer */}
             <footer className="homepage-footer">
-                <p>&copy; 2024 ASHTRA. All rights reserved.</p>
+                <p>&copy; 2024 EDUVERSE. All rights reserved. 
                 <div className="footer-links">
                     <Link to="/privacy-policy">Privacy Policy</Link>
                     <Link to="/terms-of-service">Terms of Service</Link>
                 </div>
+                </p>
+               
             </footer>
         </div>
     );
