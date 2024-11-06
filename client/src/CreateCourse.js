@@ -11,8 +11,8 @@ const CreateCourse = () => {
     price: '',
     category: '',
     level: 'Beginner',
-    videoContents: [{ label: '', file: null }], // To handle multiple videos
-    resources: '',
+    videoContents: [{ label: '', file: null }], 
+    resources: null,
     image: null,
   });
 
@@ -20,8 +20,12 @@ const CreateCourse = () => {
     const { name, value } = e.target;
     setCourse({ ...course, [name]: value });
   };
+  
+  const handleFileChange = (e, field) => {
+    setCourse({ ...course, [field]: e.target.files[0] });
+  };
 
-  const handleFileChange = (e, index) => {
+  const handleVideoFileChange = (e, index) => {
     const newVideoContents = [...course.videoContents];
     newVideoContents[index].file = e.target.files[0];
     setCourse({ ...course, videoContents: newVideoContents });
@@ -45,18 +49,43 @@ const CreateCourse = () => {
     setCourse({ ...course, videoContents: newVideoContents });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Code to save course details, e.g., sending data to the backend
-    console.log('Course Created:', course);
+    console.log(course)
+    const fdata = new FormData();
+    fdata.append('title', course.title);
+    fdata.append('description', course.description);
+    fdata.append('pricing', course.pricing); 
+    fdata.append('category', course.category);
+    fdata.append('level', course.level);
+    if (course.image) fdata.append('image', course.image); 
+  
+    // Append video contents
+    
+  
+    try {
+      const response = await fetch('http://localhost:8000/instructor/newcourse', {
+        method: 'POST',
+        body: fdata,
+      });
+      console.log(response)
+      if (!response.ok) {
+        throw new Error('Failed to create course');
+      }
+      const data = await response.json();
+      console.log('Data:', data);
+    } catch (error) {
+      console.error('Error occurred:', error);
+    }
   };
+  
 
   return (
     <div className="create-course-page">
       <h1 id="abc"> <b>Create a New Course</b></h1>
       <form className="create-course-form" onSubmit={handleSubmit}>
 
-        {/* Course Title */}
+       
         <label>Course Title</label>
         <input
           type="text"
@@ -67,7 +96,7 @@ const CreateCourse = () => {
           required
         />
 
-        {/* Course Description */}
+        
         <label>Course Description</label>
         <textarea
           name="description"
@@ -77,7 +106,7 @@ const CreateCourse = () => {
           required
         ></textarea>
 
-        {/* Course Price */}
+       
         <label>Course Price ($)</label>
         <input
           type="number"
@@ -88,7 +117,7 @@ const CreateCourse = () => {
           required
         />
 
-        {/* Course Category */}
+       
         <label>Category</label>
         <select
           name="category"
@@ -103,7 +132,7 @@ const CreateCourse = () => {
           <option value="Marketing">Marketing</option>
         </select>
 
-        {/* Course Level */}
+   
         <label>Level</label>
         <select
           name="level"
@@ -115,7 +144,8 @@ const CreateCourse = () => {
           <option value="Advanced">Advanced</option>
         </select>
 
-        {/* Video Content Inputs */}
+
+        
         <label>Video Content</label>
         {course.videoContents.map((video, index) => (
           <div key={index} className="video-input">
@@ -132,7 +162,7 @@ const CreateCourse = () => {
                 type="file"
                 className="video-file-input"
                 accept="video/*"
-                onChange={(e) => handleFileChange(e, index)}
+                onChange={(e) => handleVideoFileChange(e, index)}
                 required
               />
               <button
@@ -145,20 +175,14 @@ const CreateCourse = () => {
             </div>
           </div>
         ))}
+
+
         <button type="button" className="add-video-button" onClick={addVideoInput}>
           <FaPlusCircle /> Add Another Video
         </button>
 
-        {/* Additional Resources */}
-        <label>Additional Resources (PDF, docs, etc.)</label>
-        <input
-          type="file"
-          name="resources"
-          onChange={handleFileChange}
-          accept=".pdf,.doc,.docx"
-        />
 
-        {/* Course Thumbnail */}
+        
         <label>Course Thumbnail</label>
         <input
           type="file"
@@ -168,7 +192,7 @@ const CreateCourse = () => {
           required
         />
 
-        {/* Submit Button */}
+       
         <button type="submit" className="submit-button">
           <FaSave /> Save Course
         </button>

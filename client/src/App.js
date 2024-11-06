@@ -10,7 +10,7 @@ import './App.css';
 import InstructorDashboard from './InstructorDashboard.js';
 import CourseDetails from './CourseDetails.js';
 import Dashboard from './Dashboard.js';
-
+import CreateCourse from './CreateCourse.js';
 const App = () => {
   const [userRole, setUserRole] = useState('student');
 
@@ -29,6 +29,7 @@ const App = () => {
         <Route path="/" element={<StudentDashboard />} />
         <Route path="/coursedetails/:courseId" element={<CourseDetails />} />
         <Route path="/instructor-dashboard" element={<InstructorDashboard/>} />
+        <Route path="/instructor/newcourse" element={<CreateCourse/>}/>
         </Routes>
       </div>
    

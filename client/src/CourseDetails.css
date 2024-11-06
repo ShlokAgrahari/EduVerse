@@ -1,4 +1,4 @@
-/* General Styling */
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -12,7 +12,7 @@ body {
   min-height: 100vh;
 }
 
-/* Header Styling */
+
 .header {
   background-color: #003366;
   color: #fff;
@@ -40,7 +40,7 @@ body {
   background-color: #ff9933;
 }
 
-/* Navbar Styling */
+
 .navbar {
   display: flex;
   justify-content: space-around;
@@ -62,7 +62,7 @@ body {
   color: #ff6600;
 }
 
-/* Course Title Section */
+
 .course-title-section {
   padding: 20px;
   background-color: #ffffff;
@@ -163,7 +163,7 @@ body {
   font-weight: bold;
 }
 
-/* Footer Styling */
+
 .footer {
   background-color: #003366;
   color: #ffffff;
@@ -172,7 +172,7 @@ body {
   font-size: 14px;
 }
 
-/* Scrollbar Styling */
+
 .main-content, .sidebar {
   overflow-y: auto;
 }

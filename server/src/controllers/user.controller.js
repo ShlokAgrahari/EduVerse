@@ -41,7 +41,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
 const loginUser = asyncHandler(async (req, res) => {
     console.log("Login function triggered");
-    const { userEmail, password } = req.body; // Removed role as it's not used
+    const { userEmail, password } = req.body; 
     if (!(userEmail && password)) {
         throw ApiError(400, "All fields are required");
     }

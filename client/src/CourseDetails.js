@@ -1,10 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './CourseDetails.css';
+import { useParams } from 'react-router-dom';
 
 const CourseDetails = () => {
-    const courseName = "Full Stack Development Masterclass";
-    const instructorName = "John Doe";
-    const coursePrice = "$199"; // Course price
+    const { courseId } = useParams();
+    const [course, setCourse] = useState(null);
+
+    useEffect(() => {
+        const fetchDetails = async () => {
+            try {
+                const response = await fetch(`http://localhost:8000/coursedetails/${courseId}`);
+                console.log(response)
+                if (!response.ok) throw new Error('Failed to fetch details');
+                const data = await response.json();
+                console.log(data)
+                setCourse(data);
+            } catch (error) {
+                console.log("Some error occurred", error);
+            }
+        };
+        fetchDetails();
+    }, [courseId]);
+
 
     return (
         <div className="course-details-container">
@@ -24,9 +41,8 @@ const CourseDetails = () => {
                 <button className="nav-link cart-button">🛒 Cart</button>
             </nav>
             
-            {/* Course Title Section */}
             <div className="course-title-section">
-                <h2>{courseName}</h2>
+                <h2>{course?.title || "Course Title"}</h2>
             </div>
             
             {/* Content Container */}
@@ -35,19 +51,19 @@ const CourseDetails = () => {
                 <div className="main-content">
                     <h3>Preview</h3>
                     <video width="100%" controls>
-                        <source src="path-to-preview-video.mp4" type="video/mp4" />
+                    <source src={course?.previewVideo } type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
                     
                     <div className="what-you-will-learn">
                         <h2>What You'll Learn</h2>
-                        <p>Become a full stack developer with essential skills...</p>
+                        <p>{course?.description}</p>
                     </div>
 
                     {/* Price and Enroll Section */}
                     <div className="enroll-price-container">
                         <div className="price-block">
-                            <p>Price: <span className="course-price">{coursePrice}</span></p>
+                            <p>Price: <span className="course-price">{course?.pricing}</span></p>
                         </div>
                         <button className="enroll-button">Enroll Now</button>
                     </div>
@@ -55,9 +71,9 @@ const CourseDetails = () => {
 
                 {/* Sidebar */}
                 <div className="sidebar">
-                    <h3>CREATED BY: <span className="instructor-name">{instructorName}</span></h3>
+                <h3>CREATED BY: <span className="instructor-name">{course?.createdBy|| "John Doe"}</span></h3>
                     <h3>Course Includes:</h3>
-                    <p>10 Modules, 50+ Lessons, Quizzes, Community access...</p>
+                    <p>{course?.description}</p>
                     
                     {/* New Add to Cart Button */}
                     <button className="add-to-cart-button">Add to Cart</button>
