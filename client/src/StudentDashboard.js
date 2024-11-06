@@ -29,6 +29,21 @@ const StudentDashboard = () => {
         navigate(`/coursedetails/${courseId}`);
     };
 
+    const handleLogout = async(e)=>{
+        try {
+            const res = await fetch("http://localhost:8000/logout",{
+                method: "POST",
+                credentials:'include',
+            })
+
+            if(res.ok){
+                console.log("logged out");
+            }
+        } catch (error) {
+            console.log("error is ",error);
+        }
+    }
+
     return (
         <div className="dashboard">
             <header className="dashboard-header">
