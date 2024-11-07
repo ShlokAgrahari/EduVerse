@@ -7,7 +7,8 @@ import newCourse from "../models/course.js";
 
 const addCart = asyncHandler(async(req,res)=>{
     console.log("add to cart");
-    const {userId,courseId} = req.body;
+    const userId = req.user._id;
+    const {courseId} = req.body;
     console.log(req.body);
     if(!(userId && courseId)){
         throw ApiError(400,"all fields are required");
