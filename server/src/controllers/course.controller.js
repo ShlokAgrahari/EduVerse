@@ -4,8 +4,10 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import newCourse from "../models/course.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 const addCourse = asyncHandler(async (req, res) => {
-    const { title, description, pricing, category, level, videoContents } = req.body;
-  
+  console.log(req)
+    const { title, description, pricing, category, level} = req.body;
+    const videoContents=req.files?.videoContents;
+    console.log(videoContents)
     if (!(title && category && description && pricing)) {
       throw ApiError(400, "All fields are required");
     }
@@ -25,10 +27,11 @@ const addCourse = asyncHandler(async (req, res) => {
   
     const lectures = [];
     if (Array.isArray(videoContents)) {
-      for (const [ video] of videoContents.entries()) {
-        const videoLocalPath = req.files[videoContents]?.[0]?.path;
+      for (let index = 0; index < videoContents.length; index++) {
+        const videoFile = videoContents[index];
+        const videoLocalPath = videoFile.path;
         if (!videoLocalPath) throw ApiError(400, 'Video missing');
-  
+    
         let videoUpload;
         try {
           videoUpload = await uploadOnCloudinary(videoLocalPath);
@@ -36,29 +39,31 @@ const addCourse = asyncHandler(async (req, res) => {
             return res.status(500).json(ApiResponse(500, null, 'Video upload failed'));
           }
         } catch (error) {
-          console.error("Error uploading video:", error);
+          console.log("Error uploading video:", error);
           return res.status(500).json(ApiResponse(500, null, "Video upload failed"));
         }
-  
+    
         lectures.push({
-          title: video.label,
+          label: req.body.videoContents[index], 
           videoUrl: videoUpload.url,
         });
       }
     }
+    const instructorId=req.user._id
   
-    const newCourse = await newCourseModel.create({
+    const newCourseData = await newCourse.create({
+      instructorId,
       title,
       category,
       description,
       pricing,
       level,
-      createdBy: req.user.id, 
+      createdBy: 'me', 
       image: img.url,
       lectures,
     });
   
-    res.status(200).json(ApiResponse(200, newCourse, "New course added"));
+    res.status(200).json(ApiResponse(200, newCourseData, "New course added"));
   });
   
 

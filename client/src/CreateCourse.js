@@ -12,7 +12,7 @@ const CreateCourse = () => {
     category: '',
     level: 'Beginner',
     videoContents: [{ label: '', file: null }], 
-    resources: null,
+
     image: null,
   });
 
@@ -24,6 +24,7 @@ const CreateCourse = () => {
   const handleFileChange = (e, field) => {
     setCourse({ ...course, [field]: e.target.files[0] });
   };
+  
 
   const handleVideoFileChange = (e, index) => {
     const newVideoContents = [...course.videoContents];
@@ -55,13 +56,22 @@ const CreateCourse = () => {
     const fdata = new FormData();
     fdata.append('title', course.title);
     fdata.append('description', course.description);
-    fdata.append('pricing', course.pricing); 
+    fdata.append('pricing', course.price); 
     fdata.append('category', course.category);
     fdata.append('level', course.level);
+    console.log(course.image)
     if (course.image) fdata.append('image', course.image); 
   
     // Append video contents
-    
+    course.videoContents.forEach((video, index) => {
+      if (video.file) {
+        console.log(video.label)
+        fdata.append(`videoContents`, video.file);
+        fdata.append(`videoContents[${index}]`, video.label);
+      }
+    }
+  );
+  console.log(fdata)
   
     try {
       const response = await fetch('http://localhost:8000/instructor/newcourse', {
@@ -73,6 +83,8 @@ const CreateCourse = () => {
         throw new Error('Failed to create course');
       }
       const data = await response.json();
+      console.log(data.lectures); // Check if each lecture has title and videoUrl
+
       console.log('Data:', data);
     } catch (error) {
       console.error('Error occurred:', error);
@@ -184,13 +196,14 @@ const CreateCourse = () => {
 
         
         <label>Course Thumbnail</label>
-        <input
-          type="file"
-          name="image"
-          onChange={handleFileChange}
-          accept="image/*"
-          required
-        />
+<input
+  type="file"
+  name="image"
+  onChange={(e) => handleFileChange(e, 'image')}
+  accept="image/*"
+  required
+/>
+
 
        
         <button type="submit" className="submit-button">
