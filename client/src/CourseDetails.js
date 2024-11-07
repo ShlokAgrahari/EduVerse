@@ -22,6 +22,37 @@ const CourseDetails = () => {
         fetchDetails();
     }, [courseId]);
 
+    const handleCart = async()=>{
+        console.log("add cart function triggered");
+        try {
+            const res = await fetch(`http://localhost:8000/coursedetails/${courseId}/cart`,{
+                method:"POST",
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                credentials: "include",
+                body: JSON.stringify({
+                    courseId
+                })
+            });
+            
+            if(!res.ok){
+                const errorData = await res.json();
+                console.log(errorData.message);
+                throw new Error(errorData.message || "Something went wrong"); 
+            }
+
+            const data = await res.json();
+            if(!data){
+                throw new Error("Data not found");
+            }
+            
+        } catch (error) {
+            console.log("error is ",error);
+
+        }
+    };
+
 
     return (
         <div className="course-details-container">
@@ -76,7 +107,7 @@ const CourseDetails = () => {
                     <p>{course?.description}</p>
                     
                     {/* New Add to Cart Button */}
-                    <button className="add-to-cart-button">Add to Cart</button>
+                    <button onClick={handleCart} className="add-to-cart-button">Add to Cart</button>
                 </div>
             </div>
 

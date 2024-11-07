@@ -15,10 +15,12 @@ router.post("/signup", registerUser);
 router.post("/login", loginUser);
 router.post("/logout",logoutUser);
 router.get("/", test);
-router.post("/student/cart",addCart);
+router.post("/coursedetails/:courseId/cart",getUser,addCart);
 
 router.get("/user",getUser,getinfo);
+
 router.post("/instructor/newcourse",getUser, upload, addCourse);
+
 
 
 router.get("/student-dashboard",async(req,res)=>{
