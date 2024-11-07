@@ -18,12 +18,10 @@ router.get("/", test);
 router.post("/coursedetails/:courseId/cart",getUser,addCart);
 
 router.get("/user",getUser,getinfo);
-// router.post("/instructor/newcourse",upload.fields([
-//     {
-//         name:"image",
-//         maxCount:1
-//     }
-// ]),addCourse)
+
+router.post("/instructor/newcourse",getUser, upload, addCourse);
+
+
 
 router.get("/student-dashboard",async(req,res)=>{
     const courses=await newCourse.find()

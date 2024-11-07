@@ -1,7 +1,7 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const lectureSchema = new mongoose.Schema({
-    title: {
+    label: {
         type: String,
         required: true,
     },
@@ -27,6 +27,11 @@ const studentSchema = new mongoose.Schema({
 });
 
 const courseSchema = new mongoose.Schema({
+    instructorId:{
+        type:Schema.Types.ObjectId,
+        ref:"User",
+        required:true
+    },
     title: {
         type: String,
         required: true,
