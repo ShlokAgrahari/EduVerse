@@ -64,7 +64,10 @@ const loginUser = asyncHandler(async (req, res) => {
 
     const options = {
         expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+        sameSite: "lax",
         httpOnly: true,
+        secure: false,
+        domain: "localhost"
     };
     return res.status(200).cookie("token", token, options).json(ApiResponse(200, { user }, "Successfully logged in"));
 });

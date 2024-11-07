@@ -32,6 +32,6 @@ app.use("/logout",router);
 app.use("/",router);
 app.use("/student-dashboard",router);
 app.use("/instructor/newcourse",router);
-app.use("/student/cart",router);
+app.use("/coursedetails/:courseId/cart",router);
 app.use("/coursedetails/:courseId",router)
 export default app;

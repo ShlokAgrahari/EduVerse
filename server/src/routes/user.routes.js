@@ -15,15 +15,15 @@ router.post("/signup", registerUser);
 router.post("/login", loginUser);
 router.post("/logout",logoutUser);
 router.get("/", test);
-router.post("/student/cart",addCart);
+router.post("/coursedetails/:courseId/cart",getUser,addCart);
 
 router.get("/user",getUser,getinfo);
-router.post("/instructor/newcourse",upload.fields([
-    {
-        name:"image",
-        maxCount:1
-    }
-]),addCourse)
+// router.post("/instructor/newcourse",upload.fields([
+//     {
+//         name:"image",
+//         maxCount:1
+//     }
+// ]),addCourse)
 
 router.get("/student-dashboard",async(req,res)=>{
     const courses=await newCourse.find()
