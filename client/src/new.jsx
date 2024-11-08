@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { Trash2, User, BookOpen, Clock, Star } from 'lucide-react'
 
-export default function AdvancedLearningCart() {
+function Cart() {
   const [courses, setCourses] = useState([
     { id: 1, name: 'Introduction to React', price: 49.99, creator: 'John Doe', lessons: 20, duration: 15, rating: 4.5, thumbnail: '/placeholder.svg?height=80&width=120', description: 'Learn the fundamentals of React and start building amazing UI!' },
     { id: 2, name: 'Advanced JavaScript Concepts', price: 69.99, creator: 'Jane Smith', lessons: 30, duration: 25, rating: 4.8, thumbnail: '/placeholder.svg?height=80&width=120', description: 'Dive deep into advanced JavaScript concepts and techniques.' },
@@ -247,3 +247,4 @@ export default function AdvancedLearningCart() {
     </div>
   )
 }
+export default Cart
