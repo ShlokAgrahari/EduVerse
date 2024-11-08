@@ -11,6 +11,7 @@ import InstructorDashboard from './InstructorDashboard.js';
 import CourseDetails from './CourseDetails.js';
 import Dashboard from './Dashboard.js';
 import CreateCourse from './CreateCourse.js';
+import Cart from './CartPage.jsx';
 const App = () => {
   const [userRole, setUserRole] = useState('student');
 
@@ -23,7 +24,7 @@ const App = () => {
         <Route path="/login" element={<LoginPage setUserRole={setUserRole} />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
-        
+        <Route path="/cart" element={<Cart/>}/>
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/student-dashboard" element={<StudentDashboard />} /> {/* Route for Student Dashboard */}
         <Route path="/" element={<StudentDashboard />} />
