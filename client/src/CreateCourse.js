@@ -76,7 +76,7 @@ const CreateCourse = () => {
     try {
       const response = await fetch('http://localhost:8000/instructor/newcourse', {
         method: 'POST',
-        credentials: "include",
+        credentials:'include',
         body: fdata,
       });
       console.log(response)
@@ -84,7 +84,7 @@ const CreateCourse = () => {
         throw new Error('Failed to create course');
       }
       const data = await response.json();
-      console.log(data.lectures); // Check if each lecture has title and videoUrl
+      console.log(data.lectures); 
 
       console.log('Data:', data);
     } catch (error) {

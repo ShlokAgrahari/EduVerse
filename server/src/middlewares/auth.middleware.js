@@ -12,7 +12,7 @@ const getUser = asyncHandler(async(req,res,next)=>{
         if(!accessToken){
 
 
-            throw ApiError(401,"unauthorised request");
+            return next( ApiError(401,"unauthorised request"));
 
         }
 

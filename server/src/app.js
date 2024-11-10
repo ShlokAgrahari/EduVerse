@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import router from "./routes/user.routes.js";
-
+import razorpay from "razorpay"
 
 const app=express();
 
@@ -34,5 +34,8 @@ app.use("/student-dashboard",router);
 app.use("/instructor/newcourse",router);
 app.use("/coursedetails/:courseId/cart",router);
 app.use("/coursedetails/:courseId",router)
+app.use("/checkout",router)
+app.use("/paymentVerification",router)
+app.use("/payment/:paymentId",router)
 app.use("/auth/google",router);
 export default app;

@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './CourseDetails.css';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const CourseDetails = () => {
     const { courseId } = useParams();
     const [course, setCourse] = useState(null);
-    const navigate = useNavigate();
-
+    const navigate=useNavigate();
     useEffect(() => {
         const fetchDetails = async () => {
             try {
@@ -75,7 +73,7 @@ const CourseDetails = () => {
 
                 <button className="nav-link">About</button>
                 <button className="nav-link">Contact</button>
-                <button className="nav-link cart-button" onClick={handleNavClick}>🛒 Cart</button>
+                <button className="nav-link cart-button" onClick={()=>navigate("/cart")} >🛒 Cart</button>
             </nav>
             
             <div className="course-title-section">
