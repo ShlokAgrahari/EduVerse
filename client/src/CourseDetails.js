@@ -53,6 +53,10 @@ const CourseDetails = () => {
         }
     };
 
+    const handleNavClick = ()=>{
+        navigate("/student-dashboard/cart");
+    }
+
 
     return (
         <div className="course-details-container">
