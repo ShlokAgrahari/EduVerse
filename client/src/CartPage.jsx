@@ -1,7 +1,10 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Trash2, User, BookOpen, Clock, Star } from 'lucide-react'
+import { Trash2,  Star } from 'lucide-react'
+
+
+
 
 function Cart() {
   const [courses, setCourses] = useState([
@@ -13,6 +16,65 @@ function Cart() {
   const removeCourse = (id) => {
     setCourses(courses.filter(course => course.id !== id))
   }
+
+
+  const handleCheckoutClick = () => {
+    handlePayment(Number(totalPrice.toFixed(2)));
+  };
+  
+  const handlePayment = async (amount) => {
+    try {
+      const response = await fetch("http://localhost:8000/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ amount }),
+      });
+      const data = await response.json(); // Convert response to JSON
+      console.log(data.order.amount);
+      const response2 = await fetch("http://localhost:8000/user", {
+        method: "GET",
+        credentials: "include", // Ensure cookies are included in the request
+    });
+
+    if (!response2.ok) throw new Error("Failed to fetch user details");
+    const user = await response2.json(); 
+    console.log(user.data.phone)
+    console.log(user.data.userEmail)
+    console.log(user.data.userName)
+const options = {
+    key: "rzp_test_ZNoTNPhp37NzKO", // Enter the Key ID generated from the Dashboard
+    amount: data.order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    currency: "INR",
+    name: "EduVerse", //your business name
+    description: "Test Transaction",
+    image: "https://t4.ftcdn.net/jpg/00/65/77/27/360_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg",
+    order_id: data.order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    callback_url: "https://localhost:8000/paymentVerification",
+    prefill: { //We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
+        name: user.data.userName, //your customer's name
+        email: user.data.userEmail,
+        contact: user.data.phone //Provide the customer's phone number for better conversion rates 
+    },
+    notes: {
+        "address": "Razorpay Corporate Office"
+    },
+    theme: {
+        color: "#3399cc"
+    }
+};
+
+const razor=new window.Razorpay(options)
+razor.open()
+
+     
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+  
+  
 
   const totalPrice = courses.reduce((sum, course) => sum + course.price, 0)
   const uniqueCreators = new Set(courses.map(course => course.creator)).size
@@ -78,9 +140,10 @@ function Cart() {
               <span>Total Price:</span>
               <span>${totalPrice.toFixed(2)}</span>
             </div>
-            <button className="checkout-button">
-              Proceed to Checkout
+            <button className="checkout-button" onClick={handleCheckoutClick}>
+             Proceed to Checkout
             </button>
+
           </div>
         )}
       </div>
