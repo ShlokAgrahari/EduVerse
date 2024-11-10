@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { registerUser, loginUser, test } from "../controllers/user.controller.js";
+import { registerUser, loginUser, test, googleLogin } from "../controllers/user.controller.js";
 import { addCourse } from "../controllers/course.controller.js";
 import { addCart } from "../controllers/cart.controller.js";
 import newCourse from "../models/course.js";
@@ -18,6 +18,7 @@ router.get("/", test);
 router.post("/coursedetails/:courseId/cart",getUser,addCart);
 
 router.get("/user",getUser,getinfo);
+router.get("/auth/google",googleLogin);
 
 router.post("/instructor/newcourse",getUser, upload, addCourse);
 
