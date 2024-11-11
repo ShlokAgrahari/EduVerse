@@ -6,6 +6,7 @@ import bcrypt from "bcryptjs";
 import jsonwebtoken from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import { oauth2Client } from "../utils/googleconfig.js";
 
 
 
@@ -39,6 +40,7 @@ const registerUser = asyncHandler(async (req, res) => {
     user.token = token;
     user.password = undefined;
 
+
     const options = {
         expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
         sameSite: "lax",
@@ -47,7 +49,7 @@ const registerUser = asyncHandler(async (req, res) => {
         domain: "localhost"
     };
 
-    return res.status(200).cookie("token", token, options).json(ApiResponse(200, { user }, "Successfully logged in"))
+    return res.status(200).cookie("token", token, options).json(ApiResponse(200, { user }, "registered"));
 });
 
 const loginUser = asyncHandler(async (req, res) => {
@@ -100,4 +102,63 @@ const getinfo = asyncHandler(async(req,res)=>{
     return res.status(202).json(ApiResponse(200,req.user,"user fetched"))
 });
 
-export { registerUser, loginUser, test ,logoutUser ,getinfo};
+
+
+const googleLogin = asyncHandler(async(req,res)=>{
+    const code = req.query.code;
+    const role = req.query.role;
+    console.log("code is",code);
+    console.log("role is ",role);
+    try {
+        console.log("googlelogin function triggered");
+        const code = req.query.code;
+        const googleres = await oauth2Client.getToken(code);
+        console.log("google res",googleres);
+        oauth2Client.setCredentials(googleres.tokens);
+        const userres = await fetch(`https://www.googleapis.com/oauth2/v2/userinfo?access_token=${googleres.tokens.access_token}`,{
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${googleres.tokens.access_token}`
+            }
+        });
+
+        if(!userres.ok){
+            console.log("fetching error");
+            throw ApiError(401,"invalid");
+        }
+        const userData = await userres.json();
+        const {email, name,} = userData;
+
+        let user = await User.findOne({userEmail:email});
+
+        if(!user){
+            user = await User.create({
+                userName: name,
+                userEmail:email,
+                role:role,
+                loginType:"google",
+            });   
+        }
+        console.log("id ",user._id);
+
+        const token = jsonwebtoken.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRY });
+        user.token = token;
+        user.password = undefined;
+
+        const options = {
+            expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+            sameSite: "lax",
+            httpOnly: true,
+            secure: false,
+            domain: "localhost"
+        };
+        return res.status(200).cookie("token", token, options).json(ApiResponse(200, { user }, "Successfully logged in through google"));
+
+        
+    } catch (error) {
+        console.log("google login backend error : ",error);
+    }
+});
+
+export { registerUser, loginUser,googleLogin, test ,logoutUser ,getinfo};
