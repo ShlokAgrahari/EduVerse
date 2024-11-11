@@ -37,5 +37,7 @@ app.use("/coursedetails/:courseId",router)
 app.use("/checkout",router)
 app.use("/paymentVerification",router)
 app.use("/payment/:paymentId",router)
+app.use("/cart-page",router)
+
 app.use("/auth/google",router);
 export default app;
