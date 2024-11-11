@@ -1,5 +1,24 @@
 import mongoose, { Schema } from "mongoose";
 
+const CartSchema = new mongoose.Schema({
+    courseId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Course",
+        required: true,
+    },
+    price:{
+        type: Number,
+        default: 0,
+    },
+    imageUrl:{
+        type: String,
+    },
+    title:{
+        type: String,
+        required : true,
+    },
+});
+
 const UserSchema = new Schema({
     userName: {
         type: String,
@@ -33,6 +52,7 @@ const UserSchema = new Schema({
           ref: "Courses",
         },
       ],
+    cart:[CartSchema],
     token: {
         type: String,
         default: null,

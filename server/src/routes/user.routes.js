@@ -42,6 +42,10 @@ router.get("/coursedetails/:courseId", async (req, res) => {
     }
 });
 
+router.get("/cart-page/:userId",async(req,res)=>{
+
+})
+
 
 
 

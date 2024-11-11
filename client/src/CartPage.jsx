@@ -1,17 +1,20 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Trash2,  Star } from 'lucide-react'
 
 
 
 
 function Cart() {
-  const [courses, setCourses] = useState([
-    { id: 1, name: 'Introduction to React', price: 49.99, creator: 'John Doe', lessons: 20, duration: 15, rating: 4.5, thumbnail: '/placeholder.svg?height=80&width=120', description: 'Learn the fundamentals of React and start building amazing UI!' },
-    { id: 2, name: 'Advanced JavaScript Concepts', price: 69.99, creator: 'Jane Smith', lessons: 30, duration: 25, rating: 4.8, thumbnail: '/placeholder.svg?height=80&width=120', description: 'Dive deep into advanced JavaScript concepts and techniques.' },
-    { id: 3, name: 'CSS Mastery', price: 39.99, creator: 'Alex Johnson', lessons: 15, duration: 10, rating: 4.2, thumbnail: '/placeholder.svg?height=80&width=120', description: 'Master CSS for creating responsive and beautiful designs.' },
-  ])
+  const [courses, setCourses] = useState([]);
+
+  useEffect(()=>{
+    const fetchCart=async()=>{
+
+    };
+    fetchCart()
+  },[])
 
   const removeCourse = (id) => {
     setCourses(courses.filter(course => course.id !== id))
