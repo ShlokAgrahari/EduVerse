@@ -10,7 +10,7 @@ const CourseCard = ({ title, instructor, price, image }) => (
     <p>{instructor}</p>
     <div className="course-footer">
       <span>${price}</span>
-      <button className="enroll-btn">Enroll Now</button>
+      <button className="enroll-btn">View More</button>
     </div>
   </div>
 );
