@@ -13,6 +13,7 @@ const CourseDetails = () => {
                 const response = await fetch(`http://localhost:8000/coursedetails/${courseId}`);
                 if (!response.ok) throw new Error('Failed to fetch details');
                 const data = await response.json();
+                console.log(data.previewVideo)
                 setCourse(data);
             } catch (error) {
                 console.log("Some error occurred", error);
@@ -54,16 +55,21 @@ const CourseDetails = () => {
                 {/* Main Content */}
                 <div className="main-content">
                     <h3>Preview</h3>
-                    <video width="100%" controls>
-                        <source src={course?.previewVideo} type="video/mp4" />
-                        Your browser does not support the video tag.
-                    </video>
+                    {course?.previewVideo && (
+    <video width="100%" controls>
+        <source src={course.previewVideo} type="video/mp4" />
+        Your browser does not support the video tag.
+    </video>
+)}
+
+
+
                     <div className = "course-heading">
                     <h2>{course?.title || "Course Title"}</h2>    
                     <div className="course-info">
                         
                         <p>Created by: <span className="instructor-name">{course?.createdBy || "John Doe"}</span></p>
-                        <p className="course-price">Price: ${course?.pricing || "49.99"}</p>
+                        <p className="course-price">Price: ₹{course?.pricing || "49.99"}</p>
                     </div>
                     </div>
                     
@@ -72,12 +78,7 @@ const CourseDetails = () => {
                 {/* Sidebar */}
                 <div className="sidebar">
                     <h3>Course Includes:</h3>
-                    <ul>
-                        <li>Access on mobile and desktop</li>
-                        <li>Certificate of completion</li>
-                        <li>Full lifetime access</li>
-                        <li>Hands-on projects</li>
-                    </ul>
+                    {course?.description}
                     <div className="add-to-cart-container">
                         <button onClick={handleCart} className="add-to-cart-button">Add to Cart</button>
                     </div>
