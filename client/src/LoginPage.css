@@ -8,7 +8,7 @@
 }
 
 .header-box {
-  background-color: #003366;
+  background-color: #283593;
   color: white;
   text-align: center;
   padding: 20px;
@@ -119,17 +119,36 @@ input {
   margin: 0 10px;
   font-size: 2.5rem;
 }
-#git {
-  color: #000000; /* Google Red */
-}
-
-.facebook {
-  color: #3b5998; /* Facebook Blue */
-}
 
 #google {
   color: linear-gradient(to bottom right, solid red, #039106); /* GitHub Black */
 }
+
+/* LoginPage.css */
+.google-login-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  color: #555;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.google-login-button:hover {
+  background-color: #f1f1f1;
+  border-color: #ccc;
+}
+
+.google-icon {
+  margin-right: 8px; /* Space between icon and text */
+  font-size: 20px; /* Adjust size of the Google icon */
+}
+
 
 .forgot-password {
   margin-top: 20px;
@@ -143,7 +162,7 @@ input {
   text-decoration: underline;
 }
 .login-footer {
-  background-color: #003366;
+  background-color: #283593;
   color: white;
   text-align: center;
   padding: 10px;
