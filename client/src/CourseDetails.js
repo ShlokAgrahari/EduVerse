@@ -58,13 +58,14 @@ const CourseDetails = () => {
                         <source src={course?.previewVideo} type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
-                    
+                    <div className = "course-heading">
+                    <h2>{course?.title || "Course Title"}</h2>    
                     <div className="course-info">
-                        <h2>{course?.title || "Course Title"}</h2>
+                        
                         <p>Created by: <span className="instructor-name">{course?.createdBy || "John Doe"}</span></p>
                         <p className="course-price">Price: ${course?.pricing || "49.99"}</p>
                     </div>
-
+                    </div>
                     
                 </div>
 

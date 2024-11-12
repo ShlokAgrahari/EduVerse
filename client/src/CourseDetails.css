@@ -57,14 +57,17 @@
 }
 
 /* Course Information Section */
-.course-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.course-heading{
   margin-top: 15px;
   padding: 10px;
   background-color: #f5f5f5;
   border-radius: 8px;
+}
+
+.course-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
 }
 
 .course-info h2 {
@@ -147,7 +150,7 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   border-radius: 4px;
-  width:400px;
+  width:400px;;
 }
 
 .add-to-cart-button:hover {
