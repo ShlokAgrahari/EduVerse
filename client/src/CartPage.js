@@ -102,7 +102,7 @@ razor.open()
                       <Star className="star-icon" />
                       <span>{course.rating.toFixed(1)}</span>
                     </div>
-                    <p className="course-price">${course.price.toFixed(2)}</p>
+                    <p className="course-price1">₹{course.price.toFixed(2)}</p>
                   </div>
                   <button
                     onClick={() => removeCourse(course.id)}
@@ -138,7 +138,7 @@ razor.open()
             </div>
             <div className="total-price">
               <span>Total Price:</span>
-              <span>${totalPrice.toFixed(2)}</span>
+              <span>₹{totalPrice.toFixed(2)}</span>
             </div>
             <button className="checkout-button" onClick={handleCheckoutClick}>
              Proceed to Checkout
@@ -175,7 +175,7 @@ razor.open()
   .cart-title {
     font-size: 1.875rem;
     font-weight: bold;
-    text-align: center;
+    justify-text: center;
   }
 
   .cart-content {
