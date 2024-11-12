@@ -8,20 +8,20 @@
 }
 
 /* Navbar Styles */
-.navbar1 {
+.navbar2 {
   background-color: #4f46e5;
   padding: 1rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.navbar-content1 {
+.navbar-content2 {
   margin: 0 auto;
   display: flex;
-  justify-content: space-between;
+  justify-content:space-between;
   align-items: center;
 }
 
-.logo1 {
+.logo2 {
   color: white;
   font-size: 1.5rem;
   font-weight: bold;
@@ -29,18 +29,18 @@
   margin-top:5px;
   display:flex;
 }
-#sitename1{
+#sitename2{
   margin-left:30px;
   display:flex;
 }
 
-.nav-actions1 {
+.nav-actions2 {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-.icon-button1 {
+.icon-button2 {
   color: white;
   background: none;
   border: none;
@@ -49,18 +49,18 @@
   transition: opacity 0.2s;
 }
 
-.icon-button1:hover {
+.icon-button2:hover {
   opacity: 0.8;
 }
 
-.profile-menu1 {
+.profile-menu2 {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   color: white;
 }
 
-.profile-image1 {
+.profile-image2 {
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
@@ -73,7 +73,7 @@
   object-fit: contain;
 }
 
-.logout-button1 {
+.logout-button2{
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -182,9 +182,12 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1.5rem;
+  justify-items: center; /* Center the cards */
 }
 
 .course-card1 {
+  width: 100%;
+  max-width: 350px; /* Fix the maximum width of each card */
   background-color: white;
   border-radius: 0.5rem;
   overflow: hidden;
