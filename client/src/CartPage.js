@@ -2,22 +2,60 @@
 
 import React, { useEffect, useState } from 'react'
 import { Trash2,  Star } from 'lucide-react'
+import { useNavigate } from 'react-router-dom';
+
 
 
 
 
 function Cart() {
   const [courses, setCourses] = useState([]);
+  const navigate = useNavigate();
+  const [deletedcourse,setdelete] = useState(0);
 
   useEffect(()=>{
     const fetchCart=async()=>{
-
+      try {
+        const resp = await fetch("http://localhost:8000/student-dashboard/cart", {
+          method: "GET",
+          credentials: "include",
+        });
+        if (!resp.ok) {
+          throw new Error('Failed to fetch cart detail');
+        }
+        const data = await resp.json();
+        setCourses(data.data);
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+    }
     };
     fetchCart()
-  },[])
+  },[deletedcourse]);
 
-  const removeCourse = (id) => {
-    setCourses(courses.filter(course => course.id !== id))
+
+  const deleteCart = async(_id)=>{
+    console.log(_id);
+    try {
+      const respond = await fetch(`http://localhost:8000/student-dashboard/cart/${_id}`,{
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          _id
+        })
+      });
+      const data = await respond.json();
+      console.log(data);
+
+      if(!respond.ok){
+        throw new Error("Something went wrong");
+      }
+     
+    } catch (error) {
+      console.log("delete cart error is ",error);
+    }
   }
 
 
@@ -79,10 +117,10 @@ razor.open()
   
   
 
-  const totalPrice = courses.reduce((sum, course) => sum + course.price, 0)
+  const totalPrice =  90;  //courses.reduce((sum, course) => sum + course.price, 0)
   const uniqueCreators = new Set(courses.map(course => course.creator)).size
-  const totalLessons = courses.reduce((sum, course) => sum + course.lessons, 0)
-  const totalDuration = courses.reduce((sum, course) => sum + course.duration, 0)
+  const totalLessons =  20;  //courses.reduce((sum, course) => sum + course.lessons, 0)
+  const totalDuration = 11;  //courses.reduce((sum, course) => sum + course.duration, 0)
 
   return (
     <div className="learning-cart">
@@ -96,22 +134,20 @@ razor.open()
           ) : (
             <div className="course-list1">
               {courses.map((course) => (
-                <div key={course.id} className="course-card1">
-                  <img src={course.thumbnail} alt={course.name} className="course-thumbnail" />
+                <div key={course.courseId} className="course-card1">
+                  <img src={course.imageUrl} alt={course.title} className="course-thumbnail" />
                   <div className="course-details">
-                    <h3 className="course-title">{course.name}</h3>
-                    <p className="course-creator">{course.creator}</p>
+                    <h3 className="course-title">{course.title}</h3>
                     <div className="course-rating">
                       <Star className="star-icon" />
-                      <span>{course.rating.toFixed(1)}</span>
+                      <span>4.3</span>
                     </div>
-                    <p className="course-price">${course.price.toFixed(2)}</p>
+                    <p className="course-price">${course.price}</p>
                   </div>
                   <button
-                    onClick={() => removeCourse(course.id)}
                     className="remove-button"
-                    aria-label={`Remove ${course.name} from cart`}
-
+                    aria-label={`Remove ${course.title} from cart`}
+                    onClick={()=>deleteCart(course._id)}
                   >
                     <Trash2 />
                   </button>

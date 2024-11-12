@@ -54,7 +54,7 @@ const CourseDetails = () => {
     };
 
     const handleNavClick = ()=>{
-        navigate("/student-dashboard/cart");
+        navigate("/user/student-dashboard/cart");
     }
 
 
@@ -73,7 +73,7 @@ const CourseDetails = () => {
 
                 <button className="nav-link">About</button>
                 <button className="nav-link">Contact</button>
-                <button className="nav-link cart-button" onClick={()=>navigate("/cart")} >🛒 Cart</button>
+                <button className="nav-link cart-button" onClick={()=>navigate("/user/cart")} >🛒 Cart</button>
             </nav>
             
             <div className="course-title-section">

@@ -22,7 +22,7 @@ const InstructorDashboard = () => {
       <header className="dashboard-header">
         <h1 className="header-title">Instructor Dashboard</h1>
         <div className="header-buttons">
-          <button className="profile-button" onClick={() => navigate('/instructor/profile')}>
+          <button className="profile-button" onClick={() => navigate('/user/instructor/profile')}>
             Profile Update
           </button>
           <button className="logout-button">Logout</button>
@@ -34,7 +34,7 @@ const InstructorDashboard = () => {
         <h2>Create Courses</h2>
         <button 
           className="create-course-button" 
-          onClick={() => navigate('/instructor/newcourse')}>
+          onClick={() => navigate('/user/instructor/newcourse')}>
           <FaChalkboardTeacher /> Start Creating
         </button>
       </div>
