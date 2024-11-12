@@ -22,4 +22,5 @@ export const upload = multer({
 }).fields([
   { name: 'image', maxCount: 1 },
   { name: 'videoContents', maxCount: 10 }, 
+  { name: 'previewVideo',maxCount:1}
 ]);
