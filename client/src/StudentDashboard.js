@@ -28,6 +28,7 @@ const StudentDashboard = () => {
     "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8c3R1ZHl8ZW58MHx8MHx8fDA%3D"
   ];
 
+
   useEffect(() => {
     const fetchCourses = async () => {
       try {
@@ -50,6 +51,7 @@ const StudentDashboard = () => {
       } catch (error) {
         console.error("Error fetching courses:", error);
       }
+
     };
     fetchCourses();
   }, []);

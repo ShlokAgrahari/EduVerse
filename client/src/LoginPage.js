@@ -47,12 +47,14 @@ const LoginPage = () => {
             if (!data) {
                 throw new Error("Unexpected response format");
             }
-             
 
+
+            const navRole = (role === 'student') ? '/user/student-dashboard' : '/user/instructor-dashboard';
+            navigate(`${navRole}`)
             setEmail("");
             setPassword("");
-            const navRole = (role === 'student') ? '/student-dashboard' : '/instructor-dashboard';
-      navigate(`${navRole}`)
+            
+
         }catch(error){
             console.log("error is ",error);
             setError(error.message);
@@ -96,6 +98,9 @@ const LoginPage = () => {
                 console.log(name);
             console.log(authResult);
             }
+
+            const navRole = (role === 'student') ? '/user/student-dashboard' : '/user/instructor-dashboard';
+            navigate(`${navRole}`)
         } catch (error) {
             console.log("google error is: ",error);
         }

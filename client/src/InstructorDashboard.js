@@ -71,6 +71,7 @@ const InstructorDashboard = () => {
 
 
   return (
+
     <div className="dashboard-container1">
       {/* Navbar */}
       <nav className="navbar2">
@@ -122,6 +123,7 @@ const InstructorDashboard = () => {
           </div>
         </section>
 
+
         {/* Stats Grid */}
         <div className="stats-grid1">
           {stats.map((stat, index) => (
@@ -136,6 +138,7 @@ const InstructorDashboard = () => {
             </div>
           ))}
         </div>
+
 
         {/* Courses Grid */}
         <div className="courses-grid1">

@@ -40,7 +40,7 @@ const SignupPage = () => {
       if (!data) {
         throw new Error("Unexpected response format");
       }
-      const navRole = (role === 'student') ? '/student-dashboard' : '/instructor-dashboard';
+      const navRole = (role === 'student') ? '/user/student-dashboard' : '/user/instructor-dashboard';
       navigate(`${navRole}`)
 
 

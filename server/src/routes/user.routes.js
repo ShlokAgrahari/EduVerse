@@ -9,7 +9,12 @@ import getUser from "../middlewares/auth.middleware.js";
 //import courses from "../controllers/course.controller.js";
 import {getinfo} from "../controllers/user.controller.js";
 import { checkout,paymentVerification } from "../controllers/payment.controller.js";
+
+import { deleteFromCart, getCartdetail } from "../controllers/getcart.controller.js";
+
+
 import { getCourses } from "../controllers/instruct.course.controller.js";
+
 
 const router = Router();
 
@@ -24,7 +29,8 @@ router.get("/auth/google",googleLogin);
 
 router.post("/instructor/newcourse",getUser, upload, addCourse);
 
-
+router.get("/student-dashboard/cart",getUser,getCartdetail);
+router.post("/student-dashboard/cart/:courseId",getUser,deleteFromCart);
 
 router.get("/student-dashboard",async(req,res)=>{
     const courses=await newCourse.find()
@@ -43,9 +49,7 @@ router.get("/coursedetails/:courseId", async (req, res) => {
     }
 });
 
-router.get("/cart-page/:userId",async(req,res)=>{
 
-})
 
 
 

@@ -44,7 +44,7 @@ const registerUser = asyncHandler(async (req, res) => {
     const options = {
         expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
         sameSite: "lax",
-        httpOnly: true,
+        path: "/",
         secure: false,
         domain: "localhost"
     };
@@ -75,7 +75,7 @@ const loginUser = asyncHandler(async (req, res) => {
     const options = {
         expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
         sameSite: "lax",
-        httpOnly: true,
+        path: "/",
         secure: false,
         domain: "localhost"
     };
@@ -149,7 +149,7 @@ const googleLogin = asyncHandler(async(req,res)=>{
         const options = {
             expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
             sameSite: "lax",
-            httpOnly: true,
+            path: "/",
             secure: false,
             domain: "localhost"
         };
