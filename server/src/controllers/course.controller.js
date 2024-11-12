@@ -9,9 +9,22 @@ const addCourse = asyncHandler(async (req, res) => {
     const { title, description, pricing, category, level} = req.body;
     const videoContents=req.files?.videoContents;
     console.log(videoContents)
+    const previewVideo=req.file?.previewVideo;
     if (!(title && category && description && pricing)) {
       throw ApiError(400, "All fields are required");
     }
+
+    const previewVideoPath=req.files?.previewVideo?.[0]?.path;
+    if(!previewVideoPath)  throw ApiError(400,"preview video file missing")
+    let vdo;
+  try{
+    vdo=await uploadOnCloudinary(previewVideoPath);
+    if(!vdo || !vdo.url){
+      return res.status(500).json(ApiResponse(500,null,"Preview Video upload failed"));
+    }
+  }catch(error){
+    return res.status(500).json(ApiResponse(500, null, "Preview Video upload failed"));
+  }
   
     const imgLocalPath = req.files?.image?.[0]?.path;
     if (!imgLocalPath) throw ApiError(400, "Image file missing");
@@ -65,6 +78,7 @@ const addCourse = asyncHandler(async (req, res) => {
       description,
       pricing,
       level,
+      previewVideo:vdo.url,
       createdBy: user.userName, 
       image: img.url,
       lectures,

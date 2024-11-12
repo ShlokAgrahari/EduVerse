@@ -11,6 +11,7 @@ const CreateCourse = () => {
     category: '',
     level: 'Beginner',
     videoContents: [{ label: '', file: null }],
+    previewVideo:null,
     image: null,
   });
   const [imagePreview, setImagePreview] = useState(null);
@@ -29,12 +30,17 @@ const CreateCourse = () => {
     }
   };
 
-  const handleVideoFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setVideoFile(file);
-    }
+  const handleVideoFileChange = (e, index) => {
+    const newVideoContents = [...course.videoContents];
+    newVideoContents[index].file = e.target.files[0];
+    setCourse({ ...course, videoContents: newVideoContents });
   };
+
+  const handlePreviewFileChange = (e) => {
+    const file = e.target.files[0];
+    setCourse({ ...course, previewVideo: file });
+  };
+  
 
   const handleRemoveImage = () => {
     setCourse({ ...course, image: null });
@@ -61,6 +67,7 @@ const CreateCourse = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(course);
     const fdata = new FormData();
     fdata.append('title', course.title);
     fdata.append('description', course.description);
@@ -68,6 +75,7 @@ const CreateCourse = () => {
     fdata.append('category', course.category);
     fdata.append('level', course.level);
     if (course.image) fdata.append('image', course.image);
+    if (course.previewVideo) fdata.append('previewVideo', course.previewVideo);
 
     course.videoContents.forEach((video, index) => {
       if (video.file) {
@@ -75,6 +83,8 @@ const CreateCourse = () => {
         fdata.append(`videoContents[${index}]`, video.label);
       }
     });
+    console.log(fdata)
+
 
     try {
       const response = await fetch('http://localhost:8000/instructor/newcourse', {
@@ -86,6 +96,7 @@ const CreateCourse = () => {
         throw new Error('Failed to create course');
       }
       const data = await response.json();
+      console.log(data.lectures); 
       console.log('Data:', data);
     } catch (error) {
       console.error('Error occurred:', error);
@@ -127,7 +138,7 @@ const CreateCourse = () => {
 
         <div className="section course-details-grid">
           <div className="course-detail">
-            <h3>Course Price ($)</h3>
+            <h3>Course Price (₹)</h3>
             <input
               type="number"
               name="price"
@@ -178,7 +189,7 @@ const CreateCourse = () => {
               <div className="thumbnail-preview">
                 <img src={imagePreview} alt="Thumbnail Preview" className="thumbnail-image" />
                 <button type="button" className="remove-button" onClick={handleRemoveImage}>
-                  <XCircle size={16} /> Remove Image
+                  <XCircle size={20} /> Remove Image
                 </button>
               </div>
             ) : (
@@ -243,16 +254,13 @@ const CreateCourse = () => {
               name="video-preview"
               accept="video/*"
               className="file-input"
+              onChange={handlePreviewFileChange}
             />
-            <button className="upload-button" type="button">
-              <Upload size={16} />
-              Upload Preview Video
-            </button>
           </div>
         </div>
 
-        <button type="submit" className="submit-button">
-          <Save size={16} />
+        <button type="submit" className="submit-button1">
+          <Save size={20} />
           Save Course
         </button>
       </form>
