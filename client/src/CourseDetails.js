@@ -41,13 +41,13 @@ const CourseDetails = () => {
                 <h1>My Learning Platform</h1>
             </header>
             
-            <nav className="navbar">
-                <button className="nav-link">Home</button>
-                <button className="nav-link">Courses</button>
-                <button className="nav-link">Affiliates</button>
-                <button className="nav-link">About</button>
-                <button className="nav-link">Contact</button>
-                <button className="nav-link cart-button" onClick={() => navigate("/cart")}>🛒 Cart</button>
+            <nav className="navbar1">
+                <button className="nav-link1">Home</button>
+                <button className="nav-link1">Courses</button>
+                <button className="nav-link1">Affiliates</button>
+                <button className="nav-link1">About</button>
+                <button className="nav-link1">Contact</button>
+                <button className="nav-link1 cart-button" onClick={() => navigate("/cart")}>🛒 Cart</button>
             </nav>
             
             <div className="content-container">
@@ -58,13 +58,14 @@ const CourseDetails = () => {
                         <source src={course?.previewVideo} type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
-                    
+                    <div className = "course-heading">
+                    <h2>{course?.title || "Course Title"}</h2>    
                     <div className="course-info">
-                        <h2>{course?.title || "Course Title"}</h2>
+                        
                         <p>Created by: <span className="instructor-name">{course?.createdBy || "John Doe"}</span></p>
                         <p className="course-price">Price: ${course?.pricing || "49.99"}</p>
                     </div>
-
+                    </div>
                     
                 </div>
 
