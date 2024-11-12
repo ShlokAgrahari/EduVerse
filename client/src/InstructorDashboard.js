@@ -1,5 +1,7 @@
 // InstructorDashboard.js
 import React, { useEffect, useState } from 'react';
+import logo from './logo.png';
+
 import { 
   LogOut, Bell, Twitter, Github, Linkedin, 
   Users, BookOpen, DollarSign, Plus ,  User
@@ -74,7 +76,8 @@ const InstructorDashboard = () => {
       <nav className="navbar1">
         <div className="navbar-content1">
           <div className="logo1">
-          <img id="idk" src="./logo.png" />
+          <img id="idk" src={logo} alt="Logo" />
+
             <h2 id="sitename1">Eduverse</h2>
             
           </div>

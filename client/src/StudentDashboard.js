@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ShoppingCart, LogOut, ChevronLeft, ChevronRight, User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import logo from './logo.png';
 import './StudentDashboard.css';
 
 const CourseCard = ({ courseId, title, createdBy, pricing, image, handleNavigation }) => (
@@ -19,7 +20,7 @@ const StudentDashboard = () => {
   const [courses, setCourses] = useState([]);
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
-  const username = "John Doe";
+  const [name,setname]=useState('')
 
   const carouselImages = [
     "https://media.istockphoto.com/id/1610418898/photo/online-survey-and-digital-form-checklist-by-laptop-computer-document-management-checking.webp?a=1&b=1&s=612x612&w=0&k=20&c=1TG9GIWnPyVXAGsIiXKkM3rHB_6MbENTTUu9ehIk4uo=",
@@ -36,6 +37,16 @@ const StudentDashboard = () => {
         }
         const data = await response.json();
         setCourses(data);
+        const response2 = await fetch("http://localhost:8000/user", {
+          method: "GET",
+          credentials: "include", // Ensure cookies are included in the request
+      });
+  
+      if (!response2.ok) throw new Error("Failed to fetch user details");
+      const user = await response2.json(); 
+      console.log(user.data.phone)
+      console.log(user.data.userEmail)
+      setname(user.data.userName)
       } catch (error) {
         console.error("Error fetching courses:", error);
       }
@@ -74,7 +85,7 @@ const StudentDashboard = () => {
     <div className="dashboard-container">
       <header className="dashboard-header">
         <div className="logo">
-          <img src="/path/to/logo.png" alt="EduLearn Logo" className="logo-image" />
+        <img id="idk" src={logo} alt="Logo" />
           <h1 id="yes">EduLearn</h1>
         </div>
         <div className="header-actions">
@@ -84,7 +95,7 @@ const StudentDashboard = () => {
           </button>
           <div className="user-info">
             <User size={24} className="user-icon" />
-            <span className="username">{username}</span>
+            <span className="username">{name}</span>
           </div>
           <button className="logout-button" onClick={handleLogout}>
             <LogOut size={24} />

@@ -66,12 +66,13 @@
   border-radius: 50%;
 }
 
-#idk{
-  margin-left:20px;
-      width: 4rem;
-      height: 4rem;
-      object-fit: cover;
+#idk {
+  margin-left: 20px;
+  width: 5rem;
+  height: 4rem;
+  object-fit: contain;
 }
+
 .logout-button1 {
   display: flex;
   align-items: center;
