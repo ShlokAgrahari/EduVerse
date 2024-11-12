@@ -2,6 +2,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import newCourse from "../models/course.js";
+import User from "../models/user.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 const addCourse = asyncHandler(async (req, res) => {
   console.log(req)
@@ -50,7 +51,13 @@ const addCourse = asyncHandler(async (req, res) => {
       }
     }
     const instructorId=req.user._id
-  
+    console.log(instructorId)
+    
+    const user = await User.findById(instructorId);
+  if (!user) {
+    throw ApiError(404, "Instructor not found");
+  }
+
     const newCourseData = await newCourse.create({
       instructorId,
       title,
@@ -58,7 +65,7 @@ const addCourse = asyncHandler(async (req, res) => {
       description,
       pricing,
       level,
-      createdBy: 'me', 
+      createdBy: user.userName, 
       image: img.url,
       lectures,
     });

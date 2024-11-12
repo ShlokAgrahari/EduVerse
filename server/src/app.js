@@ -30,6 +30,7 @@ app.use("/signup",router);
 app.use("/login",router);
 app.use("/logout",router);
 app.use("/",router);
+app.use("/instructor-dashboard",router)
 app.use("/student-dashboard",router);
 app.use("/instructor/newcourse",router);
 app.use("/coursedetails/:courseId/cart",router);

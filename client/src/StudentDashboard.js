@@ -1,21 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ShoppingCart, LogOut, ChevronLeft, ChevronRight, User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import './StudentDashboard.css';
 
-const CourseCard = ({ title, instructor, price, image }) => (
+const CourseCard = ({ courseId, title, createdBy, pricing, image, handleNavigation }) => (
   <div className="course-card">
     <img src={image} alt={title} className="course-image" />
     <h3>{title}</h3>
-    <p>{instructor}</p>
+    <p>{createdBy}</p>
     <div className="course-footer">
-      <span>${price}</span>
-      <button className="enroll-btn">View More</button>
+      <span>${pricing}</span>
+      <button className="enroll-btn" onClick={() => handleNavigation(courseId)}>View More</button>
     </div>
   </div>
 );
 
 const StudentDashboard = () => {
+  const [courses, setCourses] = useState([]);
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
   const username = "John Doe";
@@ -26,36 +27,40 @@ const StudentDashboard = () => {
     "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8c3R1ZHl8ZW58MHx8MHx8fDA%3D"
   ];
 
-  const courses = [
-    {
-      title: "Web Development Fundamentals",
-      instructor: "John Doe",
-      price: 49.99,
-      image: "https://media.istockphoto.com/id/2105091005/photo/young-student-taking-notes-while-e-learning-on-laptop-at-the-university.webp?a=1&b=1&s=612x612&w=0&k=20&c=frHL5Va1wVqHaWLaXsbmxqmkoJq3WxHbw7Qt6Q4vOfA=",
-      
-    },
-    {
-      title: "Python Programming",
-      instructor: "Jane Smith",
-      price: 59.99,
-      image: "https://media.istockphoto.com/id/2105091005/photo/young-student-taking-notes-while-e-learning-on-laptop-at-the-university.webp?a=1&b=1&s=612x612&w=0&k=20&c=frHL5Va1wVqHaWLaXsbmxqmkoJq3WxHbw7Qt6Q4vOfA=",
-    
-    },
-    {
-      title: "Data Science Basics",
-      instructor: "Mike Johnson",
-      price: 69.99,
-      image: "https://media.istockphoto.com/id/2105091005/photo/young-student-taking-notes-while-e-learning-on-laptop-at-the-university.webp?a=1&b=1&s=612x612&w=0&k=20&c=frHL5Va1wVqHaWLaXsbmxqmkoJq3WxHbw7Qt6Q4vOfA=",
-    
-    },
-    {
-      title: "UI/UX Design",
-      instructor: "Sarah Wilson",
-      price: 54.99,
-      image:     "https://media.istockphoto.com/id/2105091005/photo/young-student-taking-notes-while-e-learning-on-laptop-at-the-university.webp?a=1&b=1&s=612x612&w=0&k=20&c=frHL5Va1wVqHaWLaXsbmxqmkoJq3WxHbw7Qt6Q4vOfA=",
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/student-dashboard'); 
+        if (!response.ok) {
+          throw new Error('Failed to fetch courses');
+        }
+        const data = await response.json();
+        setCourses(data);
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+      }
+    };
+    fetchCourses();
+  }, []);
 
+  const handleNavigation = (courseId) => {
+    navigate(`/coursedetails/${courseId}`);
+  };
+
+  const handleLogout = async (e) => {
+    try {
+      const res = await fetch("http://localhost:8000/logout", {
+        method: "POST",
+        credentials: 'include',
+      });
+
+      if (res.ok) {
+        console.log("Logged out");
+      }
+    } catch (error) {
+      console.log("Error:", error);
     }
-  ];
+  };
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev === carouselImages.length - 1 ? 0 : prev + 1));
@@ -81,7 +86,7 @@ const StudentDashboard = () => {
             <User size={24} className="user-icon" />
             <span className="username">{username}</span>
           </div>
-          <button className="logout-button" onClick={() => navigate('/login')}>
+          <button className="logout-button" onClick={handleLogout}>
             <LogOut size={24} />
             <span>Logout</span>
           </button>
@@ -139,8 +144,16 @@ const StudentDashboard = () => {
         <section className="featured-courses">
           <h2>Featured Courses</h2>
           <div className="courses-grid">
-            {courses.map((course, index) => (
-              <CourseCard key={index} {...course} />
+            {courses.map((course) => (
+              <CourseCard
+                key={course._id}
+                courseId={course._id}
+                title={course.title}
+                createdBy={course.createdBy}
+                pricing={course.pricing}
+                image={course.image}
+                handleNavigation={handleNavigation}
+              />
             ))}
           </div>
         </section>

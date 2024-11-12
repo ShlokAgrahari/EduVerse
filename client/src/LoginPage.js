@@ -47,11 +47,12 @@ const LoginPage = () => {
             if (!data) {
                 throw new Error("Unexpected response format");
             }
-
+             
 
             setEmail("");
             setPassword("");
-            navigate('/dashboard');
+            const navRole = (role === 'student') ? '/student-dashboard' : '/instructor-dashboard';
+      navigate(`${navRole}`)
         }catch(error){
             console.log("error is ",error);
             setError(error.message);
