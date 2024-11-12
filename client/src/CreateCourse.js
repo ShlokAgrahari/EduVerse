@@ -1,35 +1,44 @@
-// src/components/CreateCourse.js
-
 import React, { useState } from 'react';
+import { Upload, Plus, Trash2, Save, XCircle } from 'lucide-react';
 import './CreateCourse.css';
-import { FaSave, FaPlusCircle, FaTrash } from 'react-icons/fa';
 
 const CreateCourse = () => {
+  const [videoFile, setVideoFile] = useState(null);
   const [course, setCourse] = useState({
     title: '',
     description: '',
     price: '',
     category: '',
     level: 'Beginner',
-    videoContents: [{ label: '', file: null }], 
-
+    videoContents: [{ label: '', file: null }],
     image: null,
   });
+  const [imagePreview, setImagePreview] = useState(null);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setCourse({ ...course, [name]: value });
   };
-  
-  const handleFileChange = (e, field) => {
-    setCourse({ ...course, [field]: e.target.files[0] });
-  };
-  
 
-  const handleVideoFileChange = (e, index) => {
-    const newVideoContents = [...course.videoContents];
-    newVideoContents[index].file = e.target.files[0];
-    setCourse({ ...course, videoContents: newVideoContents });
+  const handleFileChange = (e, field) => {
+    const file = e.target.files[0];
+    setCourse({ ...course, [field]: file });
+
+    if (field === 'image' && file) {
+      setImagePreview(URL.createObjectURL(file));
+    }
+  };
+
+  const handleVideoFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setVideoFile(file);
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setCourse({ ...course, image: null });
+    setImagePreview(null);
   };
 
   const handleLabelChange = (e, index) => {
@@ -52,163 +61,199 @@ const CreateCourse = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(course)
     const fdata = new FormData();
     fdata.append('title', course.title);
     fdata.append('description', course.description);
-    fdata.append('pricing', course.price); 
+    fdata.append('pricing', course.price);
     fdata.append('category', course.category);
     fdata.append('level', course.level);
-    console.log(course.image)
-    if (course.image) fdata.append('image', course.image); 
-  
-    // Append video contents
+    if (course.image) fdata.append('image', course.image);
+
     course.videoContents.forEach((video, index) => {
       if (video.file) {
-        console.log(video.label)
         fdata.append(`videoContents`, video.file);
         fdata.append(`videoContents[${index}]`, video.label);
       }
-    }
-  );
-  console.log(fdata)
-  
+    });
+
     try {
       const response = await fetch('http://localhost:8000/instructor/newcourse', {
         method: 'POST',
-        credentials:'include',
+        credentials: 'include',
         body: fdata,
       });
-      console.log(response)
       if (!response.ok) {
         throw new Error('Failed to create course');
       }
       const data = await response.json();
-      console.log(data.lectures); 
-
       console.log('Data:', data);
     } catch (error) {
       console.error('Error occurred:', error);
     }
   };
-  
 
   return (
-    <div className="create-course-page">
-      <h1 id="abc"> <b>Create a New Course</b></h1>
-      <form className="create-course-form" onSubmit={handleSubmit}>
+    <div className="design-container">
+      <div className="design-header">
+        <h1>Create New Course</h1>
+      </div>
+
+      <form className="design-content" onSubmit={handleSubmit}>
+        <div className="section">
+          <h3>Course Title</h3>
+          <input
+            type="text"
+            name="title"
+            value={course.title}
+            onChange={handleInputChange}
+            placeholder="Enter course title"
+            className="form-input"
+            required
+          />
+        </div>
 
        
-        <label>Course Title</label>
-        <input
-          type="text"
-          name="title"
-          value={course.title}
-          onChange={handleInputChange}
-          placeholder="Enter course title"
-          required
-        />
+        <div className="section">
+          <h3>Course Description</h3>
+          <textarea
+            name="description"
+            value={course.description}
+            onChange={handleInputChange}
+            placeholder="Describe the course"
+            className="form-textarea"
+            required
+          ></textarea>
+        </div>
 
-        
-        <label>Course Description</label>
-        <textarea
-          name="description"
-          value={course.description}
-          onChange={handleInputChange}
-          placeholder="Describe the course"
-          required
-        ></textarea>
-
-       
-        <label>Course Price ($)</label>
-        <input
-          type="number"
-          name="price"
-          value={course.price}
-          onChange={handleInputChange}
-          placeholder="Enter course price"
-          required
-        />
-
-       
-        <label>Category</label>
-        <select
-          name="category"
-          value={course.category}
-          onChange={handleInputChange}
-          required
-        >
-          <option value="">Select Category</option>
-          <option value="Development">Development</option>
-          <option value="Business">Business</option>
-          <option value="Design">Design</option>
-          <option value="Marketing">Marketing</option>
-        </select>
-
-   
-        <label>Level</label>
-        <select
-          name="level"
-          value={course.level}
-          onChange={handleInputChange}
-        >
-          <option value="Beginner">Beginner</option>
-          <option value="Intermediate">Intermediate</option>
-          <option value="Advanced">Advanced</option>
-        </select>
-
-
-        
-        <label>Video Content</label>
-        {course.videoContents.map((video, index) => (
-          <div key={index} className="video-input">
-            <div className="video-input-row">
-              <input
-                type="text"
-                className="video-label-input"
-                placeholder="Video Label"
-                value={video.label}
-                onChange={(e) => handleLabelChange(e, index)}
-                required
-              />
-              <input
-                type="file"
-                className="video-file-input"
-                accept="video/*"
-                onChange={(e) => handleVideoFileChange(e, index)}
-                required
-              />
-              <button
-                type="button"
-                className="delete-video-button"
-                onClick={() => deleteVideoInput(index)}
-              >
-                <FaTrash /> Delete
-              </button>
-            </div>
+        <div className="section course-details-grid">
+          <div className="course-detail">
+            <h3>Course Price ($)</h3>
+            <input
+              type="number"
+              name="price"
+              value={course.price}
+              onChange={handleInputChange}
+              placeholder="Enter course price"
+              className="form-input"
+              required
+            />
           </div>
-        ))}
 
+          <div className="course-detail">
+            <h3>Category</h3>
+            <select
+              name="category"
+              value={course.category}
+              onChange={handleInputChange}
+              className="form-select"
+              required
+            >
+              <option value="">Select Category</option>
+              <option value="Development">Development</option>
+              <option value="Business">Business</option>
+              <option value="Design">Design</option>
+              <option value="Marketing">Marketing</option>
+            </select>
+          </div>
 
-        <button type="button" className="add-video-button" onClick={addVideoInput}>
-          <FaPlusCircle /> Add Another Video
-        </button>
+          <div className="course-detail">
+            <h3>Level</h3>
+            <select
+              name="level"
+              value={course.level}
+              onChange={handleInputChange}
+              className="form-select"
+            >
+              <option value="Beginner">Beginner</option>
+              <option value="Intermediate">Intermediate</option>
+              <option value="Advanced">Advanced</option>
+            </select>
+          </div>
+        </div>
 
+        <div className="section course-thumbnail-section">
+          <h3>Course Thumbnail</h3>
+          <div className="thumbnail-upload-container">
+            {imagePreview ? (
+              <div className="thumbnail-preview">
+                <img src={imagePreview} alt="Thumbnail Preview" className="thumbnail-image" />
+                <button type="button" className="remove-button" onClick={handleRemoveImage}>
+                  <XCircle size={16} /> Remove Image
+                </button>
+              </div>
+            ) : (
+              <div className="upload-section">
+                <input
+                  type="file"
+                  id="image-upload"
+                  name="image"
+                  onChange={(e) => handleFileChange(e, 'image')}
+                  accept="image/*"
+                  className="file-input"
+                  required
+                />
+              </div>
+            )}
+          </div>
+        </div>
 
-        
-        <label>Course Thumbnail</label>
-<input
-  type="file"
-  name="image"
-  onChange={(e) => handleFileChange(e, 'image')}
-  accept="image/*"
-  required
-/>
+        <div className="section">
+          <h3>Video Content</h3>
+          {course.videoContents.map((video, index) => (
+            <div key={index} className="video-content-item">
+              <div className="video-input-row">
+                <input
+                  type="text"
+                  className="form-input"
+                  placeholder="Video Label"
+                  value={video.label}
+                  onChange={(e) => handleLabelChange(e, index)}
+                  required
+                />
+                <input
+                  type="file"
+                  className="file-input"
+                  accept="video/*"
+                  onChange={(e) => handleVideoFileChange(e, index)}
+                  required
+                />
+                <button
+                  type="button"
+                  className="delete-button"
+                  onClick={() => deleteVideoInput(index)}
+                >
+                  <Trash2 size={16} />
+                  Delete
+                </button>
+              </div>
+            </div>
+          ))}
+          <button type="button" className="add-button" onClick={addVideoInput}>
+            <Plus size={16} />
+            Add Another Video
+          </button>
+        </div>
 
+        <div className="section preview-video-section">
+          <h3>Preview Video</h3>
+          <div className="video-input-row">
+            <input
+              type="file"
+              id="video-preview"
+              name="video-preview"
+              accept="video/*"
+              className="file-input"
+            />
+            <button className="upload-button" type="button">
+              <Upload size={16} />
+              Upload Preview Video
+            </button>
+          </div>
+        </div>
 
-       
         <button type="submit" className="submit-button">
-          <FaSave /> Save Course
+          <Save size={16} />
+          Save Course
         </button>
       </form>
     </div>
