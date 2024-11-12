@@ -65,6 +65,10 @@ const courseSchema = new mongoose.Schema({
     resources: {
         type: String, 
     },
+    previewVideo:{
+            type: String,
+            required: true,
+    },
     image: {
         type: String, 
     },

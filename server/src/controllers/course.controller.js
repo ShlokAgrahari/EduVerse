@@ -2,15 +2,29 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import newCourse from "../models/course.js";
+import User from "../models/user.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 const addCourse = asyncHandler(async (req, res) => {
   console.log(req)
     const { title, description, pricing, category, level} = req.body;
     const videoContents=req.files?.videoContents;
     console.log(videoContents)
+    const previewVideo=req.file?.previewVideo;
     if (!(title && category && description && pricing)) {
       throw ApiError(400, "All fields are required");
     }
+
+    const previewVideoPath=req.files?.previewVideo?.[0]?.path;
+    if(!previewVideoPath)  throw ApiError(400,"preview video file missing")
+    let vdo;
+  try{
+    vdo=await uploadOnCloudinary(previewVideoPath);
+    if(!vdo || !vdo.url){
+      return res.status(500).json(ApiResponse(500,null,"Preview Video upload failed"));
+    }
+  }catch(error){
+    return res.status(500).json(ApiResponse(500, null, "Preview Video upload failed"));
+  }
   
     const imgLocalPath = req.files?.image?.[0]?.path;
     if (!imgLocalPath) throw ApiError(400, "Image file missing");
@@ -50,7 +64,13 @@ const addCourse = asyncHandler(async (req, res) => {
       }
     }
     const instructorId=req.user._id
-  
+    console.log(instructorId)
+    
+    const user = await User.findById(instructorId);
+  if (!user) {
+    throw ApiError(404, "Instructor not found");
+  }
+
     const newCourseData = await newCourse.create({
       instructorId,
       title,
@@ -58,7 +78,8 @@ const addCourse = asyncHandler(async (req, res) => {
       description,
       pricing,
       level,
-      createdBy: 'me', 
+      previewVideo:vdo.url,
+      createdBy: user.userName, 
       image: img.url,
       lectures,
     });

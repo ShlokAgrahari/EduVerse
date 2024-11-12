@@ -9,7 +9,11 @@ import getUser from "../middlewares/auth.middleware.js";
 //import courses from "../controllers/course.controller.js";
 import {getinfo} from "../controllers/user.controller.js";
 import { checkout,paymentVerification } from "../controllers/payment.controller.js";
+
 import { deleteFromCart, getCartdetail } from "../controllers/getcart.controller.js";
+
+
+import { getCourses } from "../controllers/instruct.course.controller.js";
 
 
 const router = Router();
@@ -19,7 +23,7 @@ router.post("/login", loginUser);
 router.post("/logout",logoutUser);
 router.get("/", test);
 router.post("/coursedetails/:courseId/cart",getUser,addCart);
-
+router.get("/instructor-dashboard",getUser,getCourses)
 router.get("/user",getUser,getinfo);
 router.get("/auth/google",googleLogin);
 

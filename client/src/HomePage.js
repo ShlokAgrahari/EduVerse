@@ -49,7 +49,7 @@ const HomePage = () => {
 
             {/* Main Content */}
             <div className="content">
-                {/* Carousel Section */}
+                {/* Ca rousel Section */}
                 <div className="carousel-wrapper">
                     <Carousel className="homepage-carousel" interval={3000} controls={true} indicators={true}>
                         <Carousel.Item>

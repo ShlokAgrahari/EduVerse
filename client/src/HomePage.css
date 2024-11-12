@@ -8,17 +8,16 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #003366;
+    background-color: #283593;
     padding: 1.5rem 2rem;
     color: #fff;
-    border: 3px solid black;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     position: relative;
 }
 .homepage-header {
     text-align: center;
     padding: 15px;
-    background-color: #003366;
+    background-color: #283593;
     color: white;
 }
 
@@ -70,7 +69,7 @@
 }
 
 .search-form input:focus {
-    border-color: #003366; 
+    border-color: #283593; 
 }
 
 .nav-buttons {
@@ -82,7 +81,7 @@
     padding: 10px 15px; 
     border: none; 
     border-radius: 5px; 
-    background-color: #003366; 
+    background-color: #283593; 
     color: white; 
     cursor: pointer; 
     transition: background-color 0.3s; 
@@ -134,7 +133,7 @@
     margin: 10px;
     padding: 10px 20px;
     border-radius: 30px; 
-    background-color: #003366; 
+    background-color: #283593; 
     color: white; 
     font-weight: bold;
     transition: transform 0.3s; 

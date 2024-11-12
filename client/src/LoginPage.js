@@ -1,7 +1,7 @@
 // src/components/LoginPage.js
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; // useNavigate instead of useHistory
-import { FaFacebook, FaGithub, FaUser, FaLock } from 'react-icons/fa';
+import { FaGoogle,  FaUser, FaLock } from 'react-icons/fa';
 import './LoginPage.css';
 import {useGoogleLogin} from "@react-oauth/google";
 
@@ -48,11 +48,13 @@ const LoginPage = () => {
                 throw new Error("Unexpected response format");
             }
 
+
             const navRole = (role === 'student') ? '/user/student-dashboard' : '/user/instructor-dashboard';
             navigate(`${navRole}`)
             setEmail("");
             setPassword("");
             
+
         }catch(error){
             console.log("error is ",error);
             setError(error.message);
@@ -173,7 +175,9 @@ const LoginPage = () => {
                 <div className="other-login-options">
                     <p>Other login options</p>
                     <div className="icon-container">
-                        <button onClick={googlelogin}>login with google</button>
+                        <button onClick={googlelogin} className="google-login-button">
+                            <FaGoogle className="google-icon" /> Login with Google
+                        </button>
                     </div>
                 </div>
 

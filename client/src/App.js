@@ -15,6 +15,7 @@ import CartDetail from './CartPage.js';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import Cart from './CartPage.js';
 import PrivateRoute from './PrivateRoute.js';
+
 const App = () => {
   const [userRole, setUserRole] = useState('student');
 
@@ -27,7 +28,7 @@ const App = () => {
   return (
     <div className="app">
     
-      <div className="main-content" style={{marginLeft:0,marginRight:0}}>
+      <div className="main-content" style={{marginLeft:0,marginRight:0,padding:0}}>
         <Routes>
 
         <Route path="/" element={<HomePage />} />
