@@ -73,23 +73,23 @@ const InstructorDashboard = () => {
   return (
     <div className="dashboard-container1">
       {/* Navbar */}
-      <nav className="navbar1">
-        <div className="navbar-content1">
-          <div className="logo1">
+      <nav className="navbar2">
+        <div className="navbar-content2">
+          <div className="logo2">
           <img id="idk" src={logo} alt="Logo" />
 
-            <h2 id="sitename1">Eduverse</h2>
+            <h2 id="sitename2">Eduverse</h2>
             
           </div>
-          <div className="nav-actions1">
-            <button className="icon-button1">
+          <div className="nav-actions2">
+            <button className="icon-button2">
               <Bell size={20} />
             </button>
-            <div className="profile-menu1">
-            <User className="user-icon1" size={24} /> {/* User icon */}
+            <div className="profile-menu2">
+            <User className="user-icon2" size={24} /> {/* User icon */}
               <span>{name}</span>
             </div>
-            <button className="logout-button1" onClick={()=>navigate('/HomePage')}>
+            <button className="logout-button2" onClick={()=>navigate('/HomePage')}>
               <LogOut size={18} />
               <span>Logout</span>
             </button>
