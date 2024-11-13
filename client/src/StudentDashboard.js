@@ -10,7 +10,7 @@ const CourseCard = ({ courseId, title, createdBy, pricing, image, handleNavigati
     <h3>{title}</h3>
     <p>{createdBy}</p>
     <div className="course-footer">
-      <span>${pricing}</span>
+      <span>₹{pricing}</span>
       <button className="enroll-btn" onClick={() => handleNavigation(courseId)}>View More</button>
     </div>
   </div>
@@ -57,7 +57,7 @@ const StudentDashboard = () => {
   }, []);
 
   const handleNavigation = (courseId) => {
-    navigate(`/coursedetails/${courseId}`);
+    navigate(`/user/coursedetails/${courseId}`);
   };
 
   const handleLogout = async (e) => {
@@ -91,7 +91,7 @@ const StudentDashboard = () => {
           <h1 id="yes">EduLearn</h1>
         </div>
         <div className="header-actions">
-          <button className="cart-button" onClick={() => navigate('/cart')}>
+          <button className="cart-button" onClick={() => navigate('/user/cart')}>
             <ShoppingCart size={24} />
             <span>Cart</span>
           </button>

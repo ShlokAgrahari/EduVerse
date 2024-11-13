@@ -47,18 +47,25 @@ export const paymentVerification = async (req, res) => {
       razorpay_order_id,
       razorpay_payment_id,
       razorpay_signature,
+    });*/
+
+    // res.redirect(
+    //   `http://localhost:3000/user/student-dashboard`
+    // );
+
+    return res.status(200).json({
+      success: true,
+      redirectUrl: "http://localhost:3000/user/student-dashboard"
     });
 
-    res.redirect(
-      `http://localhost:3000/paymentsuccess?reference=${razorpay_payment_id}`
-    );
+    /*
   } else {
     res.status(400).json({
       success: false,
     });*/
-    res.status(200).json({
-      success:"PAYMENT SUCCESSFULL"
-    })
+    // res.status(200).json({
+    //   success:"PAYMENT SUCCESSFULL"
+    // })
   }
     } catch (error) {
         console.error("Error creating order:", error);

@@ -85,14 +85,14 @@ function Cart() {
     console.log(user.data.userEmail)
     console.log(user.data.userName)
 const options = {
-    key: "rzp_test_ZNoTNPhp37NzKO", // Enter the Key ID generated from the Dashboard
-    amount: data.order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    key: "rzp_test_ZNoTNPhp37NzKO", 
+    amount: data.order.amount, 
     currency: "INR",
-    name: "EduVerse", //your business name
+    name: "EduVerse", 
     description: "Test Transaction",
     image: "https://t4.ftcdn.net/jpg/00/65/77/27/360_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg",
-    order_id: data.order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-    callback_url: "https://localhost:8000/paymentVerification",
+    order_id: data.order.id, 
+    callback_url: "https://localhost:3000/user/student-dashboard",
     prefill: { //We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
         name: user.data.userName, //your customer's name
         email: user.data.userEmail,
@@ -117,10 +117,10 @@ razor.open()
   
   
 
-  const totalPrice =  90;  //courses.reduce((sum, course) => sum + course.price, 0)
+  const totalPrice = courses.reduce((sum, course) => sum + course.price, 0)
   const uniqueCreators = new Set(courses.map(course => course.creator)).size
-  const totalLessons =  20;  //courses.reduce((sum, course) => sum + course.lessons, 0)
-  const totalDuration = 11;  //courses.reduce((sum, course) => sum + course.duration, 0)
+  const totalLessons = courses.reduce((sum, course) => sum + course.lessons, 0)
+  const totalDuration = courses.reduce((sum, course) => sum + course.duration, 0)
 
   return (
     <div className="learning-cart">
@@ -132,9 +132,9 @@ razor.open()
           {courses.length === 0 ? (
             <p className="empty-cart-message">Your cart is empty. Start adding courses to begin your learning journey!</p>
           ) : (
-            <div className="course-list1">
+            <div className="course-list3">
               {courses.map((course) => (
-                <div key={course.courseId} className="course-card1">
+                <div key={course.courseId} className="course-card3">
                   <img src={course.imageUrl} alt={course.title} className="course-thumbnail" />
                   <div className="course-details">
                     <h3 className="course-title">{course.title}</h3>
@@ -142,10 +142,10 @@ razor.open()
                       <Star className="star-icon" />
                       <span>4.3</span>
                     </div>
-                    <p className="course-price">${course.price}</p>
+                    <p className="course-price1">₹{course.price}</p>
                   </div>
                   <button
-                    className="remove-button"
+                    className="remove-button1"
                     aria-label={`Remove ${course.title} from cart`}
                     onClick={()=>deleteCart(course._id)}
                   >
@@ -177,7 +177,7 @@ razor.open()
             </div>
             <div className="total-price">
               <span>Total Price:</span>
-              <span>${totalPrice.toFixed(2)}</span>
+              <span>₹{totalPrice.toFixed(2)}</span>
             </div>
             <button className="checkout-button" onClick={handleCheckoutClick}>
              Proceed to Checkout
@@ -195,7 +195,7 @@ razor.open()
 
   .cart-container {
     width: 100%;
-    margin: 0 auto;
+    margin: 0;
     background-color: white;
     border-radius: 0.5rem;
     border: 2px solid black;
@@ -214,7 +214,7 @@ razor.open()
   .cart-title {
     font-size: 1.875rem;
     font-weight: bold;
-    text-align: center;
+    text-align: left;
   }
 
   .cart-content {
@@ -228,14 +228,14 @@ razor.open()
     font-size: 1.125rem;
   }
 
-  .course-list1 {
+  .course-list3 {
     display: flex;
     flex-direction: column;
     gap: 1rem;
     width: 100%;
   }
 
-  .course-card1 {
+  .course-card3 {
     display: flex;
     align-items: center;
     border: 2px solid black;
@@ -281,13 +281,13 @@ razor.open()
     margin-right: 0.25rem;
   }
 
-  .course-price {
+  .course-price1 {
     font-size: 1.125rem;
     font-weight: 600;
     color: #1e40af;
   }
 
-  .remove-button {
+  .remove-button1 {
     color: #ef4444;
     background: none;
     border: none;

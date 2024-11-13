@@ -104,7 +104,7 @@ const InstructorDashboard = () => {
         {/* Header */}
         <div className="dashboard-header1">
           <h1>Instructor Dashboard</h1>
-          <button className="create-course-button1" onClick={() => navigate('/instructor/newcourse')}>
+          <button className="create-course-button1" onClick={() => navigate('/user/instructor/newcourse')}>
             <Plus size={20} />
             <span>Create New Course</span>
           </button>
