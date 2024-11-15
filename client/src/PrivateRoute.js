@@ -11,15 +11,13 @@ const PrivateRoute = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Try to get token from cookie
+        
         const token = Cookies.get("token");
         console.log(token);
 
         if (token) {
-            // User is authenticated
             setIsLogged(true);
         } else {
-            // Redirect to login if not authenticated
             navigate("/login");
         }
     }, [navigate]);
