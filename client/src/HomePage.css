@@ -14,6 +14,22 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     position: relative;
 }
+
+.logo2 {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-left:15px;
+    margin-top:5px;
+    display:flex;
+  }
+
+  #idk {
+    margin-left: 20px;
+    width: 5rem;
+    height: 4rem;
+    object-fit: contain;
+  }
 .homepage-header {
     text-align: center;
     padding: 15px;
