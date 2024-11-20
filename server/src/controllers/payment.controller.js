@@ -49,6 +49,7 @@ export const paymentVerification = async (req, res) => {
       razorpay_signature,
     });*/
 
+
     // res.redirect(
     //   `http://localhost:3000/user/student-dashboard`
     // );
@@ -57,6 +58,7 @@ export const paymentVerification = async (req, res) => {
       success: true,
       redirectUrl: "http://localhost:3000/user/student-dashboard"
     });
+
 
     /*
   } else {
