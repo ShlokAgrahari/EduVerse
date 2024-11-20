@@ -10,7 +10,7 @@ const CourseCard = ({ courseId, title, createdBy, pricing, image, handleNavigati
     <h3>{title}</h3>
     <p>{createdBy}</p>
     <div className="course-footer">
-      <span>${pricing}</span>
+      <span>₹{pricing}</span>
       <button className="enroll-btn" onClick={() => handleNavigation(courseId)}>View More</button>
     </div>
   </div>
@@ -27,6 +27,7 @@ const StudentDashboard = () => {
     "https://media.istockphoto.com/id/2105091005/photo/young-student-taking-notes-while-e-learning-on-laptop-at-the-university.webp?a=1&b=1&s=612x612&w=0&k=20&c=frHL5Va1wVqHaWLaXsbmxqmkoJq3WxHbw7Qt6Q4vOfA=",
     "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8c3R1ZHl8ZW58MHx8MHx8fDA%3D"
   ];
+
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -50,12 +51,13 @@ const StudentDashboard = () => {
       } catch (error) {
         console.error("Error fetching courses:", error);
       }
+
     };
     fetchCourses();
   }, []);
 
   const handleNavigation = (courseId) => {
-    navigate(`/coursedetails/${courseId}`);
+    navigate(`/user/coursedetails/${courseId}`);
   };
 
   const handleLogout = async (e) => {
@@ -89,7 +91,7 @@ const StudentDashboard = () => {
           <h1 id="yes">EduLearn</h1>
         </div>
         <div className="header-actions">
-          <button className="cart-button" onClick={() => navigate('/cart')}>
+          <button className="cart-button" onClick={() => navigate('/user/cart')}>
             <ShoppingCart size={24} />
             <span>Cart</span>
           </button>

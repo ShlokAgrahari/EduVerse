@@ -2,22 +2,60 @@
 
 import React, { useEffect, useState } from 'react'
 import { Trash2,  Star } from 'lucide-react'
+import { useNavigate } from 'react-router-dom';
+
 
 
 
 
 function Cart() {
   const [courses, setCourses] = useState([]);
+  const navigate = useNavigate();
+  const [deletedcourse,setdelete] = useState(0);
 
   useEffect(()=>{
     const fetchCart=async()=>{
-
+      try {
+        const resp = await fetch("http://localhost:8000/student-dashboard/cart", {
+          method: "GET",
+          credentials: "include",
+        });
+        if (!resp.ok) {
+          throw new Error('Failed to fetch cart detail');
+        }
+        const data = await resp.json();
+        setCourses(data.data);
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+    }
     };
     fetchCart()
-  },[])
+  },[deletedcourse]);
 
-  const removeCourse = (id) => {
-    setCourses(courses.filter(course => course.id !== id))
+
+  const deleteCart = async(_id)=>{
+    console.log(_id);
+    try {
+      const respond = await fetch(`http://localhost:8000/student-dashboard/cart/${_id}`,{
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          _id
+        })
+      });
+      const data = await respond.json();
+      console.log(data);
+
+      if(!respond.ok){
+        throw new Error("Something went wrong");
+      }
+     
+    } catch (error) {
+      console.log("delete cart error is ",error);
+    }
   }
 
 
@@ -47,14 +85,14 @@ function Cart() {
     console.log(user.data.userEmail)
     console.log(user.data.userName)
 const options = {
-    key: "rzp_test_ZNoTNPhp37NzKO", // Enter the Key ID generated from the Dashboard
-    amount: data.order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    key: "rzp_test_ZNoTNPhp37NzKO", 
+    amount: data.order.amount, 
     currency: "INR",
-    name: "EduVerse", //your business name
+    name: "EduVerse", 
     description: "Test Transaction",
     image: "https://t4.ftcdn.net/jpg/00/65/77/27/360_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg",
-    order_id: data.order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-    callback_url: "https://localhost:8000/paymentVerification",
+    order_id: data.order.id, 
+    callback_url: "https://localhost:3000/user/student-dashboard",
     prefill: { //We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
         name: user.data.userName, //your customer's name
         email: user.data.userEmail,
@@ -94,24 +132,22 @@ razor.open()
           {courses.length === 0 ? (
             <p className="empty-cart-message">Your cart is empty. Start adding courses to begin your learning journey!</p>
           ) : (
-            <div className="course-list1">
+            <div className="course-list3">
               {courses.map((course) => (
-                <div key={course.id} className="course-card1">
-                  <img src={course.thumbnail} alt={course.name} className="course-thumbnail" />
+                <div key={course.courseId} className="course-card3">
+                  <img src={course.imageUrl} alt={course.title} className="course-thumbnail" />
                   <div className="course-details">
-                    <h3 className="course-title">{course.name}</h3>
-                    <p className="course-creator">{course.creator}</p>
+                    <h3 className="course-title">{course.title}</h3>
                     <div className="course-rating">
                       <Star className="star-icon" />
-                      <span>{course.rating.toFixed(1)}</span>
+                      <span>4.3</span>
                     </div>
-                    <p className="course-price">${course.price.toFixed(2)}</p>
+                    <p className="course-price1">₹{course.price}</p>
                   </div>
                   <button
-                    onClick={() => removeCourse(course.id)}
-                    className="remove-button"
-                    aria-label={`Remove ${course.name} from cart`}
-
+                    className="remove-button1"
+                    aria-label={`Remove ${course.title} from cart`}
+                    onClick={()=>deleteCart(course._id)}
                   >
                     <Trash2 />
                   </button>
@@ -141,7 +177,7 @@ razor.open()
             </div>
             <div className="total-price">
               <span>Total Price:</span>
-              <span>${totalPrice.toFixed(2)}</span>
+              <span>₹{totalPrice.toFixed(2)}</span>
             </div>
             <button className="checkout-button" onClick={handleCheckoutClick}>
              Proceed to Checkout
@@ -159,7 +195,7 @@ razor.open()
 
   .cart-container {
     width: 100%;
-    margin: 0 auto;
+    margin: 0;
     background-color: white;
     border-radius: 0.5rem;
     border: 2px solid black;
@@ -178,7 +214,7 @@ razor.open()
   .cart-title {
     font-size: 1.875rem;
     font-weight: bold;
-    text-align: center;
+    text-align: left;
   }
 
   .cart-content {
@@ -192,14 +228,14 @@ razor.open()
     font-size: 1.125rem;
   }
 
-  .course-list1 {
+  .course-list3 {
     display: flex;
     flex-direction: column;
     gap: 1rem;
     width: 100%;
   }
 
-  .course-card1 {
+  .course-card3 {
     display: flex;
     align-items: center;
     border: 2px solid black;
@@ -245,13 +281,13 @@ razor.open()
     margin-right: 0.25rem;
   }
 
-  .course-price {
+  .course-price1 {
     font-size: 1.125rem;
     font-weight: 600;
     color: #1e40af;
   }
 
-  .remove-button {
+  .remove-button1 {
     color: #ef4444;
     background: none;
     border: none;

@@ -3,6 +3,7 @@ import React from 'react';
 import { Carousel, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import logo from './logo.png';
+
 import './HomePage.css';
 
 const HomePage = () => {
@@ -23,10 +24,11 @@ const HomePage = () => {
         <div className="homepage">
             {/* Header */}
             <header className="homepage-header">
-            <div className="logo1">
+
+            <div className="logo2">
           <img id="idk" src={logo} alt="Logo" />
 
-            <h2 id="sitename1">Eduverse</h2>
+            <h2 id="sitename2">Eduverse</h2>
             
           </div>
                 

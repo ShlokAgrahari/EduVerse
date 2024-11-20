@@ -14,6 +14,8 @@ import CreateCourse from './CreateCourse.js';
 import CartDetail from './CartPage.js';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import Cart from './CartPage.js';
+import PrivateRoute from './PrivateRoute.js';
+
 const App = () => {
   const [userRole, setUserRole] = useState('student');
 
@@ -28,18 +30,22 @@ const App = () => {
     
       <div className="main-content" style={{marginLeft:0,marginRight:0,padding:0}}>
         <Routes>
-        <Route path="/dashboard" element={<Dashboard userRole={userRole} />} />
-        {/* <Route path="/login" element={<LoginPage setUserRole={setUserRole} />} /> */}
+
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<GoogleAuthWrapper/>} />
-        <Route path="/cart" element={<Cart/>}/>
         <Route path="/signup" element={<SignupPage />} />
-        <Route path="/student-dashboard" element={<StudentDashboard />} /> {/* Route for Student Dashboard */}
+         {/* Route for Student Dashboard */}
         <Route path="/" element={<StudentDashboard />} />
-        <Route path="/coursedetails/:courseId" element={<CourseDetails />} />
-        <Route path="/instructor-dashboard" element={<InstructorDashboard/>} />
-        <Route path="/instructor/newcourse" element={<CreateCourse/>}/>
-        <Route path="/student-dashboard/cart" element={<CartDetail/>}/>
+        
+        
+        <Route path="/user" element = {<PrivateRoute/>}>
+          <Route path="student-dashboard" element={<StudentDashboard />} />
+          <Route path="coursedetails/:courseId" element={<CourseDetails />} />
+          <Route path="instructor-dashboard" element={<InstructorDashboard/>} />
+          <Route path="instructor/newcourse" element={<CreateCourse/>}/>
+          <Route path="student-dashboard/cart" element={<CartDetail/>}/>
+          <Route path="cart" element={<Cart/>}/>
+        </Route>
         </Routes>
       </div>
    

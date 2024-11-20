@@ -36,19 +36,29 @@ const CourseDetails = () => {
         }
     };
 
+    const handleNavClick = ()=>{
+        navigate("/user/student-dashboard/cart");
+    }
+
+
+
     return (
         <div className="course-details-container">
             <header className="header">
                 <h1>My Learning Platform</h1>
             </header>
             
+
+            {/* Navbar with Previous Content */}
+   
             <nav className="navbar1">
                 <button className="nav-link1">Home</button>
                 <button className="nav-link1">Courses</button>
                 <button className="nav-link1">Affiliates</button>
                 <button className="nav-link1">About</button>
                 <button className="nav-link1">Contact</button>
-                <button className="nav-link1 cart-button" onClick={() => navigate("/cart")}>🛒 Cart</button>
+                <button className="nav-link1 cart-button" onClick={() => navigate("/user/cart")}>🛒 Cart</button>
+
             </nav>
             
             <div className="content-container">
