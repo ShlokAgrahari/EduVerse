@@ -1,5 +1,36 @@
 import mongoose, { Schema } from "mongoose";
 
+const commentSchema = new mongoose.Schema({
+    studentId: { 
+        type: Schema.Types.ObjectId, 
+        ref: "User", 
+        required: true 
+    },
+    studentName: { 
+        type: String, 
+        required: true 
+    },
+    commentText: { 
+        type: String, 
+        required: true 
+    },
+    createdAt: { 
+        type: Date, 
+        default: Date.now 
+    },
+    parentComment: { 
+        type: Schema.Types.ObjectId, 
+        ref: "Comment", 
+        default: null
+    },
+    childrenComments: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Comment", 
+        },
+    ],
+});
+
 const lectureSchema = new mongoose.Schema({
     label: {
         type: String,
@@ -9,6 +40,7 @@ const lectureSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    comments: [commentSchema],
 });
 
 const studentSchema = new mongoose.Schema({
