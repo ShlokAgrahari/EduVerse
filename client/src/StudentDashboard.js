@@ -88,7 +88,7 @@ const StudentDashboard = () => {
       <header className="dashboard-header">
         <div className="logo">
         <img id="idk" src={logo} alt="Logo" />
-          <h1 id="yes">EduLearn</h1>
+          <h1 id="yes">EduVerse</h1>
         </div>
         <div className="header-actions">
           <button className="cart-button" onClick={() => navigate('/user/cart')}>
