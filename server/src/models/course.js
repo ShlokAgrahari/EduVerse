@@ -1,24 +1,21 @@
 import mongoose, { Schema } from "mongoose";
 
 const commentSchema = new mongoose.Schema({
-    studentId: { 
-        type: Schema.Types.ObjectId, 
-        ref: "User", 
-        required: true 
+
+    name: {
+        type:String,
+        required: true,
     },
-    studentName: { 
-        type: String, 
-        required: true 
+    comment: {
+        type: String,
+        required: true,
     },
-    commentText: { 
-        type: String, 
-        required: true 
-    },
-    createdAt: { 
-        type: Date, 
-        default: Date.now 
-    },
-});
+    user:{
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    }
+
 
 const lectureSchema = new mongoose.Schema({
     label: {
@@ -29,8 +26,30 @@ const lectureSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    comments: [commentSchema],
+
+    comments:[commentSchema],
+
 });
+
+const reviewSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+    },
+    rating:{
+        type: Number,
+        required: true,
+    },
+    reviews:{
+        type: String,
+        required: true,
+    },
+    user:{
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    }
+})
 
 const studentSchema = new mongoose.Schema({
     studentId: {
@@ -92,6 +111,11 @@ const courseSchema = new mongoose.Schema({
     },
     image: {
         type: String, 
+    },
+    review : [reviewSchema],
+    rating : {
+        type: Number,
+        default: 0,
     },
     students: [studentSchema],
     
