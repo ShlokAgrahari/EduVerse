@@ -14,6 +14,7 @@ import { deleteFromCart, getCartdetail } from "../controllers/getcart.controller
 
 
 import { getCourses } from "../controllers/instruct.course.controller.js";
+import { addComment, addReview } from "../controllers/review.controller.js";
 
 
 const router = Router();
@@ -31,6 +32,9 @@ router.post("/instructor/newcourse",getUser, upload, addCourse);
 
 router.get("/student-dashboard/cart",getUser,getCartdetail);
 router.post("/student-dashboard/cart/:courseId",getUser,deleteFromCart);
+
+router.post("/student-dashboard/rating",getUser,addReview);
+router.post("/student-dashboard/comment",getUser,addComment);
 
 router.get("/student-dashboard",async(req,res)=>{
     const courses=await newCourse.find()
