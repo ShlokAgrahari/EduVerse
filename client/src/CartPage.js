@@ -11,11 +11,14 @@ import { useNavigate } from 'react-router-dom';
 function Cart() {
   const [courses, setCourses] = useState([]);
   const navigate = useNavigate();
-  const [deletedcourse,setdelete] = useState(0);
+  const [val,setVal]=useState(0);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(()=>{
+  useEffect(() => {
     const fetchCart=async()=>{
       try {
+        console.log("Fetching cart data...");
+        setLoading(true);
         const resp = await fetch("http://localhost:8000/student-dashboard/cart", {
           method: "GET",
           credentials: "include",
@@ -27,37 +30,48 @@ function Cart() {
         setCourses(data.data);
       } catch (error) {
         console.error("Error fetching courses:", error);
+    }finally {
+      setLoading(false); // End loading
     }
     };
-    fetchCart()
-  },[deletedcourse]);
+    fetchCart();
+  },[]); 
+    useEffect(() => {
+      console.log("Updated courses:", courses);
+    }, [courses]);
+    
 
-
-  const deleteCart = async(_id)=>{
-    console.log(_id);
-    try {
-      const respond = await fetch(`http://localhost:8000/student-dashboard/cart/${_id}`,{
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        credentials: "include",
-        body: JSON.stringify({
-          _id
-        })
+    const deleteCart = (_id) => {
+      return new Promise(async (resolve, reject) => {
+        try {
+          const respond = await fetch(`http://localhost:8000/student-dashboard/cart/${_id}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+            body: JSON.stringify({ _id }),
+          });
+    
+          if (!respond.ok) {
+            throw new Error("Something went wrong");
+          }
+    
+          const data = await respond.json();
+          console.log(data);
+    
+          // Resolve the promise with a success message or any required data
+          resolve(_id);
+          setVal(val + 1);  
+        } catch (error) {
+          console.error("Delete cart error:", error);
+          // Reject the promise with the error
+          reject(error);
+        }
       });
-      const data = await respond.json();
-      console.log(data);
-
-      if(!respond.ok){
-        throw new Error("Something went wrong");
-      }
-     
-    } catch (error) {
-      console.log("delete cart error is ",error);
-    }
-  }
-
+    };
+    
+  
 
   const handleCheckoutClick = () => {
     handlePayment(Number(totalPrice.toFixed(2)));
@@ -92,7 +106,7 @@ const options = {
     description: "Test Transaction",
     image: "https://t4.ftcdn.net/jpg/00/65/77/27/360_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg",
     order_id: data.order.id, 
-    callback_url: "https://localhost:3000/user/student-dashboard",
+    callback_url: "http://localhost:8000/payment-verification",
     prefill: { //We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
         name: user.data.userName, //your customer's name
         email: user.data.userEmail,
@@ -121,7 +135,9 @@ razor.open()
   const uniqueCreators = new Set(courses.map(course => course.creator)).size
   const totalLessons = courses.reduce((sum, course) => sum + course.lessons, 0)
   const totalDuration = courses.reduce((sum, course) => sum + course.duration, 0)
-
+  if (loading) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className="learning-cart">
       <div className="cart-container">
@@ -145,12 +161,23 @@ razor.open()
                     <p className="course-price1">₹{course.price}</p>
                   </div>
                   <button
-                    className="remove-button1"
-                    aria-label={`Remove ${course.title} from cart`}
-                    onClick={()=>deleteCart(course._id)}
-                  >
-                    <Trash2 />
-                  </button>
+  className="remove-button1"
+  aria-label={`Remove ${course.title} from cart`}
+  onClick={() => {window.location.reload();
+    deleteCart(course._id)
+      .then((_id) => {
+        // Update the state only after the deletion is confirmed
+        setCourses((prevCourses) => prevCourses.filter((course) => course._id !== _id));
+        console.log("Course deleted:", _id);
+      })
+      .catch((error) => {
+        console.error("Failed to delete course:", error);
+      });
+  }}
+>
+  <Trash2 />
+</button>
+
                 </div>
               ))}
             </div>

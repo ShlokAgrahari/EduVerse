@@ -61,7 +61,7 @@ router.get("/lecture/:courseId",getLecture)
 
 
 router.post("/checkout", checkout);
-router.post("/paymentVerification",paymentVerification)
+router.post("/payment-verification",getUser,paymentVerification)
 
 
 //router.get("/stdhome",async(req,res)=>{
