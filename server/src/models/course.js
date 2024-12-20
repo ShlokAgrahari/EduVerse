@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
 const commentSchema = new mongoose.Schema({
+
     name: {
         type:String,
         required: true,
@@ -14,7 +15,7 @@ const commentSchema = new mongoose.Schema({
         ref: "User",
         required: true,
     }
-});
+
 
 const lectureSchema = new mongoose.Schema({
     label: {
@@ -25,7 +26,9 @@ const lectureSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+
     comments:[commentSchema],
+
 });
 
 const reviewSchema = new mongoose.Schema({

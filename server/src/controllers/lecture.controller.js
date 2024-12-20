@@ -5,42 +5,18 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import fs from 'fs'
 
-const addLecture=asyncHandler(async(req,res)=>{
+const getLecture=asyncHandler(async(req,res)=>{
     const {courseId}=req.params;
-    const {title}=req.body;
-    console.log(courseId)
-    console.log(title)
-
-    if(!title){
-        throw ApiError(400,"Lecture title is required");
-    }
-
-    let video;
-    try{
-        video=await uploadOnCloudinary(videoFilePath);
-        if(!video || !video.url) 
-            {
-                throw ApiError(500,"Video upload failed")
-            }
-        fs.unlinkSync(videoFilePath);
-    }catch(error)
-    {
-        console.log("Error occurred",error)
-    }
-    const course=await newCourse.findById(courseId);
-    if(!course){
-        throw ApiError(404,"Course not found");
-    }
-
-    course.lectures.push(
-        {
-            title,
-            videoUrl:video.url
+    try {
+        const currcourse = await newCourse.findById(courseId);
+        if (!currcourse) {
+            return res.status(404).json({ message: "Course not found" });
         }
-    )
-    course.save();
+        res.json(currcourse);
+    } catch (error) {
+        res.status(500).json({ message: "Server error" });
+    }
 
-    return res.status(200).json(ApiResponse(200,course,"Lecture added successfully"));
 })
 
-export {addLecture}
+export {getLecture}

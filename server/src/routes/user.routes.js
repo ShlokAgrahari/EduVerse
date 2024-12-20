@@ -9,7 +9,7 @@ import getUser from "../middlewares/auth.middleware.js";
 //import courses from "../controllers/course.controller.js";
 import {getinfo} from "../controllers/user.controller.js";
 import { checkout,paymentVerification } from "../controllers/payment.controller.js";
-
+import { getLecture } from "../controllers/lecture.controller.js";
 import { deleteFromCart, getCartdetail } from "../controllers/getcart.controller.js";
 
 
@@ -52,6 +52,8 @@ router.get("/coursedetails/:courseId", async (req, res) => {
         res.status(500).json({ message: "Server error" });
     }
 });
+
+router.get("/lecture/:courseId",getLecture)
 
 
 

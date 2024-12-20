@@ -55,7 +55,7 @@ const InstructorDashboard = () => {
     { 
       icon: <Users className="stats-icon" />,
       title: 'Total Students',
-      value: '1,234'
+      value: '0'
     },
     {
       icon: <BookOpen className="stats-icon" />,

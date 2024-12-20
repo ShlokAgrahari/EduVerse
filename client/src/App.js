@@ -15,6 +15,8 @@ import CartDetail from './CartPage.js';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import Cart from './CartPage.js';
 import PrivateRoute from './PrivateRoute.js';
+import LecturePage from './LecturePage.js'
+
 
 const App = () => {
   const [userRole, setUserRole] = useState('student');
@@ -44,6 +46,7 @@ const App = () => {
           <Route path="instructor-dashboard" element={<InstructorDashboard/>} />
           <Route path="instructor/newcourse" element={<CreateCourse/>}/>
           <Route path="student-dashboard/cart" element={<CartDetail/>}/>
+          <Route path="lecture/:courseId" element={<LecturePage />}/>
           <Route path="cart" element={<Cart/>}/>
         </Route>
         </Routes>
