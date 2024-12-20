@@ -1,4 +1,4 @@
-import React, { useState,useEffect, useRef } from 'react';
+import React, { useState,useEffect, useRef,useMemo } from 'react';
 
 import { 
   Maximize, 
@@ -141,6 +141,20 @@ const LecturePage = () => {
     }
   ]);
   const [newComment, setNewComment] = useState('');
+  const [replyTo, setReplyTo] = useState(null);
+  useEffect(() => {
+    if (currentVideo?.comments == null) return;
+    setComments(currentVideo.comments);
+  }, [currentVideo?.comments]);
+   // Group comments by parentId for nested replies
+   const commentsByParentId = useMemo(() => {
+    const group = {};
+    comments.forEach((comment) => {
+      group[comment.parentId] ||= [];
+      group[comment.parentId].push(comment);
+    });
+    return group;
+  }, [comments]);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [completedLectures, setCompletedLectures] = useState(
@@ -153,18 +167,22 @@ const LecturePage = () => {
 
   const handleAddComment = () => {
     if (newComment.trim()) {
-      setComments([
-        {
-          id: comments.length + 1,
-          user: 'You',
-          text: newComment,
-          timestamp: 'Just now'
-        },
-        ...comments
-      ]);
+      const newCommentData = {
+        id: comments.length + 1,
+        studentName: 'You',
+        commentText: newComment,
+        createdAt: new Date(),
+        parentComment: replyTo || null, // If replying to a comment, set the parentComment ID
+        childrenComment: [] // New comment starts without replies
+      };
+      setComments([newCommentData, ...comments]);
       setNewComment('');
+      setReplyTo(null); // Reset replyTo after adding a comment
     }
   };
+  
+  
+  
 
   const toggleFullScreen = () => {
     setIsFullScreen(!isFullScreen);
@@ -235,7 +253,7 @@ const LecturePage = () => {
             ref={videoContainerRef} 
             className="video-container"
           >
-            <video src={courseData.currentLecture?.videoUrl} controls className="video-placeholder">
+            <video src={courseData.currentLecture?.videoUrl} controls disablePictureInPicture controlsList="nodownload" className="video-placeholder">
               Your browser does not support the video tag.
             </video>
             <div className="video-controls">
@@ -315,13 +333,14 @@ const LecturePage = () => {
                 <div key={comment.id} className="comment">
                   <div className="comment-content">
                     <div className="comment-header">
-                      <span className="comment-user">{comment.user}</span>
-                      <span className="comment-timestamp">{comment.timestamp}</span>
+                      <span className="comment-user">{comment.studentName}</span>
+                      <span className="comment-timestamp">{new Date(comment.createdAt).toLocaleString()}</span>
                     </div>
-                    <p>{comment.text}</p>
-                  </div>
+                      <p>{comment.commentText}</p>
+                    </div>
                 </div>
               ))}
+              
             </div>
           </div>
         </div>
@@ -332,8 +351,9 @@ const LecturePage = () => {
               <h3>More Lectures</h3>
               <div className="lecture-progress">
                 {currentLecture && (
-                  <span>Now Playing: {courseData.currentLecture.title}</span>
+                  <span>Now Playing: {courseData.currentLecture?.title}</span>
                 )}
+                <br></br>
                 <span>
                   {completedLecturesCount} / {totalLectures} Lectures Completed
                 </span>
@@ -348,16 +368,16 @@ const LecturePage = () => {
                 >
                   <div 
                     className="lecture-completion-checkbox"
-                    onClick={() => toggleLectureCompletion(lecture.id)}
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevents the click event from bubbling up
+                      toggleLectureCompletion(lecture.index);
+                    }}
                   >
-                    {completedLectures[lecture.id] ? (
+                    {completedLectures[lecture.index] ? (
                       <CheckSquare className="checked" />
                     ) : (
                       <Square className="unchecked" />
                     )}
-                  </div>
-                  <div className="lecture-thumbnail">
-                    <span className="lecture-duration">{lecture.duration}</span>
                   </div>
                   <div className="lecture-details">
                     <h4>{lecture.title}</h4>
