@@ -1,5 +1,21 @@
 import mongoose, { Schema } from "mongoose";
 
+const commentSchema = new mongoose.Schema({
+    name: {
+        type:String,
+        required: true,
+    },
+    comment: {
+        type: String,
+        required: true,
+    },
+    user:{
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    }
+});
+
 const lectureSchema = new mongoose.Schema({
     label: {
         type: String,
@@ -9,7 +25,28 @@ const lectureSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    comments:[commentSchema],
 });
+
+const reviewSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+    },
+    rating:{
+        type: Number,
+        required: true,
+    },
+    reviews:{
+        type: String,
+        required: true,
+    },
+    user:{
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    }
+})
 
 const studentSchema = new mongoose.Schema({
     studentId: {
@@ -71,6 +108,11 @@ const courseSchema = new mongoose.Schema({
     },
     image: {
         type: String, 
+    },
+    review : [reviewSchema],
+    rating : {
+        type: Number,
+        default: 0,
     },
     students: [studentSchema],
     
