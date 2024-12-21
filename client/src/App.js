@@ -16,6 +16,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import Cart from './CartPage.js';
 import PrivateRoute from './PrivateRoute.js';
 import LecturePage from './LecturePage.js'
+import AllCourses from './AllCourses.js'
 
 
 const App = () => {
@@ -48,6 +49,7 @@ const App = () => {
           <Route path="student-dashboard/cart" element={<CartDetail/>}/>
           <Route path="lecture/:courseId" element={<LecturePage />}/>
           <Route path="cart" element={<Cart/>}/>
+          <Route path="All" element={<AllCourses />} />
         </Route>
         </Routes>
       </div>
