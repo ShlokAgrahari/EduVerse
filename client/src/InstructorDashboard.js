@@ -4,7 +4,7 @@ import logo from './logo.png';
 
 import { 
   LogOut, Bell, Twitter, Github, Linkedin, 
-  Users, BookOpen, DollarSign, Plus ,  User
+  Users, BookOpen, DollarSign, Plus ,  User,IndianRupee
 } from 'lucide-react';
 import './InstructorDashboard.css';
 import { useNavigate } from 'react-router-dom';
@@ -14,6 +14,8 @@ const InstructorDashboard = () => {
   const [courses, setCourses] = useState([]);
   const [name,setname]=useState("")
   const navigate=useNavigate();
+  const [students,setStudents]=useState(0)
+  const [earning,setEarnings]=useState(0)
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -50,12 +52,39 @@ const InstructorDashboard = () => {
   }, []);
 
 
-  const totalCoursePrice = courses.reduce((total, course) => total + course.price, 0);
+  useEffect(() => {
+    const calculateUniqueStudents = () => {
+      const studentSet = new Set();
+  
+      courses.forEach(course => {
+        if (course.students && Array.isArray(course.students)) {
+          course.students.forEach(student => studentSet.add(student.studentId)); 
+        }
+      });
+  
+      console.log(studentSet); 
+      setStudents(studentSet.size); 
+    };
+  
+    calculateUniqueStudents();
+  }, [courses]);
+  
+
+  useEffect(()=>{
+    const calculateEarnings=()=>{
+      const totalEarnings=courses.reduce(
+        (total,course)=>total+(course.pricing*course.students.length),0
+      );
+      setEarnings(totalEarnings)
+    }
+    calculateEarnings();
+  },[courses])
+
   const stats = [
     { 
       icon: <Users className="stats-icon" />,
       title: 'Total Students',
-      value: '0'
+      value: students
     },
     {
       icon: <BookOpen className="stats-icon" />,
@@ -63,9 +92,9 @@ const InstructorDashboard = () => {
       value: courses.length
     },
     {
-      icon: <DollarSign className="stats-icon" />, // Dollar sign icon for the price
+      icon: <IndianRupee className="stats-icon" />, // Dollar sign icon for the price
       title: 'Total Earnings',
-      value: `$${totalCoursePrice}`
+      value: earning
     }
   ];
 
@@ -99,7 +128,7 @@ const InstructorDashboard = () => {
       </nav>
 
       {/* Main Content */}
-      <main className="main-content1">
+      <main className="main-content2">
       
         {/* Header */}
         <div className="dashboard-header1">

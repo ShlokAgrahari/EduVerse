@@ -19,6 +19,22 @@ const CartSchema = new mongoose.Schema({
     },
 });
 
+const SubscriptionSchema = new mongoose.Schema({
+    courseId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Course",
+        required: true,
+    },
+    courseName:{
+        type:String,
+        required:true,
+    },
+    subscriptionDate: {
+        type: Date,
+        default: Date.now,
+    },
+});
+
 const UserSchema = new Schema({
     userName: {
         type: String,
@@ -44,12 +60,7 @@ const UserSchema = new Schema({
         enum: ["standard", "google", "facebook", "github"],
         default: "standard",
     },
-    subscription: [
-        {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Courses",
-        },
-      ],
+    subscription: [SubscriptionSchema],
     cart:[CartSchema],
     token: {
         type: String,
