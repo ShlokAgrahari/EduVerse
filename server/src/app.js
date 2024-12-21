@@ -40,7 +40,13 @@ app.use("/paymentVerification",router)
 app.use("/payment/:paymentId",router)
 app.use("/student-dashboard/cart",router)
 app.use("/student-dashboard/cart/:courseId",router);
+
+app.use("/student-dashboard/rating",router);
+app.use("/student-dashboard/comment",router);
+
 app.use("/lecture/:courseId",router)
+
 app.use("/payment-verification",router)
+
 app.use("/auth/google",router);
 export default app;
