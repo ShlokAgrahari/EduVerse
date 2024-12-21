@@ -247,7 +247,7 @@ const LecturePage = () => {
         </nav>
       </header>
 
-      <div className="main-content">
+      <div className="main-content1">
         <div className={`video-section ${isFullScreen ? 'fullwidth' : ''}`}>
           <div 
             ref={videoContainerRef} 

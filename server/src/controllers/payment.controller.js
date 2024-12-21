@@ -2,6 +2,7 @@ import { instance } from "../index.js";
 import crypto from "crypto";
 import CartDetail from "../models/cart.js";
 import User from "../models/user.js"; // Adjust the path if necessary
+import newCourse from "../models/course.js";
 
 export const checkout = async (req, res) => {
   try {
@@ -52,6 +53,40 @@ export const paymentVerification = async (req, res) => {
             throw ApiError(401,"user does not found");
         }
       console.log(user)
+      const cartCourses=user.cart;
+      if(!cartCourses){
+        return res.status(400).json({
+          success: false,
+          message: "No courses in the cart to subscribe",
+        });
+      }
+      cartCourses.forEach(async (course) => {
+        try {
+            const courseData = await newCourse.findById(course.courseId);
+            if (!courseData) {
+                console.error(`Course with ID ${course.courseId} not found`);
+                return;
+            }
+            if (!Array.isArray(courseData.students)) {
+                courseData.students = [];
+            }
+            courseData.students.push({
+                studentId: userId,
+                studentName: req.user.userName,
+                studentEmail: req.user.userEmail,
+            });
+            await courseData.save();
+            user.subscription.push({
+                courseId: course.courseId,
+                subscriptionsDate: new Date(),
+                courseName:course.title
+            });
+            await user.save();
+        } catch (err) {
+            console.error(`Error processing course ${course.courseId}:`, err);
+        }
+    });
+    
       user.cart = [];
       await user.save();
       return res.redirect("http://localhost:3000/user/student-dashboard");
