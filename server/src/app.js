@@ -49,4 +49,6 @@ app.use("/lecture/:courseId",router)
 app.use("/payment-verification",router)
 
 app.use("/auth/google",router);
+
+app.use("/dashboard/search",router)
 export default app;

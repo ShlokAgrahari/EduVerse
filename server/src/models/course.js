@@ -15,6 +15,7 @@ const commentSchema = new mongoose.Schema({
         ref: "User",
         required: true,
     }
+});
 
 
 const lectureSchema = new mongoose.Schema({

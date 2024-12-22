@@ -3,6 +3,7 @@ import React from 'react';
 import { Carousel, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import logo from './logo.png';
+import SearchBar from './components/searchbar';
 
 import './HomePage.css';
 
@@ -38,8 +39,7 @@ const HomePage = () => {
             {/* Navigation Bar */}
             <nav className="homepage-navbar">
                 <form className="search-form">
-                    <input type="text" placeholder="Search courses..." />
-                    <Button variant="outline-primary">Search</Button>
+                    <SearchBar/>
                 </form>
                 <div className="nav-buttons">
                     <Link to="/about">
