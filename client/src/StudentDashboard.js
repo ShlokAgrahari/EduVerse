@@ -57,7 +57,7 @@ const StudentDashboard = () => {
   }, []);
 
   const handleNavigation = (courseId) => {
-    navigate(`/user/coursedetails/${courseId}`);
+    navigate(`/coursedetails/${courseId}`);
   };
 
   const handleLogout = async (e) => {
