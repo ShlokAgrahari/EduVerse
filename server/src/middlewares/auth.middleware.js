@@ -17,10 +17,7 @@ const getUser = asyncHandler(async(req,res,next)=>{
         }
 
         const decodetoken = jsonwebtoken.verify(accessToken,process.env.JWT_SECRET);
-        console.log("decodetoken",decodetoken)
         const user = await User.findById(decodetoken.id).select("-password");
-        console.log("user",user)
-
         if(!user){
 
             throw ApiError(401,"user does not found");

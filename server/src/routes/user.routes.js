@@ -16,7 +16,7 @@ import { deleteFromCart, getCartdetail } from "../controllers/getcart.controller
 import { getCourses } from "../controllers/instruct.course.controller.js";
 import { addComment, addReview } from "../controllers/review.controller.js";
 import { searchCourse } from "../controllers/search.controller.js";
-
+import myCourses from "../controllers/getMyCourses.controller.js";
 
 const router = Router();
 
@@ -28,7 +28,7 @@ router.post("/coursedetails/:courseId/cart",getUser,addCart);
 router.get("/instructor-dashboard",getUser,getCourses)
 router.get("/user",getUser,getinfo);
 router.get("/auth/google",googleLogin);
-
+router.get("/my-courses",getUser,myCourses);
 router.post("/instructor/newcourse",getUser, upload, addCourse);
 
 router.get("/student-dashboard/cart",getUser,getCartdetail);
