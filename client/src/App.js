@@ -17,7 +17,7 @@ import Cart from './CartPage.js';
 import PrivateRoute from './PrivateRoute.js';
 import LecturePage from './LecturePage.js'
 import AllCourses from './AllCourses.js'
-
+import Certificate from './Certificate.js';
 
 const App = () => {
   const [userRole, setUserRole] = useState('student');
@@ -40,7 +40,7 @@ const App = () => {
          {/* Route for Student Dashboard */}
         <Route path="/" element={<StudentDashboard />} />
         <Route path="/coursedetails/:courseId" element={<CourseDetails />} />
-        
+        <Route path='/completion-certificate' element={<Certificate/>}/>
         
         <Route path="/user" element = {<PrivateRoute/>}>
           <Route path="student-dashboard" element={<StudentDashboard />} />
