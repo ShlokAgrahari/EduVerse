@@ -49,7 +49,7 @@ const App = () => {
           <Route path="student-dashboard/cart" element={<CartDetail/>}/>
           <Route path="lecture/:courseId" element={<LecturePage />}/>
           <Route path="cart" element={<Cart/>}/>
-          <Route path="All" element={<AllCourses />} />
+          <Route path="my-courses" element={<AllCourses />} />
         </Route>
         </Routes>
       </div>

@@ -1,50 +1,79 @@
-import React, { useState } from 'react';
-import { BookOpen, Clock, Star, User, Bell, Search, ChevronDown } from 'lucide-react';
-import './AllCourses.css';
+import React, { useState, useEffect } from "react";
+import { BookOpen, Clock, Star, User, Bell, Search } from "lucide-react";
+import "./AllCourses.css";
+import { useNavigate } from "react-router-dom";
 
 const AllCourses = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
+  const [courses, setCourses] = useState([]);
+  const [courseDurations, setCourseDurations] = useState({});
+  const [name, setName] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  // Mock user data
-  const user = {
-    name: "Sarah Parker",
-    role: "Student",
-    courses: [
-      {
-        id: 1,
-        title: "Advanced Web Development",
-        instructor: "John Smith",
-        duration: "12 hours",
-        rating: 4.8,
-        category: "Development",
-        enrolled: "Oct 15, 2024",
-        image: "https://media.istockphoto.com/id/2122148349/photo/writing-an-exam-at-the-university.webp?a=1&b=1&s=612x612&w=0&k=20&c=fJNH1q1N1NJ6IbQTvftt_k6W1ZKOSp10KCSNHnwiTRc="
-      },
-      {
-        id: 2,
-        title: "UX/UI Design Fundamentals",
-        instructor: "Emma Wilson",
-        duration: "8 hours",
-        rating: 4.9,
-        category: "Design",
-        enrolled: "Nov 1, 2024",
-        image: "https://media.istockphoto.com/id/2122148349/photo/writing-an-exam-at-the-university.webp?a=1&b=1&s=612x612&w=0&k=20&c=fJNH1q1N1NJ6IbQTvftt_k6W1ZKOSp10KCSNHnwiTRc="
-      },
-      {
-        id: 3,
-        title: "Data Science Essentials",
-        instructor: "Michael Chen",
-        duration: "15 hours",
-        rating: 4.7,
-        category: "Data Science",
-        enrolled: "Sep 28, 2024",
-        image: "https://media.istockphoto.com/id/2122148349/photo/writing-an-exam-at-the-university.webp?a=1&b=1&s=612x612&w=0&k=20&c=fJNH1q1N1NJ6IbQTvftt_k6W1ZKOSp10KCSNHnwiTRc="
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch courses
+        const coursesResponse = await fetch("http://localhost:8000/my-courses", {
+          method: "GET",
+          credentials: "include",
+        });
+        if (!coursesResponse.ok) throw new Error("Failed to fetch courses");
+        const coursesData = await coursesResponse.json();
+        setCourses(coursesData);
+
+        // Fetch user details
+        const userResponse = await fetch("http://localhost:8000/user", {
+          method: "GET",
+          credentials: "include",
+        });
+        if (!userResponse.ok) throw new Error("Failed to fetch user details");
+        const userData = await userResponse.json();
+        setName(userData.data.userName);
+
+        // Calculate total durations for courses
+        const durations = {};
+        for (const course of coursesData) {
+          const totalDuration = await fetchCourseDuration(course.lectures);
+          durations[course._id] = totalDuration;
+        }
+        setCourseDurations(durations);
+      } catch (error) {
+        setError(error.message);
       }
-    ]
+    };
+
+    fetchData();
+  }, []);
+
+  const fetchCourseDuration = async (lectures) => {
+    const durations = await Promise.all(
+      lectures.map((lecture) => getVideoDuration(lecture.videoUrl))
+    );
+    return durations.reduce((total, duration) => total + duration, 0);
+  };
+
+  const getVideoDuration = async (videoUrl) => {
+    return new Promise((resolve, reject) => {
+      const videoElement = document.createElement("video");
+      videoElement.src = videoUrl;
+      videoElement.onloadedmetadata = () => resolve(videoElement.duration);
+      videoElement.onerror = () => reject("Error loading video");
+    });
+  };
+
+  const formatTime = (time) => {
+    const hours = Math.floor(time / 3600);
+    const minutes = Math.floor((time % 3600) / 60);
+    const seconds = Math.floor(time % 60);
+    return `${hours > 0 ? `${hours}:` : ""}${minutes < 10 ? `0${minutes}` : minutes}:${
+      seconds < 10 ? `0${seconds}` : seconds
+    }`;
   };
 
   const handleOpenCourse = (courseId) => {
-    console.log(`Opening course: ${courseId}`);
+    navigate(`/user/lecture/${courseId}`);
   };
 
   const handleSearchChange = (e) => {
@@ -53,8 +82,7 @@ const AllCourses = () => {
 
   return (
     <div className="dashboard">
-      {/* Header */}
-      <header className="header">
+      <header className="header1">
         <div className="header-content">
           <div className="brand">
             <BookOpen className="brand-icon" />
@@ -84,24 +112,22 @@ const AllCourses = () => {
               <div className="avatar">
                 <User className="avatar-icon" />
               </div>
-              <span className="user-name">{user.name}</span>
-              <ChevronDown />
+              <span className="user-name">{name}</span>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="main-content">
-        {/* Page Header */}
         <div className="page-header">
           <h1 className="page-title">My Learning Dashboard</h1>
           <p className="page-description">Explore your courses and continue learning</p>
         </div>
 
-        {/* Courses Grid */}
+        {error && <p className="error-message">{error}</p>}
+
         <div className="courses-grid">
-          {user.courses.map((course) => (
+          {courses.map((course) => (
             <div key={course.id} className="course-card">
               <div className="course-image-container">
                 <img
@@ -118,22 +144,26 @@ const AllCourses = () => {
                 <div className="course-meta">
                   <div className="meta-item">
                     <User className="meta-icon" />
-                    <span>{course.instructor}</span>
+                    <span>{course.createdBy}</span>
                   </div>
                   <div className="meta-item">
                     <Clock className="meta-icon" />
-                    <span>{course.duration}</span>
+                    <span>
+                      {courseDurations[course._id]
+                        ? formatTime(courseDurations[course._id])
+                        : "Loading..."}
+                    </span>
                   </div>
                   <div className="meta-item">
                     <Star className="meta-icon" />
-                    <span>{course.rating}</span>
+                    <span>4.4</span>
                   </div>
                 </div>
 
                 <div className="course-actions">
                   <button
                     className="action-button primary-button"
-                    onClick={() => handleOpenCourse(course.id)}
+                    onClick={() => handleOpenCourse(course._id)}
                   >
                     Start Course
                   </button>
