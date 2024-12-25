@@ -16,7 +16,12 @@ import { deleteFromCart, getCartdetail } from "../controllers/getcart.controller
 import { getCourses } from "../controllers/instruct.course.controller.js";
 import { addComment, addReview } from "../controllers/review.controller.js";
 import { searchCourse } from "../controllers/search.controller.js";
+
+import { getRecommendation } from "../controllers/recommend.controller.js";
+
+
 import myCourses from "../controllers/getMyCourses.controller.js";
+
 
 const router = Router();
 
@@ -58,7 +63,7 @@ router.get("/lecture/:courseId",getLecture)
 
 
 router.get("/dashboard/search",searchCourse)
-
+router.get("/student-dashboard/recommend",getUser,getRecommendation);
 
 
 router.post("/checkout", checkout);
