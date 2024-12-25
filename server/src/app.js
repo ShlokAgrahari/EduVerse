@@ -51,4 +51,6 @@ app.use("/payment-verification",router)
 app.use("/auth/google",router);
 
 app.use("/dashboard/search",router)
+app.use("/student-dashboard/recommend",router);
+
 export default app;

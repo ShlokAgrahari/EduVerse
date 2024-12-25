@@ -14,7 +14,7 @@ const registerUser = asyncHandler(async (req, res) => {
     console.log("Register user function triggered");
     const { userName,phone,userEmail, password, role, loginType } = req.body;
     console.log(req.body)
-
+    
     if (!(userName && userEmail && password)) {
         throw ApiError(400, "All fields are required");
     }
@@ -35,7 +35,7 @@ const registerUser = asyncHandler(async (req, res) => {
         loginType,
     });
 
-    const token = jsonwebtoken.sign({ id: user._id,username:user.userName }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRY });
+    const token = jsonwebtoken.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRY });
 
     user.token = token;
     user.password = undefined;
