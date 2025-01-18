@@ -18,6 +18,8 @@ import PrivateRoute from './PrivateRoute.js';
 import LecturePage from './LecturePage.js'
 import AllCourses from './AllCourses.js'
 import Certificate from './Certificate.js';
+import  Loader  from './Loader.js';
+
 
 const App = () => {
   const [userRole, setUserRole] = useState('student');
@@ -31,9 +33,10 @@ const App = () => {
   return (
     <div className="app">
     
-      <div className="main-content" style={{marginLeft:0,marginRight:0,padding:0}}>
+      
+        
         <Routes>
-
+        <Route path='/loader' element={<Loader/>}/>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<GoogleAuthWrapper/>} />
         <Route path="/signup" element={<SignupPage />} />
@@ -52,7 +55,7 @@ const App = () => {
           <Route path="my-courses" element={<AllCourses />} />
         </Route>
         </Routes>
-      </div>
+     
    
     </div>
   );
