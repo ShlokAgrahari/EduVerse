@@ -293,6 +293,7 @@ body {
   }
 }
 
+
  /* font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
@@ -300,6 +301,7 @@ body {
     color: #333;
     box-sizing: border-box; */
   
+
   .dashboard {
     display: flex;
     flex-direction: column;

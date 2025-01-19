@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { Upload, Plus, Trash2, Save, XCircle } from 'lucide-react';
 import './CreateCourse.css';
-
+import { useNavigate } from 'react-router-dom';
+import Loader from './Loader';
 const CreateCourse = () => {
+  const navigate = useNavigate(); 
+  const [isLoading, setIsLoading] = useState(false);
   const [videoFile, setVideoFile] = useState(null);
   const [course, setCourse] = useState({
     title: '',
@@ -67,6 +70,7 @@ const CreateCourse = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true); 
     console.log(course);
     const fdata = new FormData();
     fdata.append('title', course.title);
@@ -95,6 +99,7 @@ const CreateCourse = () => {
       if (!response.ok) {
         throw new Error('Failed to create course');
       }
+      navigate('/user/instructor-dashboard');
       const data = await response.json();
       console.log(data.lectures); 
       console.log('Data:', data);
@@ -102,7 +107,9 @@ const CreateCourse = () => {
       console.error('Error occurred:', error);
     }
   };
-
+  if (isLoading) {
+    return <Loader />; 
+  }
   return (
     <div className="design-container">
       <div className="design-header">
