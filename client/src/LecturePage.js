@@ -7,7 +7,7 @@ import {
   X,
   CheckSquare,
   Columns,
-  Square,
+  Square, 
   Star,
 } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -233,6 +233,23 @@ const LecturePage = () => {
       window.removeEventListener('keydown', handleEscapeKey);
     };
   }, [isFullScreen]);
+
+
+  const checklecture = async(lectureId)=>{
+    try {
+      const res = await fetch(`http://localhost:8000/lecture/${courseId}/check`,{
+        method:"POST",
+        headers: { 'Content-Type': 'application/json' },
+        credentials: "include",
+        body: JSON.stringify({lectureId}),
+      });
+      if(!res.ok){
+        throw new Error((await res.json()).message || "Something went wrong");
+      }
+    } catch (error) {
+      console.log("checkbox error is",error);
+    }
+  }
   
 
   return (
@@ -371,6 +388,7 @@ const LecturePage = () => {
                     onClick={(e) => {
                       e.stopPropagation(); // Prevents the click event from bubbling up
                       toggleLectureCompletion(lecture.index);
+                      checklecture(lecture._id);
                     }}
                   >
                     {completedLectures[lecture.index] ? (

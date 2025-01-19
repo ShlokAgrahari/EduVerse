@@ -45,6 +45,7 @@ app.use("/student-dashboard/rating",router);
 app.use("/student-dashboard/comment",router);
 
 app.use("/lecture/:courseId",router)
+app.use("/lecture/:courseId/check",router);
 
 app.use("/payment-verification",router)
 

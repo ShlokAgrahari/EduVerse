@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { mongo, Schema } from "mongoose";
 
 const CartSchema = new mongoose.Schema({
     courseId:{
@@ -19,6 +19,18 @@ const CartSchema = new mongoose.Schema({
     },
 });
 
+const lectureSchema = new mongoose.Schema({
+    lectureId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Course",
+        required:true,
+    },
+    complete:{
+        type:Boolean,
+        default: false,
+    },
+});
+
 const SubscriptionSchema = new mongoose.Schema({
     courseId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -28,6 +40,11 @@ const SubscriptionSchema = new mongoose.Schema({
     courseName:{
         type:String,
         required:true,
+    },
+    allecture:[lectureSchema],
+    completed:{
+        type:Boolean,
+        default:false,
     },
     subscriptionDate: {
         type: Date,
