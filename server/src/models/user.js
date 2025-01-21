@@ -52,6 +52,19 @@ const SubscriptionSchema = new mongoose.Schema({
     },
 });
 
+SubscriptionSchema.pre("save",async function(next){
+    if(this.isNew){
+        const course = await mongoose.model("Course").findById(this.courseId).select("lectures");
+        if(course && course.lectures){
+            this.allecture = course.lectures.map((lecture)=>({
+                lectureId: lecture._id,
+                complete: false,
+            }));
+        }
+    }
+    next();
+}); 
+
 const UserSchema = new Schema({
     userName: {
         type: String,

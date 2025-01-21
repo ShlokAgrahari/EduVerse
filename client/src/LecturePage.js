@@ -1,4 +1,4 @@
-import React, { useState,useEffect, useRef,useMemo } from 'react';
+import React, { useState,useEffect, useRef,useMemo, useDebugValue} from 'react';
 
 import { 
   Maximize, 
@@ -165,6 +165,30 @@ const LecturePage = () => {
   );
   const videoContainerRef = useRef(null);
 
+
+  // --------------------  function to fetch completed lecture ----------------
+
+  const [finishedLecture,setfinishedLecture] = useState([]);
+  const [mark,setmark] = useState(0);
+
+  useEffect(()=>{
+    const compLecture = async()=>{
+      const response = await fetch(`http://localhost:8000/lecture/${courseId}/completed`,{
+        method:"GET",
+        credentials:'include',
+      });
+      if(!response.ok){
+        throw new Error('Failed to fetch lectures');
+      }
+      const result =await response.json();
+      setfinishedLecture(result.data);
+      console.log("completed lecture:",result.data);
+    }
+    compLecture();
+  },[mark]);
+
+
+
   const handleAddComment = () => {
     if (newComment.trim()) {
       const newCommentData = {
@@ -246,8 +270,23 @@ const LecturePage = () => {
       if(!res.ok){
         throw new Error((await res.json()).message || "Something went wrong");
       }
+      setmark(mark+1);
     } catch (error) {
       console.log("checkbox error is",error);
+    }
+  }
+
+  const [showmessage,setshowmessage] = useState(false);
+
+  const handleDownload = ()=>{
+    if(finishedLecture.length == totalLectures){
+      navigate(`/${courseId}/completion-certificate`);
+    }
+    else{
+      setshowmessage(true);
+      setTimeout(() => {
+        setshowmessage(false);
+      }, 10000);
     }
   }
   
@@ -261,6 +300,26 @@ const LecturePage = () => {
           <a href="/courses">Courses</a>
           <a href="/about">About</a>
           <a href="/contact">Contact</a>
+          <button onClick={handleDownload}>Download certificate</button>
+          {showmessage && (
+        <div
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            color: 'white',
+            padding: '20px',
+            borderRadius: '8px',
+            textAlign: 'center',
+            zIndex: 1000,
+            width: '300px',
+          }}
+        >
+          <p>Complete all lectures first!</p>
+        </div>
+      )}
         </nav>
       </header>
 

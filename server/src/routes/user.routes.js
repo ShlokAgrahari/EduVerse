@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { registerUser, loginUser, test, googleLogin } from "../controllers/user.controller.js";
+import { registerUser, loginUser, test, googleLogin, getDetail } from "../controllers/user.controller.js";
 import { addCourse } from "../controllers/course.controller.js";
 import { addCart } from "../controllers/cart.controller.js";
 import newCourse from "../models/course.js";
@@ -9,7 +9,7 @@ import getUser from "../middlewares/auth.middleware.js";
 //import courses from "../controllers/course.controller.js";
 import {getinfo} from "../controllers/user.controller.js";
 import { checkout,paymentVerification } from "../controllers/payment.controller.js";
-import { completeLecture, getLecture } from "../controllers/lecture.controller.js";
+import { completeLecture, getLecture, isComplete } from "../controllers/lecture.controller.js";
 import { deleteFromCart, getCartdetail } from "../controllers/getcart.controller.js";
 
 
@@ -69,6 +69,8 @@ router.get("/student-dashboard/recommend",getUser,getRecommendation);
 router.post("/checkout", checkout);
 router.post("/payment-verification",getUser,paymentVerification)
 router.post("/lecture/:courseId/check",getUser,completeLecture);
+router.get("/lecture/:courseId/completed",getUser,isComplete);
+router.get("/getdetail/:courseId",getUser,getDetail);
 
 
 //router.get("/stdhome",async(req,res)=>{
