@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Certificate.css";
 import completionBadge from "./completion-badge.png";
 import logoImage from "./logo.png";
@@ -7,8 +7,33 @@ import student from './student.png'
 import html2pdf from 'html2pdf.js';
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
+import { useParams } from "react-router-dom";
 
 const Certificate = () => {
+
+    const {courseId} = useParams();
+    const [userName,setuserName] = useState("");
+    const [courseName,setcourseName] = useState("");
+
+    useEffect(()=>{
+      const getDetail = async () => {
+        const response = await fetch(`http://localhost:8000/getdetail/${courseId}`,{
+          method:"GET",
+          credentials:"include",
+        });
+        if(!response.ok){
+          throw new Error('Failed to fetch details');
+        }
+        const result = await response.json();
+        const {name,course} = result.data.Detail;
+        setuserName(name);
+        setcourseName(course);
+      }
+      getDetail();
+    },[]);
+
+
+
 
     useEffect(() => {
         const generatePDF = async () => {
@@ -86,7 +111,7 @@ const Certificate = () => {
     color: '#333',     // Optional, sets text color
   }}
 >
-  This is to certify that NAME has successfully completed the online course COURSE NAME of duration HOURS on DATE.
+  This is to certify that {userName} has successfully completed the online course {courseName} of duration HOURS on DATE.
 </p>
 
               </div>

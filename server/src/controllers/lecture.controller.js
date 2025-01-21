@@ -48,4 +48,26 @@ const completeLecture = asyncHandler(async(req,res)=>{
     }
 })
 
-export {getLecture,completeLecture};
+
+
+const isComplete = asyncHandler(async(req,res)=>{
+    const {courseId} = req.params;
+    const userId = req.user._id;
+    console.log("iscomplete functions is triggered");
+    try {
+        const user = await User.findById(userId);
+        if(!user){
+            throw ApiError(401,"user does not found");
+        }
+        const course = user.subscription.find((sub)=>sub.courseId.toString() === courseId);
+        if(!course){
+            throw ApiError(401,"course does not found");
+        }
+        const completedLectures = course.allecture.filter(lecture => lecture.complete);
+        res.status(200).json(ApiResponse(200,completedLectures,"fetched completed lectures"));
+    } catch (error) {
+        res.status(500).json({message:"server error"});
+    }
+})
+
+export {getLecture,completeLecture,isComplete};

@@ -46,6 +46,7 @@ app.use("/student-dashboard/comment",router);
 
 app.use("/lecture/:courseId",router)
 app.use("/lecture/:courseId/check",router);
+app.use("/lecture/:courseId/completed",router);
 
 app.use("/payment-verification",router)
 
@@ -53,5 +54,6 @@ app.use("/auth/google",router);
 
 app.use("/dashboard/search",router)
 app.use("/student-dashboard/recommend",router);
+app.use("/getdetail/:courseId",router);
 
 export default app;
