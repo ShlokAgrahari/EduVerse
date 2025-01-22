@@ -31,7 +31,7 @@ const LoginPage = () => {
             });
 
             if (!res.ok) {
-                const errorData = await res.json(); // Retrieve error message from response
+                const errorData = await res.json();
                 console.log(errorData.message);
                 setError(errorData.message);
                 throw new Error(errorData.message || "Something went wrong"); // Pass the error message to catch block
@@ -61,7 +61,7 @@ const LoginPage = () => {
             
 
         }catch(error){
-            console.log("error is ",error);
+            console.log("error is ",error.message);
             setError(error.message);
         }
     };

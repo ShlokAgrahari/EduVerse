@@ -2,6 +2,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
 import User from "../models/user.js";
+import newCourse from "../models/course.js";
 import bcrypt from "bcryptjs";
 import jsonwebtoken from "jsonwebtoken";
 import cookieParser from "cookie-parser";
@@ -162,4 +163,28 @@ const googleLogin = asyncHandler(async(req,res)=>{
     }
 });
 
-export { registerUser, loginUser,googleLogin, test ,logoutUser ,getinfo};
+const getDetail = asyncHandler(async(req,res)=>{
+    const {courseId} = req.params;
+    const userId = req.user._id;
+
+    try {
+        const user = await User.findById(userId);
+        if(!user){
+            throw ApiError(401,"user does not found");
+        }
+        const currcourse = await newCourse.findById(courseId);
+        if (!currcourse) {
+            return res.status(404).json({ message: "Course not found" });
+        }
+        const detail = {
+            name:user.userName,
+            course:currcourse.title,
+        }
+        return res.status(200).json(ApiResponse(200,{detail},"fetched detail"));
+    } catch (error) {
+        console.log("get detail error is ",error);
+    }
+})
+
+
+export { registerUser, loginUser,googleLogin, test ,logoutUser ,getinfo,getDetail};

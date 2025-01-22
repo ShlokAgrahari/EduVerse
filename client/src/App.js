@@ -47,7 +47,7 @@ const App = () => {
          {/* Route for Student Dashboard */}
         <Route path="/" element={<StudentDashboard />} />
         <Route path="/coursedetails/:courseId" element={<CourseDetails />} />
-        <Route path='/completion-certificate' element={<Certificate/>}/>
+        <Route path="/:courseId/completion-certificate" element={<Certificate/>}/>
         
         <Route path="/user" element = {<PrivateRoute/>}>
           <Route path="student-dashboard" element={<StudentDashboard />} />

@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { mongo, Schema } from "mongoose";
 
 const CartSchema = new mongoose.Schema({
     courseId:{
@@ -19,6 +19,18 @@ const CartSchema = new mongoose.Schema({
     },
 });
 
+const lectureSchema = new mongoose.Schema({
+    lectureId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Course",
+        required:true,
+    },
+    complete:{
+        type:Boolean,
+        default: false,
+    },
+});
+
 const SubscriptionSchema = new mongoose.Schema({
     courseId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -29,11 +41,29 @@ const SubscriptionSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
+    allecture:[lectureSchema],
+    completed:{
+        type:Boolean,
+        default:false,
+    },
     subscriptionDate: {
         type: Date,
         default: Date.now,
     },
 });
+
+SubscriptionSchema.pre("save",async function(next){
+    if(this.isNew){
+        const course = await mongoose.model("Course").findById(this.courseId).select("lectures");
+        if(course && course.lectures){
+            this.allecture = course.lectures.map((lecture)=>({
+                lectureId: lecture._id,
+                complete: false,
+            }));
+        }
+    }
+    next();
+}); 
 
 const UserSchema = new Schema({
     userName: {
