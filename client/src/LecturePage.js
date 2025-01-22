@@ -309,6 +309,7 @@ const LecturePage = () => {
           <div className="comments-section">
             <div className="comments-header">
               <h3>{comments.length} Comments</h3>
+              <button>Connect</button>
             </div>
 
             <div className="add-comment">

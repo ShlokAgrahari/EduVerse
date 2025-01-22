@@ -21,6 +21,7 @@ import { getRecommendation } from "../controllers/recommend.controller.js";
 
 
 import myCourses from "../controllers/getMyCourses.controller.js";
+import { getMessages, getUserForSidebar, sendMessages } from "../controllers/message.controller.js";
 
 
 const router = Router();
@@ -70,6 +71,10 @@ router.post("/checkout", checkout);
 router.post("/payment-verification",getUser,paymentVerification)
 
 
+router.get("/messages/users",getUser,getUserForSidebar)
+router.get("/messages/:id",getUser,getMessages)
+
+router.post("/messages/send/:id",getUser,sendMessages)
 //router.get("/stdhome",async(req,res)=>{
 //    res.json(courses);
 //});

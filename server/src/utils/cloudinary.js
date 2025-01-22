@@ -18,8 +18,11 @@ const uploadOnCloudinary=async(localFilePath)=>{
         console.log("file is uploaded on cloudinary",response.url);
 
         try {
-            fs.unlinkSync(localFilePath);
-            console.log("File deleted from local server:", localFilePath);
+            if (fs.existsSync(localFilePath)) {
+                fs.unlinkSync(localFilePath);
+              }
+              
+            console.log("File deleted from local server:");
         } catch (unlinkError) {
             console.error("Error deleting local file after successful upload:", unlinkError);
         }

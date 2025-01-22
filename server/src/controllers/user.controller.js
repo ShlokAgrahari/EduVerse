@@ -79,6 +79,7 @@ const loginUser = asyncHandler(async (req, res) => {
         secure: false,
         domain: "localhost"
     };
+    console.log(user);
     return res.status(200).cookie("token", token, options).json(ApiResponse(200, { user }, "Successfully logged in"));
 });
 

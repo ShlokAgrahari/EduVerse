@@ -3,7 +3,8 @@ import { ShoppingCart, LogOut, ChevronLeft, ChevronRight, User } from 'lucide-re
 import { useNavigate } from 'react-router-dom';
 import logo from './logo.png';
 import './StudentDashboard.css';
-
+import { disconnectSocket } from './socketManager';
+import { getSocket,getOnlineUsers } from './socketManager';
 const CourseCard = ({ courseId, title, createdBy, pricing, image, handleNavigation }) => (
   <div className="course-card">
     <img src={image} alt={title} className="course-image" />
@@ -47,6 +48,12 @@ const StudentDashboard = () => {
       const user = await response2.json(); 
       console.log(user.data.phone)
       console.log(user.data.userEmail)
+      const socket =await getSocket();
+
+    // Get list of online users
+    
+    console.log("socket",socket.connected);
+    console.log(getOnlineUsers());
       setname(user.data.userName)
       } catch (error) {
         console.error("Error fetching courses:", error);
@@ -56,6 +63,7 @@ const StudentDashboard = () => {
     fetchCourses();
   }, []);
 
+  
   const handleNavigation = (courseId) => {
     navigate(`/coursedetails/${courseId}`);
   };
@@ -69,11 +77,13 @@ const StudentDashboard = () => {
 
       if (res.ok) {
         console.log("Logged out");
+        disconnectSocket();
       }
     } catch (error) {
       console.log("Error:", error);
     }
   };
+
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev === carouselImages.length - 1 ? 0 : prev + 1));
