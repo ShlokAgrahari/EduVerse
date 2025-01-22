@@ -4,7 +4,8 @@ import { Link, useNavigate } from 'react-router-dom'; // useNavigate instead of 
 import { FaGoogle,  FaUser, FaLock } from 'react-icons/fa';
 import './LoginPage.css';
 import {useGoogleLogin} from "@react-oauth/google";
-
+import {io} from "socket.io-client"
+import { initializeSocket } from './socketManager';
 const LoginPage = () => {
     const [userEmail, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -12,6 +13,7 @@ const LoginPage = () => {
     const [errmsg,setError] = useState('');
     const navigate = useNavigate(); // useNavigate hook
 
+    const onlineUsers = {};
 
     const handleSubmit = async(e) => {
         e.preventDefault();
@@ -47,12 +49,15 @@ const LoginPage = () => {
             if (!data) {
                 throw new Error("Unexpected response format");
             }
+           console.log("this is data",data);
 
+           initializeSocket(data.data.user._id);
 
-            const navRole = (role === 'student') ? '/user/student-dashboard' : '/user/instructor-dashboard';
-            navigate(`${navRole}`)
-            setEmail("");
-            setPassword("");
+           const navRole = (role === 'student') ? '/user/student-dashboard' : '/user/instructor-dashboard';
+           navigate(`${navRole}`);
+           
+           setEmail("");
+           setPassword("");
             
 
         }catch(error){
@@ -87,7 +92,10 @@ const LoginPage = () => {
         }
     };
 
-
+    const connectSocket=async()=>{
+        const socket=io("http://localhost:8000")
+        socket.connect();
+    }
     const responseGoogle = async(authResult)=>{
         try {
             const result = await googleAuth(authResult.code,role);
@@ -97,6 +105,7 @@ const LoginPage = () => {
                 console.log(email);
                 console.log(name);
             console.log(authResult);
+            initializeSocket(result.data.user._id);
             }
 
             const navRole = (role === 'student') ? '/user/student-dashboard' : '/user/instructor-dashboard';
@@ -199,4 +208,4 @@ const LoginPage = () => {
     );
 };
 
-export default LoginPage;
+export {LoginPage};

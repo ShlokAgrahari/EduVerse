@@ -21,6 +21,7 @@ import { getRecommendation } from "../controllers/recommend.controller.js";
 
 
 import myCourses from "../controllers/getMyCourses.controller.js";
+import { getMessages, getUserForSidebar, sendMessages } from "../controllers/message.controller.js";
 
 
 const router = Router();
@@ -73,6 +74,10 @@ router.get("/lecture/:courseId/completed",getUser,isComplete);
 router.get("/getdetail/:courseId",getUser,getDetail);
 
 
+router.get("/messages/users",getUser,getUserForSidebar)
+router.get("/messages/:id",getUser,getMessages)
+
+router.post("/messages/send/:id",getUser,sendMessages)
 //router.get("/stdhome",async(req,res)=>{
 //    res.json(courses);
 //});

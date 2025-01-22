@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import StudentDashboard from './StudentDashboard';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Routes, Route } from 'react-router-dom';
-import LoginPage from './LoginPage';
+import {LoginPage} from './LoginPage';
 import SignupPage from './SignupPage.js';
 import HomePage from './HomePage.js';
 import './App.css';
@@ -19,7 +19,8 @@ import LecturePage from './LecturePage.js'
 import AllCourses from './AllCourses.js'
 import Certificate from './Certificate.js';
 import  Loader  from './Loader.js';
-
+import ChatPage from './ChatPage.js';
+import { AuthProvider } from './AuthContext.js';
 
 const App = () => {
   const [userRole, setUserRole] = useState('student');
@@ -31,11 +32,14 @@ const App = () => {
   )
 
   return (
+    <AuthProvider>
     <div className="app">
-    
+        
       
         
         <Routes>
+
+        <Route path="/connect" element={<ChatPage/>}/>
         <Route path='/loader' element={<Loader/>}/>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<GoogleAuthWrapper/>} />
@@ -58,6 +62,7 @@ const App = () => {
      
    
     </div>
+    </AuthProvider>
   );
 };
 

@@ -51,14 +51,13 @@ const CourseDetails = () => {
 
             {/* Navbar with Previous Content */}
    
-            <nav className="navbar1">
+            <nav className="navbar5">
                 <button className="nav-link1">Home</button>
                 <button className="nav-link1">Courses</button>
                 <button className="nav-link1">Affiliates</button>
                 <button className="nav-link1">About</button>
                 <button className="nav-link1">Contact</button>
                 <button className="nav-link1 cart-button" onClick={() => navigate("/user/cart")}>🛒 Cart</button>
-
             </nav>
             
             <div className="content-container">
