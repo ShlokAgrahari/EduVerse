@@ -3,6 +3,7 @@ import { ShoppingCart, LogOut, ChevronLeft, ChevronRight, User } from 'lucide-re
 import { useNavigate } from 'react-router-dom';
 import logo from './logo.png';
 import './StudentDashboard.css';
+import SearchBar from './components/searchbar';
 
 const CourseCard = ({ courseId, title, createdBy, pricing, image, handleNavigation }) => (
   <div className="course-card">
@@ -105,6 +106,19 @@ const StudentDashboard = () => {
           </button>
         </div>
       </header>
+
+      <div className='student-navbar'>
+        <div className='Search-option'>
+          <SearchBar/>
+        </div>
+        <div className='nav-button'>
+          <ul className='basicbtn'>
+            <li>Home</li>
+            <li>Contact Us</li>
+            <li>About</li>
+          </ul>
+        </div>
+      </div>
 
       <main className="dashboard-main">
         <div className="carousel-container">

@@ -62,11 +62,11 @@ const loginUser = asyncHandler(async (req, res) => {
 
     const user = await User.findOne({ userEmail });
     if (!user) {
-        throw ApiError(409, "User does not exist");
+        return res.status(400).json({message:"user does not exist!"});
     }
 
     if (!(await bcrypt.compare(password, user.password))) {
-        throw ApiError(401, "Invalid credentials");
+        return res.status(404).json({message:"password is incorrect!"});
     }
 
     const token = jsonwebtoken.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRY });

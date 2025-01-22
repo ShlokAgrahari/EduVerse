@@ -4,7 +4,7 @@
   --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
   --secondary-gradient: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
   --surface-color: #ffffff;
-  --background-color: #283593;
+  --background-color: #024CAA;
   --text-primary: #1e293b;
   --text-secondary: #64748b;
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
@@ -37,7 +37,7 @@ body {
 
 /* Header Styles */
 .dashboard-header {
-  background-color: #283593;
+  background-color: #024CAA;
   padding: 1rem 2.5rem;
   box-shadow: var(--shadow-sm);
   position: sticky;
@@ -373,11 +373,23 @@ body {
 /* Footer */
 .dashboard-footer {
   padding: 2rem;
-  background: var(--background-color);
+  background: #024CAA;
   color: #ffffff;
   text-align: center;
   font-size: 0.9rem;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+}
+
+.student-navbar{
+  display: flex;
+}
+
+.basicbtn{
+  display: flex;
+}
+
+.Search-option{
+  border: solid #024CAA ;
 }

@@ -29,7 +29,7 @@ const LoginPage = () => {
             });
 
             if (!res.ok) {
-                const errorData = await res.json();
+                const errorData = await res.json(); // Retrieve error message from response
                 console.log(errorData.message);
                 setError(errorData.message);
                 throw new Error(errorData.message || "Something went wrong"); // Pass the error message to catch block
@@ -56,7 +56,7 @@ const LoginPage = () => {
             
 
         }catch(error){
-            console.log("error is ",error.message);
+            console.log("error is ",error);
             setError(error.message);
         }
     };
@@ -167,6 +167,7 @@ const LoginPage = () => {
                             />
                         </div>
                     </div>
+                    <p style={{color:errmsg?"red":"white"}}>{errmsg}</p>
 
                     <button type="submit" className="login-button">Login</button>
                 </form>
