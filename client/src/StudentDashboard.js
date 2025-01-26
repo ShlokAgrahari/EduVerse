@@ -26,11 +26,16 @@ const StudentDashboard = () => {
   const [name,setname]=useState('')
 
   const carouselImages = [
-    "https://media.istockphoto.com/id/1610418898/photo/online-survey-and-digital-form-checklist-by-laptop-computer-document-management-checking.webp?a=1&b=1&s=612x612&w=0&k=20&c=1TG9GIWnPyVXAGsIiXKkM3rHB_6MbENTTUu9ehIk4uo=",
-    "https://media.istockphoto.com/id/2105091005/photo/young-student-taking-notes-while-e-learning-on-laptop-at-the-university.webp?a=1&b=1&s=612x612&w=0&k=20&c=frHL5Va1wVqHaWLaXsbmxqmkoJq3WxHbw7Qt6Q4vOfA=",
-    "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8c3R1ZHl8ZW58MHx8MHx8fDA%3D"
+    "https://img.freepik.com/free-photo/woman-working-office_144627-44195.jpg?t=st=1737640211~exp=1737643811~hmac=3402c5a94d17cbf396b615f26def61d535e02ccd2ee022e1b0ce1fa31d2f1fa9&w=996",
+    "https://img.freepik.com/free-photo/crop-woman-writing-notepad_23-2147863488.jpg?t=st=1737640582~exp=1737644182~hmac=45b27cd8bdced3fd353803cb92a48049241faedfbc64b941117896d2577769f4&w=1060",
+    "https://img.freepik.com/free-photo/programming-background-collage_23-2149901766.jpg?t=st=1737641210~exp=1737644810~hmac=664450102534678fe84699ae1ba5cee28e67ad390c113cfaf03933234a4ef6cd&w=996"
   ];
 
+  const line = [
+    "Explore, learn, and thrive with EduVerse.",
+    "Empower your learning journey with EduVerse today.",
+    "EduVerse: Best faculty, boundless opportunities."
+  ];
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -80,6 +85,7 @@ const StudentDashboard = () => {
       if (res.ok) {
         console.log("Logged out");
         disconnectSocket();
+        navigate("/");
       }
     } catch (error) {
       console.log("Error:", error);
@@ -93,6 +99,12 @@ const StudentDashboard = () => {
 
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev === 0 ? carouselImages.length - 1 : prev - 1));
+  };
+
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
   };
 
   return (
@@ -122,11 +134,14 @@ const StudentDashboard = () => {
         <div className='Search-option'>
           <SearchBar/>
         </div>
-        <div className='nav-button'>
+        <button className="menu-button" onClick={toggleMenu}>
+          &#9776; {/* Hamburger icon */}
+        </button>
+        <div className={`nav-button ${menuOpen ? 'show' : 'hide'}`}>
           <ul className='basicbtn'>
-            <li>Home</li>
-            <li>Contact Us</li>
-            <li>About</li>
+            <li >Home</li>
+            <li >Contact Us</li>
+            <li >About</li>
           </ul>
         </div>
       </div>
@@ -140,10 +155,9 @@ const StudentDashboard = () => {
                 className={`carousel-image ${currentSlide === index ? 'active' : ''}`}
                 style={{ backgroundImage: `url(${image})` }}
               >
-                <div className="carousel-text">
-                  <h2>Explore Online Courses</h2>
-                  <p>Learn from the best instructors worldwide.</p>
-                </div>
+                  <div className="carousel-text">
+                    <h2>{line[index]}</h2>
+                  </div>      
               </div>
             ))}
           </div>
@@ -163,6 +177,8 @@ const StudentDashboard = () => {
             ))}
           </div>
         </div>
+
+        <div></div>
 
         <section className="dashboard-stats">
           <div className="stat-card">
