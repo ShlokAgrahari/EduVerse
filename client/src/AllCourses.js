@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BookOpen, Clock, Star, User, Bell, Search } from "lucide-react";
 import "./AllCourses.css";
 import { useNavigate } from "react-router-dom";
+import logo from './logo.png';
 
 const AllCourses = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -84,11 +85,11 @@ const AllCourses = () => {
     <div className="dashboard">
       <header className="header1">
         <div className="header-content">
-          <div className="brand">
-            <BookOpen className="brand-icon" />
-            <span className="brand-name">EduLearn Pro</span>
+          <div className="logo3">
+            <img id="idk3" src={logo} alt="Logo" />
+             <h1 id="yes3">EduVerse</h1>
           </div>
-
+{/* 
           <div className="search-container">
             <div className="search-wrapper">
               <div className="search-icon-wrapper">
@@ -102,7 +103,7 @@ const AllCourses = () => {
                 onChange={handleSearchChange}
               />
             </div>
-          </div>
+          </div> */}
 
           <div className="user-menu">
             <button className="notification-button">
@@ -126,9 +127,9 @@ const AllCourses = () => {
 
         {error && <p className="error-message">{error}</p>}
 
-        <div className="courses-grid">
+        <div className="courses-grid11">
           {courses.map((course) => (
-            <div key={course.id} className="course-card">
+            <div key={course.id} className="course-card11">
               <div className="course-image-container">
                 <img
                   src={course.image}
@@ -138,23 +139,15 @@ const AllCourses = () => {
                 <span className="course-category">{course.category}</span>
               </div>
 
-              <div className="course-content">
+              <div className="course-content11">
                 <h3 className="course-title">{course.title}</h3>
 
                 <div className="course-meta">
-                  <div className="meta-item">
-                    <User className="meta-icon" />
+                  <div className="meta-item"style={{display:"flex"}}>
+                   <User className="meta-icon" />
                     <span>{course.createdBy}</span>
                   </div>
-                  <div className="meta-item">
-                    <Clock className="meta-icon" />
-                    <span>
-                      {courseDurations[course._id]
-                        ? formatTime(courseDurations[course._id])
-                        : "Loading..."}
-                    </span>
-                  </div>
-                  <div className="meta-item">
+                  <div className="meta-item"style={{display:"flex"}}>
                     <Star className="meta-icon" />
                     <span>4.4</span>
                   </div>

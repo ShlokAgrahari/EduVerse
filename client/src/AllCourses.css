@@ -17,9 +17,28 @@ body {
   overflow-x: hidden;
 }
 
+
+#idk3{
+  margin-left: 20px;
+  width: 5rem;
+  height: 4rem;
+  object-fit: contain;
+}
+
+.logo3 {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #ffffff
+}
+
+#yes3{
+ color: white;
+}
+
 /* Header */
 .header {
-  background-color: #283593;
+  background-color:#024CAA;
   color: #fff;
   padding: 1rem 2rem;
   display: flex;
@@ -145,14 +164,16 @@ body {
 }
 
 /* Courses Section */
-.courses-grid {
-  display: grid;
+.courses-grid11 {
+  display: flex;
+  flex-direction: column;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
   width: 100%;
 }
 
-.course-card {
+.course-card11 {
+  display: flex;
   background-color: #fff;
   border-radius: 8px;
   overflow: hidden;
@@ -161,10 +182,11 @@ body {
   flex-direction: column;
   justify-content: space-between;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  height: 450px;
+  height: auto;
+  max-height: 200px;
 }
 
-.course-card:hover {
+.course-card11:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -192,7 +214,7 @@ body {
   text-transform: uppercase;
 }
 
-.course-content {
+.course-content11 {
   padding: 1rem;
   flex: 1;
   display: flex;
@@ -248,6 +270,14 @@ body {
   justify-content: space-between;
 }
 
+.meta-item{
+  font-size: clamp(0.7rem, 2vw, 1rem);
+}
+.meta-icon{
+  width: clam(0.7rem,2vw,1rem);
+  height: clamp(0.7rem, 2vw, 1rem);;
+}
+
 .action-button {
   padding: 0.5rem 1rem;
   border-radius: 5px;
@@ -284,7 +314,7 @@ body {
     margin: 1rem 0;
   }
 
-  .courses-grid {
+  .courses-grid11 {
     grid-template-columns: 1fr;
   }
 
@@ -311,7 +341,7 @@ body {
   }
   /* Header */
   .header1 {
-    background-color: #283593;
+    background-color:#024CAA;
     color: #fff;
     padding: 1rem 2rem;
     display: flex;
@@ -419,29 +449,35 @@ body {
     color: #555;
   }
   /* Courses Section */
-  .courses-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  .courses-grid11 {
+    display: flex;
+    flex-direction: column;
     gap: 2rem;
     width: 100%;
   }
-  .course-card {
+  .course-card11 {
     background-color: #fff;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    flex-direction: row;
+    /* justify-content: space-between; */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    height: 450px;
+    height: 200px;
+    max-height: 200px;
+
   }
-  .course-card:hover {
+  .course-card11:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
   .course-image-container {
     position: relative;
+    width: 100%;
+    max-width: 300px;
+    object-fit: cover;
+    height: auto;
   }
   .course-image {
     width: 100%;
@@ -460,15 +496,17 @@ body {
     font-weight: bold;
     text-transform: uppercase;
   }
-  .course-content {
-    padding: 1rem;
+  .course-content11 {
+    padding:2rem;
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    height: auto;
   }
   .course-title {
-    font-size: 1.2rem;
+    /* font-size: 1.2rem; */
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
     font-weight: bold;
     color: #283593;
     margin-bottom: 0.5rem;
@@ -510,7 +548,7 @@ body {
   .action-button {
     padding: 0.5rem 1rem;
     border-radius: 5px;
-    font-size: 0.9rem;
+    font-size: clamp(0.5rem, 1.5vw, 0.9rem);
     font-weight: bold;
     cursor: pointer;
     text-align: center;
@@ -537,8 +575,22 @@ body {
     .search-container {
       margin: 1rem 0;
     }
-    .courses-grid {
+    .courses-grid11{
       grid-template-columns: 1fr;
+    }
+    .course-image-container{
+      flex: 2;
+    }
+
+    .course-category{
+      font-size: clamp(0.8rem, 2.5vw, 1rem);
+    }
+    .course-card11{
+      height: 150px;
+    }
+    .course-content11{
+      padding: 16px;
+      flex: 3;
     }
     .user-name {
       display: none;
