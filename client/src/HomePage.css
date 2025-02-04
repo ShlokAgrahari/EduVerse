@@ -24,7 +24,7 @@
     display:flex;
   }
 
-  #idk {
+  #idk10 {
     margin-left: 20px;
     width: 5rem;
     height: 4rem;
@@ -74,6 +74,7 @@
 .search-form {
     display: flex;
     align-items: center;
+    transition: all 0.5s ease-in-out;
 }
 
 .search-form input {
@@ -174,6 +175,9 @@
     margin-top: 10px; 
 }
 
+.search-btn{
+    display: none;
+}
 .footer-links a {
     color: white; 
     margin: 0 10px; 
@@ -184,4 +188,59 @@
 .footer-links a:hover {
     color: #00bfff;
     text-decoration: underline;
+}
+
+
+@media(max-width:660px){
+    .about-edu{
+        display: none;
+    }
+
+    .search-btn{
+        display: block;
+    }
+
+    #idk10{
+        margin-left: 0px;
+    }
+
+    #sitename4{
+        margin-left: 0px;
+        margin-bottom: 0px;
+        padding-top:15px;
+    }
+
+    .content{
+        flex-direction: column;
+    }
+
+    .carousel-wrapper{
+        width: 100%;
+    }
+    .trusted-companies{
+        width: 100%;
+    }
+
+    .navbtn{
+        font-size: clamp(0.4rem,4vw,1rem);
+        padding:8px;
+    }
+
+    .hide3{
+        opacity: 0;
+        width: 0px;
+    }
+
+    .show3{
+       opacity: 1;
+       width: 100%;
+    }
+
+    .hide4{
+        display: flex;
+        gap: 5px;
+    }
+    .show4{
+        display: none;
+    }
 }

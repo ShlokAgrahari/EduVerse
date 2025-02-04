@@ -1,5 +1,6 @@
 // src/components/HomePage.js
-import React from 'react';
+import React, { useState } from 'react';
+import SearchIcon from '@mui/icons-material/Search';
 import { Carousel, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import logo from './logo.png';
@@ -21,35 +22,44 @@ const HomePage = () => {
         'COLLEGE BOARD',
     ];
 
+    const [expand,setexpand] = useState(false);
+    const handlesearch = ()=>{
+        setexpand(!expand);
+    }
+
     return (
         <div className="homepage">
             {/* Header */}
             <header className="homepage-header">
 
             <div className="logo2">
-          <img id="idk" src={logo} alt="Logo" />
+          <img id="idk10" src={logo} alt="Logo" />
 
-            <h2 id="sitename2">Eduverse</h2>
+            <h2 id="sitename4">Eduverse</h2>
             
           </div>
                 
-                <p>Best Teacher | Affordable Pricing | Exclusive Notes</p>
+                <p className='about-edu'>Best Teacher | Affordable Pricing | Exclusive Notes</p>
             </header>
 
             {/* Navigation Bar */}
             <nav className="homepage-navbar">
-                <form className="search-form">
+                <div className='search-btn'>
+                <button onClick={handlesearch} style={{padding:"3px"}}><SearchIcon/></button>
+                </div>
+            
+            <div className={`search-form ${expand?"show3":"hide3"}`}>
                     <SearchBar/>
-                </form>
-                <div className="nav-buttons">
+                </div>
+                <div className={`nav-buttons ${expand? "show4":"hide4"}`}>
                     <Link to="/about">
-                        <Button variant="outline-secondary">About Us</Button>
+                        <Button className='navbtn' variant="outline-secondary">About</Button>
                     </Link>
                     <Link to="/login">
-                        <Button variant="outline-primary">Login</Button>
+                        <Button className='navbtn' variant="outline-primary">Login</Button>
                     </Link>
                     <Link to="/signup">
-                        <Button variant="outline-secondary">Sign Up</Button>
+                        <Button className='navbtn' variant="outline-secondary">SignUp</Button>
                     </Link>
                 </div>
             </nav>

@@ -3,6 +3,7 @@
   --primary-color: #4f46e5;
   --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
   --secondary-gradient: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+  --gradient: linear-gradient(135deg,#eeee7ffe 0%,#ea2d2d 100%);
   --surface-color: #ffffff;
   --background-color: #024CAA;
   --text-primary: #1e293b;
@@ -82,7 +83,7 @@ body {
   align-items: center;
   gap: 0.75rem;
   padding: 0.5rem 1rem;
-  background: var(--background-color);
+  background: var(--gradient);
   border-radius: var(--radius-md);
   transition: all 0.3s ease;
 }
@@ -485,10 +486,10 @@ body {
     background-color: #75abf1;
     color: white;
   }
-  .hide{
+  .hide1{
     opacity: 0;
   }
-  .show{
+  .show1{
     opacity: 1;
   }
 }

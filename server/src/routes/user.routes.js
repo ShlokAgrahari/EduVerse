@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { registerUser, loginUser, test, googleLogin, getDetail } from "../controllers/user.controller.js";
-import { addCourse } from "../controllers/course.controller.js";
+import { addCourse, getCourseDetail } from "../controllers/course.controller.js";
 import { addCart } from "../controllers/cart.controller.js";
 import newCourse from "../models/course.js";
 import { upload } from "../middlewares/multer.middleware.js";
@@ -14,7 +14,7 @@ import { deleteFromCart, getCartdetail } from "../controllers/getcart.controller
 
 
 import { getCourses } from "../controllers/instruct.course.controller.js";
-import { addComment, addReview } from "../controllers/review.controller.js";
+import { addComment, addReview, getReviews } from "../controllers/review.controller.js";
 import { searchCourse } from "../controllers/search.controller.js";
 
 import { getRecommendation } from "../controllers/recommend.controller.js";
@@ -41,6 +41,7 @@ router.get("/student-dashboard/cart",getUser,getCartdetail);
 router.post("/student-dashboard/cart/:courseId",getUser,deleteFromCart);
 
 router.post("/student-dashboard/rating",getUser,addReview);
+router.get("/reviews/:courseId",getReviews);
 router.post("/student-dashboard/comment",getUser,addComment);
 
 router.get("/student-dashboard",async(req,res)=>{
@@ -72,6 +73,7 @@ router.post("/payment-verification",getUser,paymentVerification)
 router.post("/lecture/:courseId/check",getUser,completeLecture);
 router.get("/lecture/:courseId/completed",getUser,isComplete);
 router.get("/getdetail/:courseId",getUser,getDetail);
+router.get("/course/detail",getUser,getCourseDetail);
 
 
 router.get("/messages/users",getUser,getUserForSidebar)

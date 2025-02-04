@@ -86,10 +86,31 @@ const addCourse = asyncHandler(async (req, res) => {
   
     res.status(200).json(ApiResponse(200, newCourseData, "New course added"));
   });
-  
+
+
+  const getCourseDetail = asyncHandler(async(req,res)=>{
+    const userId = req.user._id;
+    try {
+      const user = await User.findById(userId).select("subscription");
+      if(!user){
+        throw ApiError(402,"user does not exist");
+      }
+      const totalcourse = user.subscription.length;
+
+      const compcourse = user.subscription.filter(sub => sub.completed).length;
+      const detail = {
+        numCourse : totalcourse,
+        compCourse : compcourse,
+      };
+
+      return res.status(200).json(ApiResponse(200,{Detail:detail},"fetched course detail"));
+    } catch (error) {
+      console.log("get course detail error is ",error);
+    }
+  });
 
 
 
 
 
-export {addCourse}
+export {addCourse, getCourseDetail}

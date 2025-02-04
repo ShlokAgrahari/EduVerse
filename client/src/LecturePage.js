@@ -1,5 +1,6 @@
 import React, { useState,useEffect, useRef,useMemo, useDebugValue} from 'react';
-
+import { MoveLeft } from 'lucide-react';
+import logo from './logo.png';
 import { 
   Maximize, 
   Settings,
@@ -290,17 +291,25 @@ const LecturePage = () => {
     }
   }
   
+  const [view,setview] = useState(false);
+  const handleView = ()=>{
+    setview(false);
+  }
+
+  const openLecture=()=>{
+    setview(true);
+  }
 
   return (
     <div className={`lecture-page ${isFullScreen ? 'fullscreen' : ''}`}>
-      <header className="header">
-        <div className="logo">EduVerse</div>
-        <nav className="nav-bar">
-          <a href="/home">Home</a>
-          <a href="/courses">Courses</a>
-          <a href="/about">About</a>
-          <a href="/contact">Contact</a>
+      <header className="header-lecture">
+        <div className="logo-lect">
+          <img id="idk-lect" src={logo} alt="Logo" />
+          <h1>EduVerse</h1>
+        </div>
+        <div className='certificate-btn'>
           <button onClick={handleDownload}>Download certificate</button>
+        </div>
           {showmessage && (
         <div
           style={{
@@ -320,8 +329,11 @@ const LecturePage = () => {
           <p>Complete all lectures first!</p>
         </div>
       )}
-        </nav>
       </header>
+
+      <div className='view-btn'>
+        <button onClick={openLecture}>⬅️ View lectures</button>
+      </div>
 
       <div className="main-content1">
         <div className={`video-section ${isFullScreen ? 'fullwidth' : ''}`}>
@@ -423,7 +435,8 @@ const LecturePage = () => {
         </div>
 
         {!isFullScreen && (
-          <div className="recommended-lectures-container">
+          <div className={`recommended-lectures-container ${view? 'show2':'hide2'}`}>
+            <button style={{color:"red"}} className='close-lect' onClick={handleView}>❌ close</button>
             <div className="lectures-header">
               <h3>More Lectures</h3>
               <div className="lecture-progress">

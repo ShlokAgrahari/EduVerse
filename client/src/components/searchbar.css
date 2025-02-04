@@ -1,8 +1,9 @@
 /* Parent container */
-.search-container {
+.search-container2 {
     position: relative; /* Relative to allow absolutely positioned dropdown */
     width: 100%;
     max-width: 400px; /* Adjust based on your layout */
+    margin: 0px;
 }
 
 /* Input box */

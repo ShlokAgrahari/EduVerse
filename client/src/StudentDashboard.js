@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ShoppingCart, LogOut, ChevronLeft, ChevronRight, User } from 'lucide-react';
+import { ShoppingCart, LogOut, ChevronLeft, ChevronRight, User, LucideTabletSmartphone } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import logo from './logo.png';
 import './StudentDashboard.css';
@@ -92,6 +92,26 @@ const StudentDashboard = () => {
     }
   };
 
+  const [coursecompleted,setcoursecompleted] = useState(0);
+  const [totalcourse,settotalcourse] = useState(0);
+
+  useEffect(()=>{
+    const getcompletiondetail = async()=>{
+        const response = await fetch("http://localhost:8000/course/detail",{
+          method:"GET",
+          credentials:"include",
+        })
+        if(!response.ok){
+          throw new Error("something went wrong");
+        }
+        const result = await response.json();
+        const data = result.data.Detail;
+        setcoursecompleted(data.compCourse);
+        settotalcourse(data.numCourse);
+        console.log("complete:",result.data.Detail);
+    };
+    getcompletiondetail();
+  },[]);
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev === carouselImages.length - 1 ? 0 : prev + 1));
@@ -137,7 +157,7 @@ const StudentDashboard = () => {
         <button className="menu-button" onClick={toggleMenu}>
           &#9776; {/* Hamburger icon */}
         </button>
-        <div className={`nav-button ${menuOpen ? 'show' : 'hide'}`}>
+        <div className={`nav-button ${menuOpen ? 'show1' : 'hide1'}`}>
           <ul className='basicbtn'>
             <li >Home</li>
             <li >Contact Us</li>
@@ -183,15 +203,15 @@ const StudentDashboard = () => {
         <section className="dashboard-stats">
           <div className="stat-card">
             <h3>Enrolled Courses</h3>
-            <p>4</p>
+            <p>{totalcourse}</p>
           </div>
           <div className="stat-card">
             <h3>In Progress</h3>
-            <p>2</p>
+            <p>{totalcourse - coursecompleted}</p>
           </div>
           <div className="stat-card">
             <h3>Completed</h3>
-            <p>1</p>
+            <p>{coursecompleted}</p>
           </div>
         </section>
 

@@ -191,13 +191,13 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.course-image-container {
+.course-image-container11 {
   position: relative;
 }
 
-.course-image {
+.course-image11 {
   width: 100%;
-  height: 200px;
+  height:auto;
   object-fit: cover;
 }
 
@@ -276,6 +276,15 @@ body {
 .meta-icon{
   width: clam(0.7rem,2vw,1rem);
   height: clamp(0.7rem, 2vw, 1rem);;
+}
+
+
+
+.hide{
+  display: none;
+}
+.show{
+  display: block;
 }
 
 .action-button {
@@ -464,7 +473,6 @@ body {
     flex-direction: row;
     /* justify-content: space-between; */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    height: 200px;
     max-height: 200px;
 
   }
@@ -472,16 +480,16 @@ body {
     transform: translateY(-5px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
-  .course-image-container {
+  .course-image-container11{
     position: relative;
     width: 100%;
     max-width: 300px;
     object-fit: cover;
     height: auto;
   }
-  .course-image {
+  .course-image11 {
     width: 100%;
-    height: 200px;
+    height: auto;
     object-fit: cover;
   }
   .course-category {
@@ -572,25 +580,53 @@ body {
   }
   /* Responsive Adjustments */
   @media (max-width: 768px) {
+    #idk3{
+      margin-left: 0px;
+    }
+    .logo3{
+      gap: 0;
+    }
+
+    #yes3{
+      margin-bottom: 0px;
+    }
     .search-container {
       margin: 1rem 0;
     }
     .courses-grid11{
       grid-template-columns: 1fr;
     }
-    .course-image-container{
+    .course-image-container11{
       flex: 2;
+      height: auto;
+    }
+    .action-button{
+      padding: 8px;
     }
 
     .course-category{
-      font-size: clamp(0.8rem, 2.5vw, 1rem);
+      font-size: clamp(0.6rem, 2.5vw, 1rem);
     }
     .course-card11{
-      height: 150px;
+      display: flex;
+      min-height: auto;
+      height: auto;
     }
+
+    .course-image11{
+      height: 100%;
+      object-fit:cover;
+    }
+
     .course-content11{
-      padding: 16px;
       flex: 3;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 16px;
+      margin: 0;
+      flex: 3;
+      gap:0;
     }
     .user-name {
       display: none;

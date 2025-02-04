@@ -29,41 +29,40 @@ body {
   overflow-x: hidden;
 }
 
+#idk-lect {
+  width: 5rem;
+  height: 4rem;
+  object-fit: contain;
+}
+
+.logo-lect {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #ffffff
+}
+
+.logo-lect h1{
+  font-size: clamp(1.5rem,5vw,2rem);
+  margin-bottom: 0px;
+  font-weight: bold;
+  margin-left: 0px;
+}
+
 /* Header Styles */
-.header {
+.header-lecture{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 30px;
-  background-color: white;
+  padding: 15px 20px;
+  background-color: #024CAA;
   box-shadow: 0 2px 4px rgba(0,0,0,0.08);
   position: sticky;
   top: 0;
-  z-index: 100;
   width: 100%;
 }
 
-.logo {
-  font-size: 24px;
-  font-weight: 700;
-  color: #5624d0;
-}
 
-.nav-bar {
-  display: flex;
-  gap: 20px;
-}
-
-.nav-bar a {
-  text-decoration: none;
-  color: #1c1d1f;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-.nav-bar a:hover {
-  color: #5624d0;
-}
 
 
 /* Main Content Layout */
@@ -80,6 +79,7 @@ body {
   flex: 2;
   width: 100%;
   padding: 20px;
+  padding-top: 0px;
 }
 
 .video-container {
@@ -363,27 +363,71 @@ body {
   border-radius: 4px;
 }
 
+.view-btn{
+  display: none;
+}
+
+
+@media (max-width:768px) {
+  .logo-lect{
+    gap: 0;
+  }
+ 
+  .certificate-btn{
+    padding: 8px !important;
+    font-size: 12px;
+    padding-right: 0px !important;
+    color: green;
+  }
+}
+
+.close-lect{
+  display: none;
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
+  .close-lect{
+    display: block;
+  }
   .main-content1 {
     flex-direction: column;
   }
 
-  .recommended-lectures-container {
-    max-width: 100%;
-    border-left: none;
-    border-top: 1px solid #e5e5e5;
+  .view-btn{
+    display: flex;
+    margin-right: 20px;
+    border-radius: 5px;
+    color: #0e376c;
+    font-weight: bold;
+    padding: 10px;
+    justify-content: flex-end;
   }
 
+  .recommended-lectures-container{
+    max-width: 500px;
+    min-width: 300px;
+    position: absolute;
+    top: 94px;
+    right: 0;
+    z-index: 5;
+    border-left: none;
+    transition: all 0.5s ease-in-out;
+    border-top: 1px solid #e5e5e5;
+    box-shadow: 0 0 5px rgb(72, 71, 71);
+  }
+
+  .show2{
+    transform: translateX(0);
+  }
+  .hide2{
+    transform: translateX(100%);
+  }
   .header {
     flex-direction: column;
     gap: 10px;
   }
-
-  .nav-bar {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+  
 }
 
 /* Scrollbar Styling */
@@ -458,4 +502,9 @@ body {
   display: flex;
   gap: 10px;
   align-items: center;
+}
+
+.certificate-btn{
+  color: white;
+  padding: 10px;
 }

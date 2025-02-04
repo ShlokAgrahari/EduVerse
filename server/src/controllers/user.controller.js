@@ -180,7 +180,7 @@ const getDetail = asyncHandler(async(req,res)=>{
             name:user.userName,
             course:currcourse.title,
         }
-        return res.status(200).json(ApiResponse(200,{detail},"fetched detail"));
+        return res.status(200).json(ApiResponse(200,{Detail:detail},"fetched detail"));
     } catch (error) {
         console.log("get detail error is ",error);
     }

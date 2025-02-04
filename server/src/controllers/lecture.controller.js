@@ -41,7 +41,7 @@ const completeLecture = asyncHandler(async(req,res)=>{
         }
 
         lecture.complete = !lecture.complete;
-        user.save();
+        await user.save();
         res.status(202).json({message:"lecture marked as completed "});
     } catch (error) {
         res.status(500).json({message:"server error"});
@@ -64,6 +64,14 @@ const isComplete = asyncHandler(async(req,res)=>{
             throw ApiError(401,"course does not found");
         }
         const completedLectures = course.allecture.filter(lecture => lecture.complete);
+        if(course.allecture.length == completedLectures.length){
+            course.completed = true;
+            await user.save();
+        }
+        else{
+            course.completed = false;
+            await user.save();
+        }
         res.status(200).json(ApiResponse(200,completedLectures,"fetched completed lectures"));
     } catch (error) {
         res.status(500).json({message:"server error"});

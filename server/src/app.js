@@ -95,6 +95,8 @@ app.use("/messages", router);
 app.use("/messages/users", router);
 app.use("/messages/:id", router);
 app.use("/messages/send/:id", router);
+app.use("/reviews/:courseId",router);
+app.use("/course/detail",router);
 
 app.use("/getdetail/:courseId",router);
 

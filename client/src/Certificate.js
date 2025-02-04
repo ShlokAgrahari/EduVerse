@@ -111,7 +111,7 @@ const Certificate = () => {
     color: '#333',     // Optional, sets text color
   }}
 >
-  This is to certify that {userName} has successfully completed the online course {courseName} of duration HOURS on DATE.
+  This is to certify that<span style={{fontWeight:"bold"}}>{userName}</span>  has successfully completed the online course <span style={{fontWeight:"bold"}}>{courseName} </span>of duration HOURS on DATE.
 </p>
 
               </div>

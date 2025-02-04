@@ -52,7 +52,7 @@ const SearchBar = ()=>{
         navigate(`/coursedetails/${courseId}`);
     };
 
-    return <div className="search-container">
+    return <div className="search-container2">
     
             <input type="text" 
             placeholder="Search courses..." 

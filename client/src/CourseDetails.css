@@ -200,3 +200,23 @@
   margin-top: 40px;
   border-radius: 0 0 8px 8px;
 }
+
+.review-area{
+  margin: 20px;
+  box-shadow: 0 0 5px rgb(143, 142, 142);
+  border-radius: 5px;
+  padding: 15px;
+}
+
+
+.review-area h3{
+  color:#283593;
+  font-weight: bold;
+}
+
+
+.user-review{
+  background-color:#f0eeee;
+  padding: 10px;
+  border-radius: 5px;
+}

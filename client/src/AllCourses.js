@@ -3,9 +3,12 @@ import { BookOpen, Clock, Star, User, Bell, Search } from "lucide-react";
 import "./AllCourses.css";
 import { useNavigate } from "react-router-dom";
 import logo from './logo.png';
+import RatingPage from "./components/rating";
 
 const AllCourses = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [rating,setrating] = useState(false);
+  const [courseId,setcourseId] = useState(null); 
   const [courses, setCourses] = useState([]);
   const [courseDurations, setCourseDurations] = useState({});
   const [name, setName] = useState("");
@@ -81,6 +84,16 @@ const AllCourses = () => {
     setSearchQuery(e.target.value);
   };
 
+  const handleRating = (crsid)=>{
+    setcourseId(crsid);
+    setrating(true);
+  }
+
+  const handleClose = (e)=>{
+    setcourseId(null);
+    setrating(false);
+  }
+
   return (
     <div className="dashboard">
       <header className="header1">
@@ -106,9 +119,6 @@ const AllCourses = () => {
           </div> */}
 
           <div className="user-menu">
-            <button className="notification-button">
-              <Bell className="notification-icon" />
-            </button>
             <div className="user-profile">
               <div className="avatar">
                 <User className="avatar-icon" />
@@ -118,6 +128,11 @@ const AllCourses = () => {
           </div>
         </div>
       </header>
+
+
+      <div className={`review-page ${rating ? "show" : "hide"}`}>
+        <RatingPage courseId= {courseId} onClose={handleClose}/>
+      </div>
 
       <main className="main-content">
         <div className="page-header">
@@ -130,11 +145,11 @@ const AllCourses = () => {
         <div className="courses-grid11">
           {courses.map((course) => (
             <div key={course.id} className="course-card11">
-              <div className="course-image-container">
+              <div className="course-image-container11">
                 <img
                   src={course.image}
                   alt={course.title}
-                  className="course-image"
+                  className="course-image11"
                 />
                 <span className="course-category">{course.category}</span>
               </div>
@@ -150,7 +165,7 @@ const AllCourses = () => {
                   <div className="meta-item"style={{display:"flex"}}>
                     <Star className="meta-icon" />
                     <span>4.4</span>
-                  </div>
+                  </div> 
                 </div>
 
                 <div className="course-actions">
@@ -160,7 +175,7 @@ const AllCourses = () => {
                   >
                     Start Course
                   </button>
-                  <button className="action-button secondary-button">
+                  <button className="action-button secondary-button" onClick={()=>handleRating(course._id)}>
                     Rate Course
                   </button>
                 </div>
