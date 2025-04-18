@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { ShoppingCart, LogOut, ChevronLeft, ChevronRight, User } from 'lucide-react';
+import { ShoppingCart, LogOut, ChevronLeft, ChevronRight, User, MessageCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import logo from './logo.png';
 import './StudentDashboard.css';
 import SearchBar from './components/searchbar';
 
 import { disconnectSocket } from './socketManager';
-import { getSocket,getOnlineUsers } from './socketManager';
+import { getSocket, getOnlineUsers } from './socketManager';
+
 const CourseCard = ({ courseId, title, createdBy, pricing, image, handleNavigation }) => (
   <div className="course-card">
     <img src={image} alt={title} className="course-image" />
@@ -23,7 +24,8 @@ const StudentDashboard = () => {
   const [courses, setCourses] = useState([]);
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [name,setname]=useState('')
+  const [name, setname] = useState('');
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const carouselImages = [
     "https://img.freepik.com/free-photo/woman-working-office_144627-44195.jpg?t=st=1737640211~exp=1737643811~hmac=3402c5a94d17cbf396b615f26def61d535e02ccd2ee022e1b0ce1fa31d2f1fa9&w=996",
@@ -49,28 +51,25 @@ const StudentDashboard = () => {
         const response2 = await fetch("http://localhost:8000/user", {
           method: "GET",
           credentials: "include", // Ensure cookies are included in the request
-      });
+        });
   
-      if (!response2.ok) throw new Error("Failed to fetch user details");
-      const user = await response2.json(); 
-      console.log(user.data.phone)
-      console.log(user.data.userEmail)
-      const socket =await getSocket();
+        if (!response2.ok) throw new Error("Failed to fetch user details");
+        const user = await response2.json(); 
+        console.log(user.data.phone)
+        console.log(user.data.userEmail)
+        const socket = await getSocket();
 
-    // Get list of online users
-    
-    console.log("socket",socket.connected);
-    console.log(getOnlineUsers());
-      setname(user.data.userName)
+        // Get list of online users
+        console.log("socket", socket.connected);
+        console.log(getOnlineUsers());
+        setname(user.data.userName)
       } catch (error) {
         console.error("Error fetching courses:", error);
       }
-
     };
     fetchCourses();
   }, []);
 
-  
   const handleNavigation = (courseId) => {
     navigate(`/coursedetails/${courseId}`);
   };
@@ -92,7 +91,6 @@ const StudentDashboard = () => {
     }
   };
 
-
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev === carouselImages.length - 1 ? 0 : prev + 1));
   };
@@ -101,17 +99,19 @@ const StudentDashboard = () => {
     setCurrentSlide((prev) => (prev === 0 ? carouselImages.length - 1 : prev - 1));
   };
 
-  const [menuOpen, setMenuOpen] = useState(false);
-
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
+  };
+
+  const navigateToChat = () => {
+    navigate('/chat');
   };
 
   return (
     <div className="dashboard-container">
       <header className="dashboard-header">
         <div className="logo">
-        <img id="idk" src={logo} alt="Logo" />
+          <img id="idk" src={logo} alt="Logo" />
           <h1 id="yes">EduVerse</h1>
         </div>
         <div className="header-actions">
@@ -139,9 +139,33 @@ const StudentDashboard = () => {
         </button>
         <div className={`nav-button ${menuOpen ? 'show' : 'hide'}`}>
           <ul className='basicbtn'>
-            <li >Home</li>
-            <li >Contact Us</li>
-            <li >About</li>
+            <li onClick={navigateToChat}>
+              <div className="nav-item">
+                
+                <span>All Courses</span>
+              </div>
+            </li>
+            <li onClick={navigateToChat}>
+              <div className="nav-item">
+                
+                <span>Chat</span>
+              </div>
+            </li>
+            <li>
+              <div className="nav-item">
+                <span>Home</span>
+              </div>
+            </li>
+            <li>
+              <div className="nav-item">
+                <span>Contact Us</span>
+              </div>
+            </li>
+            <li>
+              <div className="nav-item">
+                <span>About</span>
+              </div>
+            </li>
           </ul>
         </div>
       </div>
@@ -155,9 +179,9 @@ const StudentDashboard = () => {
                 className={`carousel-image ${currentSlide === index ? 'active' : ''}`}
                 style={{ backgroundImage: `url(${image})` }}
               >
-                  <div className="carousel-text">
-                    <h2>{line[index]}</h2>
-                  </div>      
+                <div className="carousel-text">
+                  <h2>{line[index]}</h2>
+                </div>      
               </div>
             ))}
           </div>
@@ -177,8 +201,6 @@ const StudentDashboard = () => {
             ))}
           </div>
         </div>
-
-        <div></div>
 
         <section className="dashboard-stats">
           <div className="stat-card">
