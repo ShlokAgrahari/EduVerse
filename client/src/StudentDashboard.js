@@ -7,6 +7,7 @@ import SearchBar from './components/searchbar';
 
 import { disconnectSocket } from './socketManager';
 import { getSocket, getOnlineUsers } from './socketManager';
+import Chatbot from './components/chatbot';
 
 const CourseCard = ({ courseId, title, createdBy, pricing, image, handleNavigation }) => (
   <div className="course-card">
@@ -107,6 +108,10 @@ const StudentDashboard = () => {
     navigate('/chat');
   };
 
+  const navigateToAllCourses = () => {
+    navigate('/user/my-courses');
+  }
+
   return (
     <div className="dashboard-container">
       <header className="dashboard-header">
@@ -139,7 +144,7 @@ const StudentDashboard = () => {
         </button>
         <div className={`nav-button ${menuOpen ? 'show' : 'hide'}`}>
           <ul className='basicbtn'>
-            <li onClick={navigateToChat}>
+            <li onClick={navigateToAllCourses}>
               <div className="nav-item">
                 
                 <span>All Courses</span>
@@ -258,6 +263,7 @@ const StudentDashboard = () => {
           <p>&copy; 2024 EduLearn. All rights reserved.</p>
         </div>
       </footer>
+      <Chatbot/>
     </div>
   );
 };
