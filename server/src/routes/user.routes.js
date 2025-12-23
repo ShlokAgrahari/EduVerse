@@ -11,7 +11,7 @@ import {getinfo} from "../controllers/user.controller.js";
 import { checkout,paymentVerification } from "../controllers/payment.controller.js";
 import { completeLecture, getLecture, isComplete } from "../controllers/lecture.controller.js";
 import { deleteFromCart, getCartdetail } from "../controllers/getcart.controller.js";
-
+import { getLectureNotes } from "../controllers/lectureAI.controller.js";
 
 import { getCourses } from "../controllers/instruct.course.controller.js";
 import { addComment, addReview } from "../controllers/review.controller.js";
@@ -72,6 +72,10 @@ router.post("/checkout", checkout);
 router.post("/payment-verification",getUser,paymentVerification)
 router.post("/lecture/:courseId/check",getUser,completeLecture);
 router.get("/lecture/:courseId/completed",getUser,isComplete);
+router.get(
+  "/lecture/:courseId/:lectureIndex/ai-notes",
+  getLectureNotes
+);
 router.get("/getdetail/:courseId",getUser,getDetail);
 
 
