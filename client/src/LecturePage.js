@@ -11,7 +11,7 @@ import {
   Star,
 } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
-
+import ReactMarkdown from "react-markdown";
 import './LecturePage.css';
 
 
@@ -56,6 +56,11 @@ const LecturePage = () => {
   const [currentVideo, setCurrentLecture] = useState(null);
   const navigate = useNavigate();
   const [creator,setCreator]=useState("")
+  const [aiNotes, setAiNotes] = useState("");
+  const [aiStatus, setAiStatus] = useState("idle"); // idle | processing | done | error
+  const aiPollingRef = useRef(null);
+
+
 
   useEffect(() => {
           const fetchDetails = async () => {
@@ -187,6 +192,74 @@ const LecturePage = () => {
     compLecture();
   },[mark]);
 
+  useEffect(() => {
+  if (!currentVideo || currentVideo.index == null) return;
+
+  const lectureIdx = currentVideo.index - 1;
+
+  const fetchAiNotes = async () => {
+    try {
+      const res = await fetch(
+        `http://localhost:8000/lecture/${courseId}/${lectureIdx}/ai-notes`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+
+      const data = await res.json();
+
+      if (data.status === "done") {
+        setAiNotes(data.notes);
+        setAiStatus("done");
+
+        // ✅ STOP polling once done
+        if (aiPollingRef.current) {
+          clearInterval(aiPollingRef.current);
+          aiPollingRef.current = null;
+        }
+      }
+      else if (data.status === "processing") {
+        setAiNotes("Generating AI notes... Please wait.");
+        setAiStatus("processing");
+      }
+      else {
+        setAiNotes("AI notes unavailable for this lecture.");
+        setAiStatus("error");
+
+        if (aiPollingRef.current) {
+          clearInterval(aiPollingRef.current);
+          aiPollingRef.current = null;
+        }
+      }
+
+    } catch (err) {
+      console.error("AI Notes fetch error", err);
+      setAiNotes("Failed to load AI notes.");
+      setAiStatus("error");
+
+      if (aiPollingRef.current) {
+        clearInterval(aiPollingRef.current);
+        aiPollingRef.current = null;
+      }
+    }
+  };
+
+  // 🔹 First call immediately
+  fetchAiNotes();
+
+  // 🔹 Start polling every 4 seconds
+  aiPollingRef.current = setInterval(fetchAiNotes, 4000);
+
+  // 🔹 Cleanup on lecture change / unmount
+  return () => {
+    if (aiPollingRef.current) {
+      clearInterval(aiPollingRef.current);
+      aiPollingRef.current = null;
+    }
+  };
+
+}, [courseId, currentVideo]);
 
 
   const handleAddComment = () => {
@@ -381,6 +454,28 @@ const LecturePage = () => {
              <p>{courseData.currentLecture?.title}</p>
             <p className="show-more">Created by: {creator}</p>
           </div>
+
+
+<div className="ai-notes-section">
+  <h3>🤖 AI Lecture Notes</h3>
+
+  {aiStatus === "processing" && (
+    <p className="ai-loading">⏳ Generating AI notes...</p>
+  )}
+
+  {aiStatus === "done" && (
+    <div className="ai-notes-content">
+      <ReactMarkdown>{aiNotes}</ReactMarkdown>
+    </div>
+  )}
+
+  {aiStatus === "error" && (
+    <p className="ai-error">
+      ⚠️ AI notes could not be generated.
+    </p>
+  )}
+</div>
+
 
           <div className="comments-section">
             <div className="comments-header">
