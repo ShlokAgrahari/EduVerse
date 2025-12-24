@@ -50,6 +50,7 @@ const App = () => {
         <Route path="/:courseId/completion-certificate" element={<Certificate/>}/>
         
         <Route path="/user" element = {<PrivateRoute/>}>
+          
           <Route path="student-dashboard" element={<StudentDashboard />} />
           <Route path="instructor-dashboard" element={<InstructorDashboard/>} />
           <Route path="instructor/newcourse" element={<CreateCourse/>}/>
