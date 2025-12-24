@@ -23,6 +23,7 @@ const CourseCard = ({ courseId, title, createdBy, pricing, image, handleNavigati
 
 const StudentDashboard = () => {
   const [courses, setCourses] = useState([]);
+  const [recourse,setRecourse] = useState([]);
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [name, setname] = useState('');
@@ -39,6 +40,24 @@ const StudentDashboard = () => {
     "Empower your learning journey with EduVerse today.",
     "EduVerse: Best faculty, boundless opportunities."
   ];
+
+  useEffect(() => {
+    const getRecCourse = async() =>{
+      try {
+        const response = await fetch('http://localhost:8000/student-dashboard/recommend', {
+          method: 'GET',
+          credentials: 'include',
+        });
+        const data = await response.json();
+        setRecourse(data.data); 
+        console.log("Recommended courses:", data);
+      } catch (error) {
+        console.log("Error fetching recommended courses:", error);
+      }
+    };
+    getRecCourse();
+  }, []);
+
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -219,6 +238,25 @@ const StudentDashboard = () => {
           <div className="stat-card">
             <h3>Completed</h3>
             <p>1</p>
+          </div>
+        </section>
+
+        <section className='mt-3'>
+          <div className='text-center items-center m-8'>
+            <h2 className='font-semibold text-blue-700 text-xl sm:text-3xl lg:text-4xl'>Recommended course for you</h2>
+            <div className='courses-grid'>
+              {recourse.map((course)=>(
+                <CourseCard
+                  key={course._id}
+                  courseId={course._id}
+                  title={course.title}
+                  createdBy={course.createdBy}
+                  pricing={course.pricing}
+                  image={course.image}
+                  handleNavigation={handleNavigation}
+                />
+              ))}
+            </div>
           </div>
         </section>
 

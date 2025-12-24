@@ -28,9 +28,10 @@ const getRecommendation = asyncHandler(async(req,res) => {
         // console.log(purchasedCourse);
 
         const allCourse = await newCourse.find().select("_id title category").lean();
+        
         // console.log(allCourse);
         
-        const response = await fetch('http://127.0.0.1:5000/recommend', {
+        const response = await fetch('https://ak-ayush-kr-recommendation.hf.space/recommend', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -42,9 +43,11 @@ const getRecommendation = asyncHandler(async(req,res) => {
         });
 
         const data = await response.json();
-        // console.log(data);
+        const recommendedIds = data.recommendations.map((rec) => rec.course_id);
+        const recommendData = await newCourse.find({_id: { $in: recommendedIds }});
+        // console.log(recommendData);
 
-        res.status(200).json(ApiResponse(200,data,"got recommended courses for user"));
+        res.status(200).json(ApiResponse(200,recommendData,"got recommended courses for user"));
 
     } catch (error) {
         console.log(error);
