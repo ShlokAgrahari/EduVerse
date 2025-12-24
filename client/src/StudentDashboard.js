@@ -105,7 +105,11 @@ const StudentDashboard = () => {
   };
 
   const navigateToChat = () => {
-    navigate('/chat');
+    navigate('/connect');
+  };
+
+  const navigateToCourses = () => {
+    navigate('/user/my-courses');
   };
 
   const navigateToAllCourses = () => {
@@ -144,7 +148,9 @@ const StudentDashboard = () => {
         </button>
         <div className={`nav-button ${menuOpen ? 'show' : 'hide'}`}>
           <ul className='basicbtn'>
-            <li onClick={navigateToAllCourses}>
+
+            <li onClick={navigateToCourses}>
+
               <div className="nav-item">
                 
                 <span>All Courses</span>

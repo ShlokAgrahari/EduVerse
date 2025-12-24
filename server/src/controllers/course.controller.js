@@ -4,6 +4,10 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import newCourse from "../models/course.js";
 import User from "../models/user.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import { processLectureAI } from "./lectureAI.controller.js";
+
+
+
 const addCourse = asyncHandler(async (req, res) => {
   console.log(req)
     const { title, description, pricing, category, level} = req.body;
@@ -84,6 +88,8 @@ const addCourse = asyncHandler(async (req, res) => {
       lectures,
     });
   
+    
+
     res.status(200).json(ApiResponse(200, newCourseData, "New course added"));
   });
   
