@@ -1,0 +1,121 @@
+/* Main container for the signup page */
+.signup-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: #f8f9fa;
+}
+
+/* Box for the signup form */
+.signup-box {
+  width: 500px;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  text-align: center;
+  border: 2px solid black;
+}
+
+/* Heading for the signup form */
+.signup-box h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+/* Input container for form fields */
+.input-container {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input-container input {
+  width: 100%;
+  padding: 10px 40px; /* Space for icon */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Icon styling for input fields */
+.icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #007bff;
+}
+
+/* Button styling */
+button[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/* Additional styles for user-type buttons */
+.user-type {
+  display: flex;
+  justify-content: space-evenly; /* Adjusts spacing between buttons evenly */
+  margin-bottom: 20px; /* Adds space below the buttons */
+}
+
+.user-button {
+  padding: 8px 16px;
+  border: 1px solid #007bff;
+  border-radius: 4px;
+  background-color: transparent;
+  color: #007bff;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.user-button.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.user-button:not(.active):hover {
+  background-color: rgba(0, 123, 255, 0.1);
+}
+
+/* Other login options section */
+.other-login-options {
+  margin-top: 20px;
+}
+
+.other-login-options p {
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #666;
+}
+
+.icon-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px; /* Spacing between social media icons */
+}
+
+.login-icon {
+  font-size: 24px;
+  color: #007bff;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.login-icon:hover {
+  color: #0056b3;
+}

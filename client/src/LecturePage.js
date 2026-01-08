@@ -1,5 +1,5 @@
 import React, { useState,useEffect, useRef,useMemo, useDebugValue} from 'react';
-
+import { useNavigate, useParams } from 'react-router-dom';
 import { 
   Maximize, 
   Settings,
@@ -10,7 +10,6 @@ import {
   Square, 
   Star,
 } from 'lucide-react';
-import { useNavigate, useParams } from 'react-router-dom';
 import ReactMarkdown from "react-markdown";
 import './LecturePage.css';
 

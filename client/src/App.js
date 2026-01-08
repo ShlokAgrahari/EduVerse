@@ -45,7 +45,7 @@ const App = () => {
         <Route path="/login" element={<GoogleAuthWrapper/>} />
         <Route path="/signup" element={<SignupPage />} />
          {/* Route for Student Dashboard */}
-        <Route path="/" element={<StudentDashboard />} />
+        <Route path="/s" element={<StudentDashboard />} />
         <Route path="/coursedetails/:courseId" element={<CourseDetails />} />
         <Route path="/:courseId/completion-certificate" element={<Certificate/>}/>
         
