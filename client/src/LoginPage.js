@@ -1,208 +1,158 @@
-// src/components/LoginPage.js
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // useNavigate instead of useHistory
-import { FaGoogle,  FaUser, FaLock,FaEnvelope } from 'react-icons/fa';
+import { Link, useNavigate } from 'react-router-dom';
+import { FaGoogle, FaUser, FaLock, FaEnvelope, FaEye, FaEyeSlash } from 'react-icons/fa';
 import './LoginPage.css';
-import {useGoogleLogin} from "@react-oauth/google";
-import {io} from "socket.io-client"
+import { useGoogleLogin } from "@react-oauth/google";
+
 import { initializeSocket } from './socketManager';
+
 const LoginPage = () => {
     const [userEmail, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [role, setUserType] = useState('student'); // Default to Student
-    const [errmsg,setError] = useState('');
-    const navigate = useNavigate(); // useNavigate hook
+    const [role, setRole] = useState('student');
+    const [errmsg, setError] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
 
-    const onlineUsers = {};
-
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Logic for login goes here
-        try{
+        setIsLoading(true);
+        setError('');
+        try {
             const res = await fetch("http://localhost:8000/login", {
                 method: "POST",
-                headers: {
-                  'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 credentials: "include",
-                body: JSON.stringify({
-                  userEmail,password, role
-                })
+                body: JSON.stringify({ userEmail, password, role })
             });
-
-            if (!res.ok) {
-                const errorData = await res.json(); // Retrieve error message from response
-                console.log(errorData.message);
-                setError(errorData.message);
-                throw new Error(errorData.message || "Something went wrong"); // Pass the error message to catch block
-            }
-
-            if (res.status === 404) {
-                throw new Error("Endpoint not found");
-            }else if (res.status === 422) {
-                throw new Error("Something went wrong");
-            }
-
-            console.log("working");
 
             const data = await res.json();
-            if (!data) {
-                throw new Error("Unexpected response format");
-            }
-           console.log("this is data",data);
+            if (!res.ok) throw new Error(data.message || "Login failed");
 
-           initializeSocket(data.data.user._id);
-
-           const navRole = (role === 'student') ? '/user/student-dashboard' : '/user/instructor-dashboard';
-           navigate(`${navRole}`);
-           
-           setEmail("");
-           setPassword("");
-            
-
-        }catch(error){
-            console.log("error is ",error);
+            initializeSocket(data.data.user._id);
+            navigate(role === 'student'
+                ? '/user/student-dashboard'
+                : '/user/instructor-dashboard'
+            );
+        } catch (error) {
             setError(error.message);
+        } finally {
+            setIsLoading(false);
         }
     };
 
-
-    // for google login 
-
-    const googleAuth = async (code,role) => {
-        try {
-            
-            const response = await fetch(`http://localhost:8000/auth/google?code=${code}&role=${role}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                credentials:"include",
-            });
-        
-            if (!response.ok) {
-                throw new Error('Failed with Google');
+    const responseGoogle = async (authResult) => {
+        if (authResult.code) {
+            setIsLoading(true);
+            try {
+                const response = await fetch(
+                    `http://localhost:8000/auth/google?code=${authResult.code}&role=${role}`,
+                    { method: 'GET', credentials: "include" }
+                );
+                const data = await response.json();
+                if (data?.data?.user) {
+                    initializeSocket(data.data.user._id);
+                    navigate(role === 'student'
+                        ? '/user/student-dashboard'
+                        : '/user/instructor-dashboard'
+                    );
+                }
+            } catch {
+                setError("Google authentication failed.");
+            } finally {
+                setIsLoading(false);
             }
-    
-            const data = await response.json();
-            console.log("googleauth",data);
-            return data; 
-        } catch (error) {
-            console.error('Error during Google', error);
         }
     };
-
-    const connectSocket=async()=>{
-        const socket=io("http://localhost:8000")
-        socket.connect();
-    }
-    const responseGoogle = async(authResult)=>{
-        try {
-            const result = await googleAuth(authResult.code,role);
-
-            if (result && result.data && result.data.user) { // Check result validity
-                const { email, name } = result.data.user;
-                console.log(email);
-                console.log(name);
-            console.log(authResult);
-            initializeSocket(result.data.user._id);
-            }
-
-            const navRole = (role === 'student') ? '/user/student-dashboard' : '/user/instructor-dashboard';
-            navigate(`${navRole}`)
-        } catch (error) {
-            console.log("google error is: ",error);
-        }
-    }
 
     const googlelogin = useGoogleLogin({
-        onSuccess:responseGoogle,
-        onError : responseGoogle,
+        onSuccess: responseGoogle,
+        onError: () => setError("Google Login Failed"),
         flow: 'auth-code'
-    })
-
-
+    });
 
     return (
-        <div className="login-page">
-            {/* Header */}
-            <header className="header-box">
-                <h1>EDUVERSE</h1>
-                <p>Best Teacher | Affordable Pricing | Exclusive Notes</p>
-            </header>
+        <div className="flex h-screen w-screen overflow-hidden bg-[#f8fafc]">
+            <div className="hidden lg:flex lg:w-1/2 relative h-full bg-[#03045e]">
+                <img
+                    src="https://images.unsplash.com/photo-1523240795612-9a054b0db644"
+                    alt="Students studying"
+                    className="absolute inset-0 w-full h-full object-cover opacity-40"
+                />
+            </div>
 
-            <div className="login-container">
-                {/* User Type Selection */}
-                <div className="user-type">
-                    <button
-                        onClick={() => setUserType('student')}
-                        className={`user-button ${role === 'student' ? 'active' : ''}`}
-                    >
-                        Student
-                    </button>
-                    <button
-                        onClick={() => setUserType('instructor')}
-                        className={`user-button ${role === 'instructor' ? 'active' : ''}`}
-                    >
-                        Instructor
-                    </button>
-                </div>
+            <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12 bg-white">
+                <div className="w-full max-w-[440px] space-y-8">
 
-                {/* Login Form */}
-                <form className="login-form" onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <div className="input-icon-container">
-                            <FaEnvelope className="input-icon" />
+                    <h2 className="text-3xl font-bold">Login</h2>
+
+                    <div className="flex p-1.5 bg-slate-100 rounded-2xl">
+                        <button
+                            type="button"
+                            onClick={() => setRole('student')}
+                            className={`flex-1 py-2 rounded-xl ${role === 'student' ? 'bg-white font-bold' : ''}`}
+                        >
+                            Student
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => setRole('instructor')}
+                            className={`flex-1 py-2 rounded-xl ${role === 'instructor' ? 'bg-white font-bold' : ''}`}
+                        >
+                            Instructor
+                        </button>
+                    </div>
+
+                    <form onSubmit={handleSubmit} className="space-y-5">
+                        <div>
+                            <label>Email</label>
                             <input
-                                type="text"
-                                id="useremail"
-                                placeholder="Enter your email"
+                                type="email"
                                 value={userEmail}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
                             />
                         </div>
-                    </div>
-                    <div className="form-group">
-                        <div className="input-icon-container">
-                            <FaLock className="input-icon" />
-                            <input
-                                type="password"
-                                id="password"
-                                placeholder="Enter your password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
+
+                        <div>
+                            <label>Password</label>
+                            <div className="relative">
+                                <input
+                                    type={showPassword ? 'text' : 'password'}
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                >
+                                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    <p style={{color:errmsg?"red":"white"}}>{errmsg}</p>
 
-                    <button type="submit" className="login-button">Login</button>
-                </form>
+                        {errmsg && <p className="text-red-500">{errmsg}</p>}
 
-                {/* Other Login Options */}
-                <div className="other-login-options">
-                    <p>Other login options</p>
-                    <div className="icon-container">
-                        <button onClick={googlelogin} className="google-login-button">
-                            <FaGoogle className="google-icon" /> Login with Google
+                        <button type="submit" disabled={isLoading}>
+                            {isLoading ? "Verifying..." : "Sign In"}
                         </button>
-                    </div>
-                </div>
+                    </form>
 
-                
-            </div>
-            <footer className="login-footer">
-                <p>&copy; 2024 EDUVERSE. All Rights Reserved.</p>
-                <div className="footer-links">
-                    <Link to="/privacy-policy">Privacy Policy</Link>
-                    <Link to="/terms-of-service">Terms of Service</Link>
-                    <Link to="/contact">Contact Us</Link>
+                    <button onClick={() => googlelogin()}>
+                        <FaGoogle /> Google
+                    </button>
+
+                    <p className="text-center text-sm">
+                        Don't have an account?
+                        <Link to="/signup"> Create account</Link>
+                    </p>
+
                 </div>
-            </footer>
+            </div>
         </div>
     );
 };
 
-export {LoginPage};
+export { LoginPage };

@@ -22,14 +22,26 @@ def recommend():
     vectorizer = TfidfVectorizer(stop_words = "english")
     tfidf_matrix = vectorizer.fit_transform(df["combined"])
 
+
+    if not all_course:
+        return jsonify({"recommendations": []})
+    
+    if not purchased_course:
+        course = [{"course_id": item["_id"]} for item in all_course[:4]]
+        return jsonify({"recommendations":course})
+
     purchased_ind = [df.index[df["_id"]==item["_id"]].tolist()[0] for item in purchased_course]
+
+    if(purchased_ind==[]):
+        course = [{"course_id": item["_id"]} for item in all_course[:4]]
+        return jsonify({"recommendations":course})
 
     use_vector = tfidf_matrix[purchased_ind].mean(axis=0)
     use_vector = np.asarray(use_vector).reshape(1, -1)
     similarity_score = cosine_similarity(use_vector,tfidf_matrix).flatten()
 
     recommended_indices = [i for i in similarity_score.argsort()[::-1] if i not in purchased_ind]
-    recommended_course = [{"course_id": df.iloc[i]["_id"]}for i in recommended_indices[:5]]
+    recommended_course = [{"course_id": df.iloc[i]["_id"]}for i in recommended_indices[:4]]
 
     return jsonify({"recommendations": recommended_course})
 

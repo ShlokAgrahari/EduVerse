@@ -95,6 +95,7 @@ app.use("/messages", router);
 app.use("/messages/users", router);
 app.use("/messages/:id", router);
 app.use("/messages/send/:id", router);
+app.use("/api-chat",router);
 
 app.use("/getdetail/:courseId",router);
 

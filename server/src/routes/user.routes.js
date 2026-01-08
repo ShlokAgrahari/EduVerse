@@ -23,6 +23,7 @@ import { getRecommendation } from "../controllers/recommend.controller.js";
 
 import myCourses from "../controllers/getMyCourses.controller.js";
 import { getMessages, getUserForSidebar, sendMessages } from "../controllers/message.controller.js";
+import { chatbotController } from "../controllers/chatbot.controller.js";
 
 
 const router = Router();
@@ -113,6 +114,6 @@ router.post("/messages/send/:id",getUser,sendMessages)
 //router.get("/stdhome",async(req,res)=>{
 //    res.json(courses);
 //});
-
+router.post("/api-chat",getUser,chatbotController);
 
 export default router;
