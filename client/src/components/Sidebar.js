@@ -50,8 +50,8 @@ const Sidebar = () => {
       {/* Header */}
       <div className="border-b border-base-300 w-full" style={{ padding: '42px' }}>
         <div className="flex items-center gap-2">
-          <Users className="w-6 h-6" />
-          <span className="font-medium hidden lg:block">Contacts</span>
+          <Users className="w-6 text-white h-6" />
+          <span className="font-medium hidden text-white lg:block">Contacts</span>
         </div>
       </div>
 
@@ -83,7 +83,7 @@ const Sidebar = () => {
               )}
             </div>
             <div className="hidden lg:block text-left min-w-0">
-              <div className="font-medium truncate">{user.name}</div>
+              <div className="font-medium text-white truncate">{user.name}</div>
               <div className="text-sm text-zinc-500">
                 {onlineUsers.includes(user._id) ? "Online" : "Offline"}
               </div>
