@@ -1,7 +1,7 @@
 // src/components/LoginPage.js
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; // useNavigate instead of useHistory
-import { FaGoogle,  FaUser, FaLock } from 'react-icons/fa';
+import { FaGoogle,  FaUser, FaLock,FaEnvelope } from 'react-icons/fa';
 import './LoginPage.css';
 import {useGoogleLogin} from "@react-oauth/google";
 import {io} from "socket.io-client"
@@ -152,7 +152,7 @@ const LoginPage = () => {
                 <form className="login-form" onSubmit={handleSubmit}>
                     <div className="form-group">
                         <div className="input-icon-container">
-                            <FaUser className="input-icon" />
+                            <FaEnvelope className="input-icon" />
                             <input
                                 type="text"
                                 id="useremail"
@@ -191,10 +191,7 @@ const LoginPage = () => {
                     </div>
                 </div>
 
-                {/* Forgot Password Link */}
-                <Link to="/forgot-password" className="forgot-password">
-                    Forgot Password?
-                </Link>
+                
             </div>
             <footer className="login-footer">
                 <p>&copy; 2024 EDUVERSE. All Rights Reserved.</p>

@@ -6,6 +6,7 @@ import newCourse from "../models/course.js";
 import { upload } from "../middlewares/multer.middleware.js";
 import { logoutUser } from "../controllers/user.controller.js";
 import getUser from "../middlewares/auth.middleware.js";
+import User from "../models/user.js";
 //import courses from "../controllers/course.controller.js";
 import {getinfo} from "../controllers/user.controller.js";
 import { checkout,paymentVerification } from "../controllers/payment.controller.js";
@@ -59,6 +60,33 @@ router.get("/coursedetails/:courseId", async (req, res) => {
         res.status(500).json({ message: "Server error" });
     }
 });
+
+
+
+
+router.get(
+  "/cart/status/:courseId",
+  getUser,
+  async (req, res) => {
+    try {
+      const { courseId } = req.params;
+
+      const exists = await User.exists({
+        _id: req.user._id,
+        "cart.courseId": courseId,
+      });
+
+      res.json({ isInCart: Boolean(exists) });
+    } catch (err) {
+      console.error("Cart status error:", err);
+      res.status(500).json({ message: "Server error" });
+    }
+  }
+);
+
+
+
+
 
 router.get("/lecture/:courseId",getLecture)
 

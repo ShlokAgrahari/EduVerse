@@ -93,7 +93,7 @@ const ChatContainer = () => {
   </time>
 </div>
 
-              <div className='chat-bubble flex flex-col bg-blue-800'>
+              <div className='chat-bubble flex flex-col'>
                 {message.image && (
                   <img src={message.image}
                   alt="attachment"

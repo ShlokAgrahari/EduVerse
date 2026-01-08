@@ -7,8 +7,28 @@ const CourseDetails = () => {
     const { courseId } = useParams();
     const [course, setCourse] = useState(null);
     const navigate = useNavigate();
+    const [isInCart, setIsInCart] = useState(false);
 
-    useEffect(() => {
+  
+  const checkCartStatus = async () => {
+    try {
+      const res = await fetch(
+        `http://localhost:8000/cart/status/${courseId}`,
+        { credentials: "include" }
+      );
+
+      if (!res.ok) return;
+
+      const data = await res.json();
+
+      console.log("isInCart from backend:", data);
+      setIsInCart(data.isInCart);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+ useEffect(() => {
         const fetchDetails = async () => {
             try {
                 const response = await fetch(`http://localhost:8000/coursedetails/${courseId}`);
@@ -16,26 +36,32 @@ const CourseDetails = () => {
                 const data = await response.json();
                 console.log(data.previewVideo)
                 setCourse(data);
+                checkCartStatus();
             } catch (error) {
                 console.log("Some error occurred", error);
             }
         };
         fetchDetails();
     }, [courseId]);
-
     const handleCart = async () => {
-        try {
-            const res = await fetch(`http://localhost:8000/coursedetails/${courseId}/cart`, {
-                method: "POST",
-                headers: { 'Content-Type': 'application/json' },
-                credentials: "include",
-                body: JSON.stringify({ courseId })
-            });
-            if (!res.ok) throw new Error((await res.json()).message || "Something went wrong");
-        } catch (error) {
-            console.log("Error:", error);
-        }
-    };
+  try {
+    const res = await fetch(
+      `http://localhost:8000/coursedetails/${courseId}/cart`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ courseId }),
+      }
+    );
+
+    if (!res.ok) throw new Error("Failed");
+
+    setIsInCart(true); 
+  } catch (err) {
+    console.log(err);
+  }
+};
 
     const handleNavClick = ()=>{
         navigate("/user/student-dashboard/cart");
@@ -93,9 +119,14 @@ const CourseDetails = () => {
                 <div className="sidebar">
                     <h3>Course Includes:</h3>
                     {course?.description}
-                    <div className="add-to-cart-container">
-                        <button onClick={handleCart} className="add-to-cart-button">Add to Cart</button>
-                    </div>
+                    <button
+  onClick={isInCart ? handleNavClick : handleCart}
+  disabled={isInCart}
+  className="add-to-cart-button"
+>
+  {isInCart ? "✅ Added to Cart" : "➕ Add to Cart"}
+</button>
+
                 </div>
             </div>
 

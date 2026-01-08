@@ -93,7 +93,7 @@ function Cart() {
         method: "GET",
         credentials: "include", // Ensure cookies are included in the request
     });
-
+    
     if (!response2.ok) throw new Error("Failed to fetch user details");
     const user = await response2.json(); 
     console.log(user.data.phone)
