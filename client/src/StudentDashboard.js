@@ -36,7 +36,7 @@ const StudentDashboard = () => {
   const [recourse, setRecourse] = useState([]);
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [name, setname] = useState('');
+  const [name, setname] = useState('Student');
   const [menuOpen, setMenuOpen] = useState(false);
 
   const carouselImages = [
@@ -51,72 +51,139 @@ const StudentDashboard = () => {
     "EduVerse: Best faculty, boundless opportunities."
   ];
 
+  // BACKEND API CALL - COMMENTED OUT
+  // useEffect(() => {
+  //   const getRecCourse = async () => {
+  //     try {
+  //       const response = await fetch('http://localhost:8000/student-dashboard/recommend', {
+  //         method: 'GET',
+  //         credentials: 'include',
+  //       });
+  //       const data = await response.json();
+  //       setRecourse(data.data);
+  //       console.log("Recommended courses:", data);
+  //     } catch (error) {
+  //       console.log("Error fetching recommended courses:", error);
+  //     }
+  //   };
+  //   getRecCourse();
+  // }, []);
+
+  // TEMPORARY: Mock recommended courses data
   useEffect(() => {
-    const getRecCourse = async () => {
-      try {
-        const response = await fetch('http://localhost:8000/student-dashboard/recommend', {
-          method: 'GET',
-          credentials: 'include',
-        });
-        const data = await response.json();
-        setRecourse(data.data);
-        console.log("Recommended courses:", data);
-      } catch (error) {
-        console.log("Error fetching recommended courses:", error);
+    const mockRecCourses = [
+      {
+        _id: '1',
+        title: 'Advanced React Patterns',
+        createdBy: 'John Doe',
+        pricing: 1999,
+        image: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=500'
+      },
+      {
+        _id: '2',
+        title: 'Node.js Masterclass',
+        createdBy: 'Jane Smith',
+        pricing: 2499,
+        image: 'https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=500'
       }
-    };
-    getRecCourse();
+    ];
+    setRecourse(mockRecCourses);
   }, []);
 
+  // BACKEND API CALL - COMMENTED OUT
+  // useEffect(() => {
+  //   const fetchCourses = async () => {
+  //     try {
+  //       const response = await fetch('http://localhost:8000/student-dashboard');
+  //       if (!response.ok) {
+  //         throw new Error('Failed to fetch courses');
+  //       }
+  //       const data = await response.json();
+  //       setCourses(data);
+  //       const response2 = await fetch("http://localhost:8000/user", {
+  //         method: "GET",
+  //         credentials: "include",
+  //       });
+
+  //       if (!response2.ok) throw new Error("Failed to fetch user details");
+  //       const user = await response2.json();
+  //       console.log(user.data.phone);
+  //       console.log(user.data.userEmail);
+  //       const socket = await getSocket();
+
+  //       console.log("socket", socket.connected);
+  //       console.log(getOnlineUsers());
+  //       setname(user.data.userName);
+  //     } catch (error) {
+  //       console.error("Error fetching courses:", error);
+  //     }
+  //   };
+  //   fetchCourses();
+  // }, []);
+
+  // TEMPORARY: Mock courses and user data
   useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const response = await fetch('http://localhost:8000/student-dashboard');
-        if (!response.ok) {
-          throw new Error('Failed to fetch courses');
-        }
-        const data = await response.json();
-        setCourses(data);
-        const response2 = await fetch("http://localhost:8000/user", {
-          method: "GET",
-          credentials: "include",
-        });
-
-        if (!response2.ok) throw new Error("Failed to fetch user details");
-        const user = await response2.json();
-        console.log(user.data.phone);
-        console.log(user.data.userEmail);
-        const socket = await getSocket();
-
-        console.log("socket", socket.connected);
-        console.log(getOnlineUsers());
-        setname(user.data.userName);
-      } catch (error) {
-        console.error("Error fetching courses:", error);
+    const mockCourses = [
+      {
+        _id: '3',
+        title: 'Complete Web Development Bootcamp',
+        createdBy: 'Mike Johnson',
+        pricing: 3999,
+        image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=500'
+      },
+      {
+        _id: '4',
+        title: 'Python for Data Science',
+        createdBy: 'Sarah Williams',
+        pricing: 2999,
+        image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=500'
+      },
+      {
+        _id: '5',
+        title: 'UI/UX Design Fundamentals',
+        createdBy: 'Emily Brown',
+        pricing: 1799,
+        image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500'
+      },
+      {
+        _id: '6',
+        title: 'Machine Learning A-Z',
+        createdBy: 'David Lee',
+        pricing: 4499,
+        image: 'https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=500'
       }
-    };
-    fetchCourses();
+    ];
+    setCourses(mockCourses);
+    setname('Student'); // Mock username
   }, []);
 
   const handleNavigation = (courseId) => {
     navigate(`/coursedetails/${courseId}`);
   };
 
-  const handleLogout = async (e) => {
-    try {
-      const res = await fetch("http://localhost:8000/logout", {
-        method: "POST",
-        credentials: 'include',
-      });
+  // BACKEND API CALL - COMMENTED OUT
+  // const handleLogout = async (e) => {
+  //   try {
+  //     const res = await fetch("http://localhost:8000/logout", {
+  //       method: "POST",
+  //       credentials: 'include',
+  //     });
 
-      if (res.ok) {
-        console.log("Logged out");
-        disconnectSocket();
-        navigate("/");
-      }
-    } catch (error) {
-      console.log("Error:", error);
-    }
+  //     if (res.ok) {
+  //       console.log("Logged out");
+  //       disconnectSocket();
+  //       navigate("/");
+  //     }
+  //   } catch (error) {
+  //     console.log("Error:", error);
+  //   }
+  // };
+
+  // TEMPORARY: Direct logout without backend
+  const handleLogout = () => {
+    console.log("Logged out");
+    // disconnectSocket(); // Uncomment when backend is ready
+    navigate("/");
   };
 
   const nextSlide = useCallback(() => {
