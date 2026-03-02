@@ -12,7 +12,6 @@ import {
   FaPhone
 } from "react-icons/fa";
 
-
 const SignupPage = () => {
   const navigate = useNavigate();
 
@@ -23,26 +22,68 @@ const SignupPage = () => {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [role, setRole] = useState("student");
+  const [error, setError] = useState("");
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    try {
-      const res = await fetch("http://localhost:8000/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ userName, phone, userEmail, password, role })
-      });
-
-      const nav =
-        role === "student"
-          ? "/user/student-dashboard"
-          : "/user/instructor-dashboard";
-
-      navigate(nav);
-    } catch (err) {
-      console.log(err.message);
+    setIsLoading(true);
+    setError("");
+    
+    // Simple validation
+    if (!userName || !userEmail || !phone || !password) {
+      setError("Please fill in all fields");
+      setIsLoading(false);
+      return;
     }
+
+    // BACKEND API CALL - COMMENTED OUT FOR NOW
+    // try {
+    //   const res = await fetch(
+    //     "https://7000-idx-lms-app-1744973974490.cluster-ubrd2huk7jh6otbgyei4h62ope.cloudworkstations.dev/signup",
+    //     {
+    //       method: "POST",
+    //       headers: { 
+    //         "Content-Type": "application/json",
+    //         "Accept": "application/json"
+    //       },
+    //       credentials: "include", 
+    //       body: JSON.stringify({ userName, phone, userEmail, password, role }),
+    //     }
+    //   );
+
+    //   if (!res.ok) {
+    //     const errorData = await res.json().catch(() => ({}));
+    //     throw new Error(errorData.message || `Server error: ${res.status} ${res.statusText}`);
+    //   }
+
+    //   const data = await res.json();
+    //   console.log("Success:", data);
+  
+    //   const nav =
+    //     role === "student"
+    //       ? "/user/student-dashboard"
+    //       : "/user/instructor-dashboard";
+  
+    //   navigate(nav);
+  
+    // } catch (error) {
+    //   console.error("Signup Error:", error);
+    //   setError(error.message || "Failed to create account. Please check if the server is running and try again.");
+    // } finally {
+    //   setIsLoading(false);
+    // }
+
+    // TEMPORARY: Direct navigation without backend
+    setTimeout(() => {
+      console.log("Signup Data:", { userName, phone, userEmail, role });
+      
+      const nav = role === "student" 
+        ? "/user/student-dashboard" 
+        : "/user/instructor-dashboard";
+      
+      navigate(nav);
+      setIsLoading(false);
+    }, 1000);
   };
 
   return (
@@ -79,24 +120,33 @@ const SignupPage = () => {
             <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Create Account</h2>
             <p className="text-slate-500 font-medium">Start your learning experience with Eduverse.</p>
           </div>
+
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-2xl text-sm">
+              {error}
+            </div>
+          )}
+
           <div className="flex p-1.5 bg-slate-100/80 rounded-2xl border border-slate-200/50">
             <button
               type="button"
               onClick={() => setRole("student")}
-              className={`flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-bold rounded-xl transition-all duration-300 ${role === "student"
+              className={`flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-bold rounded-xl transition-all duration-300 ${
+                role === "student"
                   ? 'bg-white text-[#03045e] shadow-[0_4px_12px_rgba(0,0,0,0.05)]'
                   : 'text-slate-500 hover:text-slate-700'
-                }`}
+              }`}
             >
               Student
             </button>
             <button
               type="button"
               onClick={() => setRole("instructor")}
-              className={`flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-bold rounded-xl transition-all duration-300 ${role === "instructor"
+              className={`flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-bold rounded-xl transition-all duration-300 ${
+                role === "instructor"
                   ? 'bg-white text-[#03045e] shadow-[0_4px_12px_rgba(0,0,0,0.05)]'
                   : 'text-slate-500 hover:text-slate-700'
-                }`}
+              }`}
             >
               Instructor
             </button>
@@ -136,6 +186,7 @@ const SignupPage = () => {
                 </div>
               </div>
             </div>
+
             <div className="space-y-1.5">
               <label className="text-sm font-semibold text-slate-700 ml-1">Email</label>
               <div className="relative group">
@@ -176,7 +227,7 @@ const SignupPage = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-4 mt-2 rounded-2xl shadow-lg shadow-blue-900/10 font-bold text-white bg-[#03045e] hover:bg-[#02034a] transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-70"
+              className="w-full py-4 mt-2 rounded-2xl shadow-lg shadow-blue-900/10 font-bold text-white bg-[#03045e] hover:bg-[#02034a] transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed"
             >
               {isLoading ? "Creating Account..." : "Create Account"}
             </button>
