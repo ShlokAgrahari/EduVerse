@@ -1,0 +1,137 @@
+:root {
+    --primary-color: #6366f1;
+    --secondary-color: #a5b4fc;
+    --background-color: #f5f3ff;
+    --text-color: #1f2937;
+  }
+  
+  .rating-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    padding: 1rem;
+  }
+  
+  .rating-modal-container {
+    background-color: white;
+    border-radius: 1rem;
+    width: 100%;
+    max-width: 28rem;
+    position: relative;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    border: 1px solid var(--secondary-color);
+  }
+  
+  .rating-section {
+    background-color: var(--background-color);
+    padding: 1.5rem;
+    text-align: center;
+  }
+  
+  .rating-section h2 {
+    color: var(--primary-color);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+  
+  .star-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .star-icon {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--secondary-color);
+  }
+  
+  .star-icon:hover,
+  .star-icon.active {
+    transform: scale(1.2);
+    color: var(--primary-color);
+  }
+  
+  .review-section {
+    padding: 1.5rem;
+  }
+  
+  .review-section textarea {
+    width: 100%;
+    border: 2px solid var(--secondary-color);
+    border-radius: 0.75rem;
+    padding: 0.75rem;
+    height: 8rem;
+    resize: vertical;
+    transition: all 0.3s ease;
+    font-size: 0.875rem;
+
+  }
+  
+  .review-section textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  }
+  .review-section h3 {
+    color: var(--text-color);
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+  }
+
+  .button-section {
+    display: flex;
+    gap: 1rem;
+    padding: 1.5rem;
+    background-color: var(--background-color);
+  }
+  .submit-btn
+  {
+    flex:1;
+    padding: 0.75px 1.25px;
+    border-radius:0.75rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    background-color: var(--primary-color);
+    color: white;
+    border: 1px solid var(--primary-color);
+ }
+  .submit-btn:hover
+  {
+    background-color: #ffffff;
+    color:#6366f1;
+  }
+  
+  
+  @media (max-width: 768px) {
+    .rating-modal-container {
+      width: 95%;
+      max-width: 95%;
+    }
+  
+    .star-container {
+      gap: 0.5rem;
+    }
+  }
+  .rating-close-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: var(--secondary-color);
+    cursor: pointer;
+    z-index: 10;
+  }
+  
+  .rating-close-button:hover {
+    color: white;
+    background:red
+  }
